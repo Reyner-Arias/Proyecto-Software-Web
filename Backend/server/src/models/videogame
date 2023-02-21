@@ -1,0 +1,14 @@
+const { Schema, model } = require("mongoose");
+
+const videogameSchema = new Schema(
+  {
+    name: { type: String, required: false },
+    developer:  { type: String, required: false }
+  },
+  {
+    timestamps: true,
+    versionKey: false
+  }
+);
+
+module.exports = model("videogames", videogameSchema);
