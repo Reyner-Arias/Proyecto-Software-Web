@@ -1,10 +1,13 @@
-POST http://localhost:3000/admin-videogames/post
+POST http://localhost:3000/admin-videogames/subirVideojuego
 content-type: application/json
 
 {
-    "name": "Wednesday",
-    "developer": "Marianna Hidalgo S",
-    "file": r"game.zip"
+    "id": 0,
+    "titulo": "",
+    "portada": "",
+    "sinopsis": "",
+    "usuario": "",
+    "juegoZip": "",
 }
 
 ######

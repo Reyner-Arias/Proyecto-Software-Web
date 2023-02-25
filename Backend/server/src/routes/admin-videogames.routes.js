@@ -11,5 +11,6 @@ const token = require("../controllers/token");
 */
 
 router.post("/post", adminVideogameController.postVideogame);
+router.post("/subirVideojuego", adminVideogameController.subirVideojuego);
 
 module.exports = router;
