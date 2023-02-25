@@ -1,18 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GetVideogamesComponent } from './get-videogames.component';
+import { DocsLinkComponent } from './docs-link.component';
 
-describe('GetVideogamesComponent', () => {
-  let component: GetVideogamesComponent;
-  let fixture: ComponentFixture<GetVideogamesComponent>;
+describe('DocsLinkComponent', () => {
+  let component: DocsLinkComponent;
+  let fixture: ComponentFixture<DocsLinkComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GetVideogamesComponent ]
+      declarations: [ DocsLinkComponent ]
     })
     .compileComponents();
+  });
 
-    fixture = TestBed.createComponent(GetVideogamesComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DocsLinkComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
