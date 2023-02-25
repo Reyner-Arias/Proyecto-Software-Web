@@ -6,6 +6,7 @@ import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
+import { UpdateVideogameComponent } from './views/videogames/update-videogame/update-videogame.component';
 
 const routes: Routes = [
   {
@@ -70,6 +71,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/pages/pages.module').then((m) => m.PagesModule)
       },
+      {
+        path: 'videogames',
+        loadChildren: () =>
+          import('./views/videogames/videogames.module').then((m) => m.VideogamesModule)
+      },
     ]
   },
   {
@@ -98,6 +104,13 @@ const routes: Routes = [
     component: RegisterComponent,
     data: {
       title: 'Register Page'
+    }
+  },
+  {
+    path: 'update-videogame',
+    component: UpdateVideogameComponent,
+    data: {
+      title: 'Update Videogame'
     }
   },
   {path: '**', redirectTo: 'dashboard'}

@@ -241,4 +241,15 @@ export const navItems: INavData[] = [
       }
     ]
   },
+  {
+    name: 'Videogames',
+    url: '/videogames',
+    iconComponent: { name: 'cil-star' },
+    children: [
+      {
+        name: 'Update',
+        url: '/videogames/update'
+      },
+    ]
+  },
 ];
