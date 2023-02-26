@@ -1,13 +1,14 @@
-POST http://localhost:3000/admin-videogames/subirVideojuego
-content-type: application/json
+POST http://localhost:3000/admin-videogames/post
+Content-Type: application/json
 
 {
-    "id": 0,
-    "titulo": "",
-    "portada": "",
-    "sinopsis": "",
-    "usuario": "",
-    "juegoZip": "",
+    "titulo": "ratgame",
+    "portada": {"imgtype": "image/jpeg"},
+    "imagepath": "Add path",
+    "sinopsis": "It's a game about rats",
+    "usuario": "ratman",
+    "juegoZip":{"filetype": "application/zip"},
+    "filepath": "Add path"
 }
 
 ######

@@ -2,12 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const videogameSchema = new Schema(
   {
-    id: {type: Number, required: false },
     titulo: { type: String, required: false },
-    portada:{ type: String, required: false},
+    portada:{ imgtype: String, data: Buffer, required: false},
     sinopsis: { type: String, required: false },
     usuario: { type: String, required: false },
-    juegoZip:{ type: String, required: false}
+    juegoZip: { filetype: String, data: Buffer, required: false}
   },
   {
     timestamps: true,
@@ -15,5 +14,4 @@ const videogameSchema = new Schema(
   }
 );
 
-const Videojuego = model("Videojuego", videogameSchema);
-module.exports = {Videojuego}
+module.exports = model("videojuego", videogameSchema)
