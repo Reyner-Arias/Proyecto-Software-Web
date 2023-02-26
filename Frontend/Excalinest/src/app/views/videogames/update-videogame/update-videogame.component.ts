@@ -27,10 +27,10 @@ export class UpdateVideogameComponent {
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
-        /* Model con error */
+      
       },
       next: (res: any) => {
-        /* Model con mensaje res */
+      
         form.resetForm();
       }
     });
