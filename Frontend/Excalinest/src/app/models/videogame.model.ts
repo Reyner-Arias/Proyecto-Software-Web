@@ -1,4 +1,4 @@
 export interface Videogame {
-    name: string;
-    developer: string;
+    name: String;
+    developer: String;
 }

@@ -1,73 +1,58 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { Videogame } from '../../../models/Videogame.model'
-import { VideogamesService} from '../../../services/videogames.service';
+import { VideogamesService } from '../../../services/videogames.service';
 
 @Component({
   selector: 'app-update-videogame',
   templateUrl: './update-videogame.component.html',
   styleUrls: ['./update-videogame.component.scss']
 })
-export class UpdateVideogameComponent {
+export class UpdateVideogameComponent implements OnInit {
+
+  private postVideogameForm: any;
+  validatedForm = false;
 
   newVideogame: Videogame = {
     name: '',
     developer: '',
   }
 
-  constructor(private videogamesService: VideogamesService) {}
+  constructor(private videogamesService: VideogamesService,
+    private formBuilder: FormBuilder) {}
 
-  onPostVideogame(form: NgForm) {
-    if (form.invalid) {
-      return;
-    }
+  getPostVideogameForm() {
+    return this.postVideogameForm;
+  }
 
-    this.newVideogame.name = form.value.name;
-    this.newVideogame.developer = form.value.developer;
+  ngOnInit(){
+    this.postVideogameForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      developer: ['', Validators.required]
+    });
+  }
+
+  onPostVideogame() {
+    this.newVideogame.name = this.postVideogameForm.value.name;
+    this.newVideogame.developer = this.postVideogameForm.value.developer;
+    console.log(this.newVideogame);
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
-      
+        alert("Error: " + err);
       },
       next: (res: any) => {
-      
-        form.resetForm();
+        alert("Bien hecho! " + res);
       }
     });
   }
 
-  customStylesValidated = false;
-  browserDefaultsValidated = false;
-  tooltipValidated = false;
-
-  onSubmit1() {
-    this.customStylesValidated = true;
-    console.log('Submit... 1');
-  }
-
-  onReset1() {
-    this.customStylesValidated = false;
-    console.log('Reset... 1');
-  }
-
-  onSubmit2() {
-    this.browserDefaultsValidated = true;
-    console.log('Submit... 2');
-  }
-
-  onReset2() {
-    this.browserDefaultsValidated = false;
-    console.log('Reset... 3');
-  }
-
-  onSubmit3() {
-    this.tooltipValidated = true;
-    console.log('Submit... 3');
-  }
-
-  onReset3() {
-    this.tooltipValidated = false;
-    console.log('Reset... 3');
+  submitVideogame() {
+    this.validatedForm = true;
+    if (this.postVideogameForm.dirty && this.postVideogameForm.valid) {
+      //this.onPostVideogame();
+      alert(`Name: ${this.postVideogameForm.value.name} --- Developer: ${this.postVideogameForm.value.developer}`);
+    }
   }
 
 }
