@@ -14,6 +14,7 @@ import {
   NavModule, 
   UtilitiesModule, 
   TabsModule,
+  ModalModule
 } from '@coreui/angular';
 
 import { UpdateVideogameComponent } from './update-videogame/update-videogame.component';
@@ -36,7 +37,8 @@ import { VideogamesRoutingModule } from './videogames-routing.module';
     ButtonGroupModule,
     DropdownModule,
     SharedModule,
-    ListGroupModule
+    ListGroupModule,
+    ModalModule
   ],
   declarations: [
     UpdateVideogameComponent

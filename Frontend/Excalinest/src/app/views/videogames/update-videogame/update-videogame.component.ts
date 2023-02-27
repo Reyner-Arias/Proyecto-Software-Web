@@ -11,7 +11,7 @@ import { VideogamesService } from '../../../services/videogames.service';
 export class UpdateVideogameComponent implements OnInit {
 
   private postVideogameForm: any;
-  validatedForm = false;
+  public validatedForm = false;
 
   newVideogame: Videogame = {
     name: '',
@@ -39,10 +39,12 @@ export class UpdateVideogameComponent implements OnInit {
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
-        alert("Error: " + err);
+        this.modalMessage = err;
+        this.openCloseInfoModal();
       },
       next: (res: any) => {
-        alert("Bien hecho! " + res);
+        this.modalMessage = res;
+        this.openCloseInfoModal();
       }
     });
   }
@@ -51,8 +53,34 @@ export class UpdateVideogameComponent implements OnInit {
     this.validatedForm = true;
     if (this.postVideogameForm.dirty && this.postVideogameForm.valid) {
       this.onPostVideogame();
-      //alert(`Name: ${this.postVideogameForm.value.name} --- Developer: ${this.postVideogameForm.value.developer}`);
     }
+  }
+
+  /* ---------------------- Modal ---------------------- */
+
+  public modalMessage = "";
+  public modalTitle = "Creación de videojuego";
+  public visible = false;
+
+  openCloseInfoModal() {
+    this.visible = !this.visible;
+    if(!this.visible) {
+      this.resetForm();
+    }
+  }
+
+  handleInfoModalChange(event: any) {
+    this.visible = event;
+  }
+
+  /* ---------------------- ----- ---------------------- */
+
+  resetForm() {
+    this.validatedForm = false;
+    this.postVideogameForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      developer: ['', Validators.required]
+    });
   }
 
 }
