@@ -50,8 +50,8 @@ export class UpdateVideogameComponent implements OnInit {
   submitVideogame() {
     this.validatedForm = true;
     if (this.postVideogameForm.dirty && this.postVideogameForm.valid) {
-      //this.onPostVideogame();
-      alert(`Name: ${this.postVideogameForm.value.name} --- Developer: ${this.postVideogameForm.value.developer}`);
+      this.onPostVideogame();
+      //alert(`Name: ${this.postVideogameForm.value.name} --- Developer: ${this.postVideogameForm.value.developer}`);
     }
   }
 
