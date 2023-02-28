@@ -11,7 +11,7 @@ DELETE http://localhost:3000/admin-videogames/delete
 Content-Type: application/json
 
 {
-    "_id": "63fc5b50325bdbfa2200367d"
+    "_id": "63fe64232925b97464f56305"
 }
 
 ###
@@ -20,11 +20,11 @@ POST http://localhost:3000/admin-videogames/post
 Content-Type: application/json
 
 {
-    "titulo": "ratgame",
+    "titulo": "Rat game 3",
     "portada": {"imgtype": "image/jpeg"},
-    "imagepath": "Add path",
+    "imagepath": "C:\\Users\\Dell\\Documents\\Github\\rats.jpg",
     "sinopsis": "It's a game about rats",
     "usuario": "ratman",
     "juegoZip":{"filetype": "application/zip"},
-    "filepath": "Add path"
+    "filepath": "C:\\Users\\Dell\\Documents\\Github\\game.rar"
 }
