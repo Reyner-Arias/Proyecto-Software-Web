@@ -26,5 +26,5 @@ Content-Type: application/json
     "sinopsis": "It's a game about rats",
     "usuario": "ratman",
     "juegoZip":{"filetype": "application/zip"},
-    "filepath": "C:\\Users\\Dell\\Documents\\Github\\game.rar"
+    "filepath": "C:\\Users\\Dell\\Documents\\Github\\game.zip"
 }

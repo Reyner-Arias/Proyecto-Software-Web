@@ -11,9 +11,13 @@ adminVideogameController.postVideogame = async function (req, res) {
   req.body.portada.data = fs.readFileSync(req.body.imagepath)
   req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
   if (path.extname(req.body.filepath) == ".zip"){
-    const videojuego = new Videojuego(req.body)
-    await videojuego.save();
-    res.send("Videogame posted successfully");
+    if (path.extname(req.body.imagepath) == ".png" || path.extname(req.body.imagepath) == ".jpg" || path.extname(req.body.imagepath) == ".jpeg"){
+      const videojuego = new Videojuego(req.body)
+      await videojuego.save();
+      res.send("Videogame posted successfully");
+    }else{
+      res.send("Image file must be jpg, jpeg or png");
+    }
   }else{
     res.send("Game file must be a zip file");
   }
