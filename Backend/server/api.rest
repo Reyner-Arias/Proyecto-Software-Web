@@ -1,3 +1,21 @@
+GET http://localhost:3000/admin-videogames/get
+Content-Type: application/json
+
+{
+    "_id": "63fd145ffb782ee45e59a546"
+}
+
+######
+
+DELETE http://localhost:3000/admin-videogames/delete
+Content-Type: application/json
+
+{
+    "_id": "63fc5b50325bdbfa2200367d"
+}
+
+###
+
 POST http://localhost:3000/admin-videogames/post
 Content-Type: application/json
 
@@ -10,5 +28,3 @@ Content-Type: application/json
     "juegoZip":{"filetype": "application/zip"},
     "filepath": "Add path"
 }
-
-######

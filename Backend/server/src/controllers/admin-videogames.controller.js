@@ -1,6 +1,9 @@
 const adminVideogameController = {};
 
 const Videojuego = require("../models/videogame");
+const multer = require("multer")
+const mongodb = require("mongodb")
+
 const fs = require('fs')
 
 //Funciones
@@ -12,4 +15,18 @@ adminVideogameController.postVideogame = async function (req, res) {
   res.send("Videogame posted successfully");
 }
 
-module.exports = adminVideogameController;
+adminVideogameController.getVideogame = async function (req,res) {
+  const videojuegoEncontrado = await Videojuego.findOne({
+    _id: new mongodb.ObjectId(req.body._id)
+  })
+  res.send(videojuegoEncontrado)
+}
+
+adminVideogameController.deleteVideogame = async function (req,res) {
+  const videojuegoEncontrado = await Videojuego.findByIdAndDelete({
+    _id: new mongodb.ObjectId(req.body._id)
+  })
+  res.send("Videogame deleted successfully")
+}
+
+module.exports = adminVideogameController
