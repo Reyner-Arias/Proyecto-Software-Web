@@ -4,9 +4,10 @@ const Tag = require('../models/Tag')
 
 // Crear una nueva etiqueta
 adminTagController.postTag = async (req, res) => {
-    const { name } = req.body
+    const { id, name } = req.body
     const newTag = new Tag({
-        name
+      id,
+      name
     })
 
     newTag.save((err) => {
@@ -61,7 +62,7 @@ adminTagController.putTag = async (req, res) => {
 // Eliminar una etiqueta
 adminTagController.deleteTag = async (req, res) => {
     const { id } = req.params
-    Tag.findByIdAndDelete(id, (err, tag) => {
+    Tag.findOneAndDelete({ id }, (err, tag) => {
         if (err) {
         res.status(500).json({ error: err.message })
         } else if (!tag) {
