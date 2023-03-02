@@ -2,7 +2,7 @@ POST http://localhost:3000/admin-videogames/post
 content-type: application/json
 
 {
-    "name": "Lost in the Frost",
+    "name": "Backrooms",
     "developer": "Fabricio Delgado"
 }
 

@@ -250,6 +250,10 @@ export const navItems: INavData[] = [
         name: 'Update',
         url: '/videogames/update'
       },
+      {
+        name: 'Get all',
+        url: '/videogames/get'
+      },
     ]
   },
 ];

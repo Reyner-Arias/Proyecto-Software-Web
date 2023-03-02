@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { GetVideogamesComponent } from './get-videogames/get-videogames.component';
 
 import { UpdateVideogameComponent } from './update-videogame/update-videogame.component';
 
@@ -20,7 +21,14 @@ const routes: Routes = [
         component: UpdateVideogameComponent,
         data: {
           title: 'Update videogame',
-        },
+        }
+      },
+      {
+        path: 'get',
+        component: GetVideogamesComponent,
+        data: {
+          title: 'Get all videogames',
+        }
       }
     ]
   },
