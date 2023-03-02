@@ -15,5 +15,6 @@ app.use(express.urlencoded({extended: false }))
 app.use(cors())
 /* Enrutadores */
 app.use("/admin-videogames", require("./routes/admin-videogames.routes"));
+app.use("/admin-tags", require("./routes/admin-tags.routes"));
 
 module.exports = app;

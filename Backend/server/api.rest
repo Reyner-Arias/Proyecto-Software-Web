@@ -15,3 +15,44 @@ content-type: application/json
     "name": "Wednesday",
     "developer": "Marianna Hidalgo S"
 }
+
+######
+# Crear etiqueta RPG
+POST http://localhost:3000/admin-tags/post
+content-type: application/json
+
+{
+    "id": 1,
+    "name": "RPG"
+}
+
+######
+# Crear etiqueta Shooter
+POST http://localhost:3000/admin-tags/post
+content-type: application/json
+
+{
+    "id": 2,
+    "name": "Shooter"
+}
+
+######
+# Obtener todas las etiquetas
+GET http://localhost:3000/admin-tags/get
+
+######
+# Obtener la etiqueta 1
+GET http://localhost:3000/admin-tags/get/1
+
+######
+# Actualizar la etiqueta 1
+PUT http://localhost:3000/admin-tags/put/1
+Content-Type: application/json
+
+{
+  "name": "Adventure"
+}
+
+######
+# Eliminar la etiqueta 1
+DELETE http://localhost:3000/admin-tags/delete/1
