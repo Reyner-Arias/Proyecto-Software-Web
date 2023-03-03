@@ -12,10 +12,12 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.0.1",
-    "mongoose": "^6.9.2",
-    "morgan": "^1.10.0"
+    "mongoose": "^6.10.0",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

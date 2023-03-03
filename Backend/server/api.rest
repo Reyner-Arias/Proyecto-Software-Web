@@ -1,22 +1,3 @@
-POST http://localhost:3000/admin-videogames/post
-content-type: application/json
-
-{
-    "name": "Wednesday",
-    "developer": "Marianna Hidalgo S"
-}
-
-######
-
-POST http://localhost:3000/admin-videogames/post
-content-type: application/json
-
-{
-    "name": "Wednesday",
-    "developer": "Marianna Hidalgo S"
-}
-
-######
 # Crear etiqueta RPG
 POST http://localhost:3000/admin-tags/post
 content-type: application/json
@@ -56,3 +37,30 @@ Content-Type: application/json
 ######
 # Eliminar la etiqueta 1
 DELETE http://localhost:3000/admin-tags/delete/1
+    
+
+####
+
+#Subir Videojuego
+POST http://localhost:3000/admin-videogames/post
+Content-Type: application/json
+
+{
+    "titulo": "Rat game 3",
+    "portada": {"imgtype": "image/jpeg"},
+    "imagepath": "Add path",
+    "sinopsis": "It's a game about rats",
+    "usuario": "ratman",
+    "juegoZip":{"filetype": "application/zip"},
+    "filepath": "Add path"
+}
+
+####
+
+#Borrar videojuego
+DELETE http://localhost:3000/admin-videogames/delete
+Content-Type: application/json
+
+{
+    "_id": "63fe64232925b97464f56305"
+}
