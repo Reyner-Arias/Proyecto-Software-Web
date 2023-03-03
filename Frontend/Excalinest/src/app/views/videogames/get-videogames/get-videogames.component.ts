@@ -23,8 +23,7 @@ export class GetVideogamesComponent implements OnInit {
       next: (res: Array<Videogame>) => {
         console.log(res);
         res.forEach(videogame => {
-          videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:image/bmd;base64, " +  videogame.portada.data);
-        
+          videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ videogame.portada.tipoImagen +";base64, " +  videogame.portada.data);
         });
         this.videogamesByDeveloper = res;
       }
