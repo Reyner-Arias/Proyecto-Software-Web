@@ -16,6 +16,9 @@ export class UpdateVideogameComponent implements OnInit {
   newVideogame: Videogame = {
     titulo: '',
     usuario: '',
+    sinopsis: '',
+    portada: {data: new ArrayBuffer(0), tipoImagen: ''},
+    imagen: ''
   }
 
   constructor(private videogamesService: VideogamesService,

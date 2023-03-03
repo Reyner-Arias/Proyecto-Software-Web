@@ -1,14 +1,16 @@
 <c-row>
     <c-col [sm]="4" *ngFor="let videogame of videogamesByDeveloper">
         <c-card class="mb-4">
-            <img cCardImg="top" src="../../../../assets/images/angular.jpg">
+            <img cCardImg="top" [src]=videogame.imagen>
             <c-card-body>
             <h5 cCardTitle>{{videogame.titulo}}</h5>
+            <c-row>
+                <c-col class="text-end mb-12">
+                    <button cButton color="dark" class="mb-4">Ver detalles</button>
+                </c-col>
+            </c-row>
             <p cCardText>
-                {{videogame.sinopsis}}
-            </p>
-            <p cCardText>
-                <small class="text-medium-emphasis">Last updated 3 mins ago</small>
+                <small class="text-medium-emphasis">By {{videogame.usuario}}</small>
             </p>
             </c-card-body>
         </c-card>
