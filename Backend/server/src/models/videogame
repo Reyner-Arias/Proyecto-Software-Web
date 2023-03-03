@@ -2,8 +2,8 @@ const { Schema, model } = require("mongoose");
 
 const videogameSchema = new Schema(
   {
-    name: { type: String, required: false },
-    developer:  { type: String, required: false }
+    titulo: { type: String, required: false },
+    usuario:  { type: String, required: false }
   },
   {
     timestamps: true,

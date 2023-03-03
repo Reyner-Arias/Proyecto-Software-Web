@@ -1,4 +1,4 @@
 export interface Videogame {
-    name: String;
-    developer: String;
+    titulo: String;
+    usuario: String;
 }

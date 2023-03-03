@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VideogamesService } from '../../../services/videogames.service';
+import { Videogame } from 'src/app/models/Videogame.model';
 
 @Component({
   selector: 'app-get-videogames',
@@ -8,7 +9,7 @@ import { VideogamesService } from '../../../services/videogames.service';
 })
 export class GetVideogamesComponent implements OnInit {
 
-  videogamesByDeveloper = [];
+  videogamesByDeveloper = new Array<Videogame>();
 
   constructor(private videogamesService: VideogamesService) {}
 
@@ -17,7 +18,7 @@ export class GetVideogamesComponent implements OnInit {
       error: (err: any) => { 
         console.log(err);
       },
-      next: (res: any) => {
+      next: (res: Array<Videogame>) => {
         console.log(res);
         this.videogamesByDeveloper = res;
       }
