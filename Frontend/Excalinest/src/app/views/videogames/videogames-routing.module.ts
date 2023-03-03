@@ -3,13 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { GetVideogamesComponent } from './get-videogames/get-videogames.component';
 
 import { UpdateVideogameComponent } from './update-videogame/update-videogame.component';
+import { VideogameDetailComponent } from './videogame-detail/videogame-detail.component';
 
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'get',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     data: {
-      title: 'Videogames',
-    }, 
+      title: 'Videojuegos',
+    },
     children: [
       {
         path: '',
@@ -27,7 +33,14 @@ const routes: Routes = [
         path: 'get',
         component: GetVideogamesComponent,
         data: {
-          title: 'Get all videogames',
+          title: 'Mis videojuegos',
+        }
+      },
+      {
+        path: 'videogame',
+        component: VideogameDetailComponent,
+        data: {
+          title: 'Detalles del videojuego'
         }
       }
     ]

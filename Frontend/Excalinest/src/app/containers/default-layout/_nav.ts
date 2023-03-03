@@ -242,7 +242,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name: 'Videogames',
+    name: 'Videojuegos',
     url: '/videogames',
     iconComponent: { name: 'cil-star' },
     children: [
@@ -251,7 +251,7 @@ export const navItems: INavData[] = [
         url: '/videogames/update'
       },
       {
-        name: 'Get all',
+        name: 'Mis videojuegos',
         url: '/videogames/get'
       },
     ]
