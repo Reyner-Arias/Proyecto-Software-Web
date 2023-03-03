@@ -9,11 +9,4 @@ adminVideogameController.postVideogame = async (req, res) => {
   res.send("Videogame posted successfully");
 };
 
-adminVideogameController.getVideogamesByDeveloper = async (req, res) => {
-  const foundVideogames = await Videogame.find({
-    developer: req.body.developer
-  });
-  res.send(foundVideogames);
-};
-
 module.exports = adminVideogameController;
