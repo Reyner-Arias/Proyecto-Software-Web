@@ -3,10 +3,10 @@ const { Schema, model } = require("mongoose");
 const videogameSchema = new Schema(
   {
     titulo: { type: String, required: false },
-    portada:{ imgtype: String, data: Buffer, required: false},
+    portada:{ tipoImagen: String, data: Buffer, required: false},
     sinopsis: { type: String, required: false },
     usuario: { type: String, required: false },
-    juegoZip: { filetype: String, data: Buffer, required: false}
+    juegoZip: { tipoArchivo: String, data: Buffer, required: false}
   },
   {
     timestamps: true,

@@ -24,10 +24,11 @@ adminVideogameController.postVideogame = async function (req, res) {
 }
 
 adminVideogameController.getVideogame = async function (req,res) {
-  const videojuegoEncontrado = await Videojuego.findOne({
-    _id: new mongodb.ObjectId(req.body._id)
+  const videojuegosEncontrados = await Videojuego.find({
+    usuario: req.body.usuario
   })
-  res.send(videojuegoEncontrado)
+  console.log(videojuegosEncontrados)
+  res.send(videojuegosEncontrados)
 }
 
 adminVideogameController.deleteVideogame = async function (req,res) {

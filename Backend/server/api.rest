@@ -47,12 +47,22 @@ Content-Type: application/json
 
 {
     "titulo": "Rat game 3",
-    "portada": {"imgtype": "image/jpeg"},
+    "portada": {"tipoImagen": "image/jpeg"},
     "imagepath": "Add path",
     "sinopsis": "It's a game about rats",
     "usuario": "ratman",
-    "juegoZip":{"filetype": "application/zip"},
+    "juegoZip":{"tipoArchivo": "application/zip"},
     "filepath": "Add path"
+}
+
+####
+
+#Get videojuego
+GET http://localhost:3000/admin-videogames/get
+Content-Type: application/json
+
+{
+    "usuario": "ratman"
 }
 
 ####
