@@ -16,7 +16,8 @@ export class VideogameDetailComponent implements OnInit {
     usuario: '',
     sinopsis: '',
     portada: {data: new ArrayBuffer(0), tipoImagen: ''},
-    imagen: ''
+    imagen: '',
+    tags: []
   }
 
   ngOnInit(): void {

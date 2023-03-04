@@ -6,4 +6,5 @@ export interface Videogame {
     sinopsis: string;
     portada: {data: ArrayBuffer, tipoImagen: string};
     imagen: SafeResourceUrl | undefined;
+    tags: string [];
 }

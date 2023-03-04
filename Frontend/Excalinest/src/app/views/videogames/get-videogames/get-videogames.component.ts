@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class GetVideogamesComponent implements OnInit {
 
   videogamesByDeveloper = new Array<Videogame>();
+  tags = ["Indie", "2D", "Singleplayer"];
  
   constructor(private videogamesService: VideogamesService,
     private domSanitizer: DomSanitizer) {}
@@ -28,6 +29,7 @@ export class GetVideogamesComponent implements OnInit {
         }
         res.forEach(videogame => {
           videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ videogame.portada.tipoImagen +";base64, " +  videogame.portada.data);
+          videogame.tags = this.tags;
         });
         this.videogamesByDeveloper = res;
       }

@@ -19,6 +19,14 @@
     </c-col>
 </c-row>
 <c-row class="row-title">
+    <c-col [sm]="2">
+        <h5>Tags</h5>
+    </c-col>
+    <c-col [sm]="10">
+        <button cButton color="light" shape="rounded-pill" *ngFor="let tag of videogame.tags" class="tag" disabled>{{tag}}</button>
+    </c-col>
+</c-row>
+<c-row class="row-title">
     <h5>Sinopsis</h5>
 </c-row>
 <c-row class="justify-content-center row-1">
