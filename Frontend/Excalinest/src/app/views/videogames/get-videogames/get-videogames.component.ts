@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VideogamesService } from '../../../services/videogames.service';
 import { Videogame } from 'src/app/models/Videogame.model';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-get-videogames',
