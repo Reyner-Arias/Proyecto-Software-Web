@@ -1,3 +1,8 @@
+<div *ngIf="showSpinner" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Cargando mis videojuegos...</span>
+</div>
+
 <c-row>
     <c-col [sm]="3" *ngFor="let videogame of videogamesByDeveloper">
         <c-card class="mb-4">

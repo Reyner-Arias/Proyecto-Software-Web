@@ -16,11 +16,12 @@ export class GetVideogamesComponent implements OnInit {
     private domSanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.videogamesService.getDeveloperVideogames("mhidalgos").subscribe({
+    this.videogamesService.getDeveloperVideogames("sirodriguez").subscribe({
       error: (err: any) => { 
         console.log(err);
       },
       next: (res: Array<Videogame>) => {
+        this.showSpinner = false;
         if(res.length == 0) {
           this.modalMessage = "Aún no hay videojuegos publicados."
           this.openCloseInfoModal();
@@ -32,6 +33,10 @@ export class GetVideogamesComponent implements OnInit {
       }
     });
   }
+
+  /* --------------------- Spinner --------------------- */
+
+  public showSpinner = true;
 
   /* ---------------------- Modal ---------------------- */
 
