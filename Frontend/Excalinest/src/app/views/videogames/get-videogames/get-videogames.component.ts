@@ -16,12 +16,15 @@ export class GetVideogamesComponent implements OnInit {
     private domSanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.videogamesService.getDeveloperVideogames("sirodriguez").subscribe({
+    this.videogamesService.getDeveloperVideogames("mhidalgos").subscribe({
       error: (err: any) => { 
         console.log(err);
       },
       next: (res: Array<Videogame>) => {
-        console.log(res);
+        if(res.length == 0) {
+          this.modalMessage = "Aún no hay videojuegos publicados."
+          this.openCloseInfoModal();
+        }
         res.forEach(videogame => {
           videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ videogame.portada.tipoImagen +";base64, " +  videogame.portada.data);
         });
@@ -29,4 +32,20 @@ export class GetVideogamesComponent implements OnInit {
       }
     });
   }
+
+  /* ---------------------- Modal ---------------------- */
+
+  public modalMessage = "";
+  public modalTitle = "Atención";
+  public visible = false;
+
+  openCloseInfoModal() {
+    this.visible = !this.visible;
+  }
+
+  handleInfoModalChange(event: any) {
+    this.visible = event;
+  }
+
+  /* ---------------------- ----- ---------------------- */
 }
