@@ -61,10 +61,6 @@ Content-Type: application/json
 GET http://localhost:3000/admin-videogames/get
 Content-Type: application/json
 
-{
-    "usuario": "ratman"
-}
-
 ####
 
 #Borrar videojuego

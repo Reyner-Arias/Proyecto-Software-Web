@@ -24,9 +24,8 @@ adminVideogameController.postVideogame = async function (req, res) {
 }
 
 adminVideogameController.getVideogame = async function (req,res) {
-  const videojuegosEncontrados = await Videojuego.find({
-    usuario: req.body.usuario
-  })
+  const videojuegosEncontrados = await Videojuego.find(
+    {},{_id: 1})
   console.log(videojuegosEncontrados)
   res.send(videojuegosEncontrados)
 }
