@@ -1,6 +1,6 @@
 const devVideogameController = {};
 
-const Videogame = require("../models/Videogame");
+const Videogame = require("../models/videogame");
 const mongodb = require("mongodb");
 
 devVideogameController.getVideogames = async (req, res) => {
