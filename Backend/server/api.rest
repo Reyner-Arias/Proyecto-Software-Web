@@ -46,13 +46,19 @@ POST http://localhost:3000/admin-videogames/post
 Content-Type: application/json
 
 {
-    "titulo": "Rat game 3",
-    "portada": {"tipoImagen": "image/jpeg"},
-    "imagepath": "Add path",
-    "sinopsis": "It's a game about rats",
-    "usuario": "ratman",
-    "juegoZip":{"tipoArchivo": "application/zip"},
-    "filepath": "Add path"
+    "titulo": "Mirror",
+    "portada": { "tipoImagen": "image/jpg" },
+    "sinopsis": "Niam despierta en un cuarto, pero hay algo extraño. Esta es la casa en la que vivía hace 37 años, cuando era sólo un niño. Ahora para volver al futuro tendrá que obtener ayuda de un niño, quien es el que tiene las herramientas para abrir los portales que lo llevarán de regreso al presente. ",
+    "usuario": "sirodriguez",
+    "juegoZip": { "tipoArchivo": "application/zip" },
+    "facebook": { "tipoImagen": "image/png" },
+    "instagram": { "tipoImagen": "image/png" },
+    "twitter": { "tipoImagen": "image/png" },
+    "imagepath": "C:\\Users\\DAADIOS\\Downloads\\Mirror.jpg",
+    "filepath": "C:\\Users\\DAADIOS\\Downloads\\Labs.zip",
+    "facepath": "C:\\Users\\DAADIOS\\Downloads\\Facebook.png",
+    "instapath": "C:\\Users\\DAADIOS\\Downloads\\Instagram.png",
+    "twitterpath": "C:\\Users\\DAADIOS\\Downloads\\Twitter.png"
 }
 
 ####
@@ -68,5 +74,5 @@ DELETE http://localhost:3000/admin-videogames/delete
 Content-Type: application/json
 
 {
-    "_id": "63fe64232925b97464f56305"
+    "_id": "64017a5085e6e7d7952fe0fd"
 }

@@ -4,14 +4,14 @@ const tag = require("./Tag");
 const videogameSchema = new Schema(
   {
     titulo: { type: String, required: false },
-    portada:{ tipoImagen: String, data: Buffer, required: false},
+    portada:{ tipoImagen: String, data: Buffer, required: false },
     sinopsis: { type: String, required: false },
     usuario: { type: String, required: false },
-    juegoZip: { tipoArchivo: String, data: Buffer, required: false},
-    facebook: {tipoImagen: String, data: Buffer, required: false},
-    instagram: {tipoImagen: String, data: Buffer, required: false},
-    twitter: {tipoImagen: String, data: Buffer, required: false},
-    tags: {type: [tag]}
+    juegoZip: { tipoArchivo: String, data: Buffer, required: false },
+    facebook: {tipoImagen: String, data: Buffer, required: false },
+    instagram: {tipoImagen: String, data: Buffer, required: false },
+    twitter: {tipoImagen: String, data: Buffer, required: false },
+    tags: {type: [tag.Schema] }
   },
   {
     timestamps: true,
