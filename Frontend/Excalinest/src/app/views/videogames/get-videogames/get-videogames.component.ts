@@ -28,7 +28,11 @@ export class GetVideogamesComponent implements OnInit {
           this.openCloseInfoModal();
         }
         res.forEach(videogame => {
-          videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ videogame.portada.tipoImagen +";base64, " +  videogame.portada.data);
+          var portadaBase64 = btoa(
+            new Uint8Array(videogame.portada.data.data)
+              .reduce((data, byte) => data + String.fromCharCode(byte), '')
+          );
+          videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:" + videogame.portada.tipoImagen + ";base64, " + portadaBase64);
           videogame.tags = this.tags;
         });
         this.videogamesByDeveloper = res;

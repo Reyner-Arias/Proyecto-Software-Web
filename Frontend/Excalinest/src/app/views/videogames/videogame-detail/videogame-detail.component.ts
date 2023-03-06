@@ -15,27 +15,47 @@ export class VideogameDetailComponent implements OnInit {
     titulo: '',
     usuario: '',
     sinopsis: '',
-    portada: {data: new ArrayBuffer(0), tipoImagen: ''},
+    portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
     tags: [],
-    facebook: {data: new ArrayBuffer(0), tipoImagen: ''},
+    facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    instagram: {data: new ArrayBuffer(0), tipoImagen: ''},
+    instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    twitter: {data: new ArrayBuffer(0), tipoImagen: ''},
+    twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: ''
   }
 
   ngOnInit(): void {
     this.videogame = history.state;
+
+    var portadaBase64 = btoa(
+      new Uint8Array(this.videogame.portada.data.data)
+        .reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
     this.videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
-      this.videogame.portada.tipoImagen +";base64, " +  this.videogame.portada.data);
+      this.videogame.portada.tipoImagen +";base64, " + portadaBase64);
+    
+    var facebookBase64 = btoa(
+      new Uint8Array(this.videogame.facebook.data.data)
+        .reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
     this.videogame.imagenFacebook = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
-      this.videogame.facebook.tipoImagen +";base64, " +  this.videogame.facebook.data);
+      this.videogame.facebook.tipoImagen +";base64, " + facebookBase64);
+    
+    var instagramBase64 = btoa(
+      new Uint8Array(this.videogame.instagram.data.data)
+        .reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
     this.videogame.imagenInstagram = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
-      this.videogame.instagram.tipoImagen +";base64, " +  this.videogame.instagram.data);
+      this.videogame.instagram.tipoImagen +";base64, " + instagramBase64);
+    
+    var twitterBase64 = btoa(
+      new Uint8Array(this.videogame.twitter.data.data)
+        .reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
     this.videogame.imagenTwitter = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
-      this.videogame.twitter.tipoImagen +";base64, " +  this.videogame.twitter.data);
+      this.videogame.twitter.tipoImagen +";base64, " + twitterBase64);
   }
 
 }

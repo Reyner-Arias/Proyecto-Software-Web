@@ -17,14 +17,14 @@ export class UpdateVideogameComponent implements OnInit {
     titulo: '',
     usuario: '',
     sinopsis: '',
-    portada: {data: new ArrayBuffer(0), tipoImagen: ''},
+    portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
     tags: [],
-    facebook: {data: new ArrayBuffer(0), tipoImagen: ''},
+    facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    instagram: {data: new ArrayBuffer(0), tipoImagen: ''},
+    instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    twitter: {data: new ArrayBuffer(0), tipoImagen: ''},
+    twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
   }
 

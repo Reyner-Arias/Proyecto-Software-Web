@@ -5,13 +5,13 @@ export interface Videogame {
     titulo: string;
     usuario: string;
     sinopsis: string;
-    portada: {data: ArrayBuffer, tipoImagen: string};
+    portada: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
     imagen: SafeResourceUrl | undefined;
     tags: Tag [];
-    facebook: {data: ArrayBuffer, tipoImagen: string};
+    facebook: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
     imagenFacebook: SafeResourceUrl | undefined;
-    instagram: {data: ArrayBuffer, tipoImagen: string};
+    instagram: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
     imagenInstagram: SafeResourceUrl | undefined;
-    twitter: {data: ArrayBuffer, tipoImagen: string};
+    twitter: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
     imagenTwitter: SafeResourceUrl | undefined;
 }
