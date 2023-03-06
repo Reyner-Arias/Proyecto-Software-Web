@@ -19,7 +19,13 @@ export class UpdateVideogameComponent implements OnInit {
     sinopsis: '',
     portada: {data: new ArrayBuffer(0), tipoImagen: ''},
     imagen: '',
-    tags: []
+    tags: [],
+    facebook: {data: new ArrayBuffer(0), tipoImagen: ''},
+    imagenFacebook: '',
+    instagram: {data: new ArrayBuffer(0), tipoImagen: ''},
+    imagenInstagram: '',
+    twitter: {data: new ArrayBuffer(0), tipoImagen: ''},
+    imagenTwitter: '',
   }
 
   constructor(private videogamesService: VideogamesService,

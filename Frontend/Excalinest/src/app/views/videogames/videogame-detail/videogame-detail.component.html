@@ -23,7 +23,7 @@
         <h5>Tags</h5>
     </c-col>
     <c-col [sm]="10">
-        <button cButton color="light" shape="rounded-pill" *ngFor="let tag of videogame.tags" class="tag" disabled>{{tag}}</button>
+        <button cButton color="light" shape="rounded-pill" *ngFor="let tag of videogame.tags" class="tag" disabled>{{tag.name}}</button>
     </c-col>
 </c-row>
 <c-row class="row-title">
@@ -43,7 +43,7 @@
             <h6>Facebook</h6>
         </c-row>
         <c-row>
-            <img cCardImg="top" [src]=videogame.imagen class="w-75 p-3 rounded mx-auto d-block">
+            <img cCardImg="top" [src]=videogame.imagenFacebook class="w-75 p-3 rounded mx-auto d-block">
         </c-row>
     </c-col>
     <c-col [sm]="4">
@@ -51,7 +51,7 @@
             <h6>Instagram</h6>
         </c-row>
         <c-row>
-            <img cCardImg="top" [src]=videogame.imagen class="w-75 p-3 rounded mx-auto d-block">
+            <img cCardImg="top" [src]=videogame.imagenInstagram class="w-75 p-3 rounded mx-auto d-block">
         </c-row>
     </c-col>
     <c-col [sm]="4">
@@ -59,7 +59,7 @@
             <h6>Twitter</h6>
         </c-row>
         <c-row>
-            <img cCardImg="top" [src]=videogame.imagen class="w-75 p-3 rounded mx-auto d-block">
+            <img cCardImg="top" [src]=videogame.imagenTwitter class="w-75 p-3 rounded mx-auto d-block">
         </c-row>
     </c-col>
 </c-row>

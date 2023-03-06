@@ -11,7 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class GetVideogamesComponent implements OnInit {
 
   videogamesByDeveloper = new Array<Videogame>();
-  tags = ["Indie", "2D", "Singleplayer"];
+  tags = [{id: 5, name: "Indie"}, {id: 3, name: "2D"}, {id: 7, name: "Singleplayer"}];
  
   constructor(private videogamesService: VideogamesService,
     private domSanitizer: DomSanitizer) {}

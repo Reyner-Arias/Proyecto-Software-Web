@@ -17,13 +17,25 @@ export class VideogameDetailComponent implements OnInit {
     sinopsis: '',
     portada: {data: new ArrayBuffer(0), tipoImagen: ''},
     imagen: '',
-    tags: []
+    tags: [],
+    facebook: {data: new ArrayBuffer(0), tipoImagen: ''},
+    imagenFacebook: '',
+    instagram: {data: new ArrayBuffer(0), tipoImagen: ''},
+    imagenInstagram: '',
+    twitter: {data: new ArrayBuffer(0), tipoImagen: ''},
+    imagenTwitter: ''
   }
 
   ngOnInit(): void {
     this.videogame = history.state;
     this.videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
       this.videogame.portada.tipoImagen +";base64, " +  this.videogame.portada.data);
+    this.videogame.imagenFacebook = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
+      this.videogame.facebook.tipoImagen +";base64, " +  this.videogame.facebook.data);
+    this.videogame.imagenInstagram = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
+      this.videogame.instagram.tipoImagen +";base64, " +  this.videogame.instagram.data);
+    this.videogame.imagenTwitter = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
+      this.videogame.twitter.tipoImagen +";base64, " +  this.videogame.twitter.data);
   }
 
 }
