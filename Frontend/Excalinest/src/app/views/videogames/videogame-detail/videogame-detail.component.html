@@ -1,0 +1,65 @@
+<c-row class="row-1">
+    <c-col [sm]="4">
+        <img cCardImg="top" [src]=videogame.imagen class="w-75 p-3 rounded mx-auto d-block">
+    </c-col>
+    <c-col [sm]="8" class="col-title">
+        <c-row>
+            <h1>{{videogame.titulo}}</h1>
+        </c-row>
+        <c-row>
+            <h5>Publicado por {{videogame.usuario}}</h5>
+        </c-row>
+        <c-row class="col-download-button">
+            <button cButton color="dark" class="download-button"><svg cIcon name="cilCloudDownload" class="me-2 icon"></svg>Descargar .zip</button>
+        </c-row>
+        <c-row class="d-grid gap-2 d-md-flex justify-content-md-end crud-buttons">
+            <button cButton color="info" class="crud-button" size="sm"><svg cIcon name="cilPencil" class="me-2 icon"></svg>Modificar</button>
+            <button cButton color="danger" class="crud-button" size="sm"><svg cIcon name="cilTrash" class="me-2 icon"></svg>Eliminar</button>
+        </c-row>
+    </c-col>
+</c-row>
+<c-row class="row-title">
+    <c-col [sm]="2">
+        <h5>Tags</h5>
+    </c-col>
+    <c-col [sm]="10">
+        <button cButton color="light" shape="rounded-pill" *ngFor="let tag of videogame.tags" class="tag" disabled>{{tag.name}}</button>
+    </c-col>
+</c-row>
+<c-row class="row-title">
+    <h5>Sinopsis</h5>
+</c-row>
+<c-row class="justify-content-center row-1">
+    <c-col [sm]="10">
+        <p>{{videogame.sinopsis}}</p>
+    </c-col>
+</c-row>
+<c-row class="row-title">
+    <h5>Redes sociales de desarrolladores</h5>
+</c-row>
+<c-row class="row-social-net">
+    <c-col [sm]="4">
+        <c-row class="text-center">
+            <h6>Facebook</h6>
+        </c-row>
+        <c-row>
+            <img cCardImg="top" [src]=videogame.imagenFacebook class="w-75 p-3 rounded mx-auto d-block">
+        </c-row>
+    </c-col>
+    <c-col [sm]="4">
+        <c-row class="text-center">
+            <h6>Instagram</h6>
+        </c-row>
+        <c-row>
+            <img cCardImg="top" [src]=videogame.imagenInstagram class="w-75 p-3 rounded mx-auto d-block">
+        </c-row>
+    </c-col>
+    <c-col [sm]="4">
+        <c-row class="text-center">
+            <h6>Twitter</h6>
+        </c-row>
+        <c-row>
+            <img cCardImg="top" [src]=videogame.imagenTwitter class="w-75 p-3 rounded mx-auto d-block">
+        </c-row>
+    </c-col>
+</c-row>

@@ -1,3 +1,4 @@
+<h2>Simulación de publicar videojuego</h2>
 <form [formGroup]="getPostVideogameForm()" (ngSubmit)="submitVideogame()" [validated]="validatedForm" 
   cForm class="row g-3 needs-validation">
   <c-col md="4">
@@ -21,13 +22,13 @@
 
 <c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
   <c-modal-header>
-    <h5 cModalTitle>{{this.modalTitle}}</h5>
-    <button (click)="openCloseInfoModal()" cButtonClose></button>
+      <h5 cModalTitle>{{this.modalTitle}}</h5>
+      <button (click)="openCloseInfoModal()" cButtonClose></button>
   </c-modal-header>
   <c-modal-body> {{this.modalMessage}} </c-modal-body>
   <c-modal-footer>
-    <button (click)="openCloseInfoModal()" cButton color="secondary">
-      Close
-    </button>
+      <button (click)="openCloseInfoModal()" cButton color="secondary">
+        Cerrar
+      </button>
   </c-modal-footer>
 </c-modal>

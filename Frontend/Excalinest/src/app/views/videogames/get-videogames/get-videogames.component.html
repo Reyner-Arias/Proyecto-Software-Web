@@ -1,0 +1,37 @@
+<div *ngIf="showSpinner" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Cargando mis videojuegos...</span>
+</div>
+
+<c-row>
+    <c-col [sm]="3" *ngFor="let videogame of videogamesByDeveloper">
+        <c-card class="mb-4">
+            <img cCardImg="top" [src]=videogame.imagen height="250" style="object-fit: cover;">
+            <c-card-body>
+            <h5 cCardTitle>{{videogame.titulo}}</h5>
+            <c-row>
+                <c-col class="text-end mb-12">
+                    <button cButton color="dark" class="mb-4" [routerLink]="['/videogames/videogame']" [state]="videogame" size="sm">Ver detalles</button>
+                </c-col>
+            </c-row>
+            <p cCardText>
+                <small class="text-medium-emphasis">Por {{videogame.usuario}}</small>
+            </p>
+            </c-card-body>
+        </c-card>
+    </c-col>
+</c-row>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+    <c-modal-header>
+        <h5 cModalTitle>{{this.modalTitle}}</h5>
+        <button (click)="openCloseInfoModal()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body> {{this.modalMessage}} </c-modal-body>
+    <c-modal-footer>
+        <button cButton color="dark" [routerLink]="['/videogames/update']">Publicar videojuego</button>
+        <button (click)="openCloseInfoModal()" cButton color="secondary">
+          Cerrar
+        </button>
+    </c-modal-footer>
+  </c-modal>

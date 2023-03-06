@@ -16,5 +16,6 @@ app.use(cors())
 /* Enrutadores */
 app.use("/admin-videogames", require("./routes/admin-videogames.routes"));
 app.use("/admin-tags", require("./routes/admin-tags.routes"));
+app.use("/dev-videogames", require("./routes/dev-videogames.routes"));
 
 module.exports = app;
