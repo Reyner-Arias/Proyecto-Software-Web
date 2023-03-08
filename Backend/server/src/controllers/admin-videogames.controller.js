@@ -1,10 +1,21 @@
 const adminVideogameController = {};
 
 const Videojuego = require("../models/videogame");
-const path = require("path")
-const mongodb = require("mongodb")
-const mongoose = require("../database");
-const fs = require('fs')
+const path = require("path");
+const mongodb = require("mongodb");
+const fs = require("fs");
+
+const MongoClient = require('mongodb').MongoClient;
+const GridFSBucket = require('mongodb').GridFSBucket;
+const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  if (err) throw err;
+  console.log('Connected to MongoDB');
+});
+
+const db = client.db('ExcalinestDB');
+const bucket = new GridFSBucket(db, { bucketName: 'builds' });
 
 function isValidImageExtension(imagepath) {
   switch (path.extname(imagepath)) {
@@ -27,7 +38,15 @@ adminVideogameController.postVideogame = async function (req, res) {
       req.body.instagram.data = fs.readFileSync(req.body.instapath)
       req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
 
-      console.log(mongoose.connection.db);
+      const readStream = fs.createReadStream(req.body.filepath);
+
+      const uploadStream = bucket.openUploadStream('Mirror.zip', {
+        contentType: req.body.tipoArchivo
+      });
+      readStream.pipe(uploadStream);
+      uploadStream.on('finish', () => {
+        console.log('File uploaded to MongoDB');
+      });
       
       const videojuego = new Videojuego(req.body)
       await videojuego.save();

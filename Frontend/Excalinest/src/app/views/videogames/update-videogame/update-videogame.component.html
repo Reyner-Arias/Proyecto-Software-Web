@@ -13,6 +13,12 @@
     <c-form-feedback [valid]="true">Desarrollador válido</c-form-feedback>
     <c-form-feedback [valid]="false">Ingrese el nombre del desarrollador</c-form-feedback>
   </c-col>
+  <c-col>
+    <div class="mb-3">
+      <label cLabel for="formFile">Build .zip</label>
+      <input cFormControl id="formFile" type="file" />
+    </div>
+  </c-col>
   <c-col xs="12">
     <button cButton class="me-1" color="primary" type="submit">
       Guardar
