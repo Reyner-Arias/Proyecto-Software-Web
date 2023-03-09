@@ -11,7 +11,7 @@ const videogameSchema = new Schema(
     facebook: {tipoImagen: String, data: Buffer, required: false },
     instagram: {tipoImagen: String, data: Buffer, required: false },
     twitter: {tipoImagen: String, data: Buffer, required: false },
-    tags: {type: [tag.Schema] }
+    tags: [{id: String, nombre: String, required: false}],
   },
   {
     timestamps: true,

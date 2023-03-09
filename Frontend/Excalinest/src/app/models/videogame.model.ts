@@ -7,7 +7,7 @@ export interface Videogame {
     sinopsis: string;
     portada: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
     imagen: SafeResourceUrl | undefined;
-    tags: Tag [];
+    tags: {id: string, nombre: string} [];
     facebook: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
     imagenFacebook: SafeResourceUrl | undefined;
     instagram: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
