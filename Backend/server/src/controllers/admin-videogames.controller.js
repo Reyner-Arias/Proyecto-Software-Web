@@ -24,48 +24,69 @@ function getImageType(imagepath) {
   }
 }
 
-//Funciones
+// Crear un nuevo videojuego
 adminVideogameController.postVideogame = async function (req, res) {
   if (path.extname(req.body.filepath) == ".zip") {
     if (isValidImageExtension(req.body.imagepath) && isValidImageExtension(req.body.facepath) 
       && isValidImageExtension(req.body.instapath) && isValidImageExtension(req.body.twitterpath)) {
       
       req.body.portada.data = fs.readFileSync(req.body.imagepath)
-      req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
+      //req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
       req.body.facebook.data = fs.readFileSync(req.body.facepath)
       req.body.instagram.data = fs.readFileSync(req.body.instapath)
       req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
       
       const videojuego = new Videojuego(req.body)
-      await videojuego.save();
-      res.send("Videogame posted successfully");
+      videojuego.save((err) => {
+        if (err) {
+          res.status(500).json({ error: err.message })
+        } else {
+          res.status(201).json({ message: 'Videogame posted successfully' })
+        }
+      });
     } else {
-      res.send("Image file must be jpg, jpeg or png");
+      res.status(500).json({ error: 'Image file must be jpg, jpeg or png' });
     }
   } else {
-    res.send("Game file must be a zip file");
+    res.status(500).json({ error: 'Game file must be a zip file' });
   }
 }
 
+// Obtener todos los videojuegos
 adminVideogameController.getVideogame = async function (req, res) {
-  const videojuegosEncontrados = await Videojuego.find(
-    {},{_id: 1})
-  console.log(videojuegosEncontrados)
-  res.send(videojuegosEncontrados)
+  Videojuego.find({}, (err, videogames) => {
+    if (err) {
+      res.status(500).json({ error: err.message })
+    } else {
+      res.status(200).send(videogames)
+    }
+  })
 }
 
+// Eliminar un videojuego
 adminVideogameController.deleteVideogame = async function (req, res) {
-  await Videojuego.findByIdAndDelete({
-    _id: new mongodb.ObjectId(req.body._id)
+  Videojuego.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, (err, videogame) => {
+    if (err) {
+      res.status(500).json({ error: err.message })
+    } else if (!videogame) {
+      res.status(404).json({ message: 'Videogame not found' })
+    } else {
+      res.status(200).json({ message: 'Videogame deleted successfully' })
+    }
   })
-  res.send("Videogame deleted successfully")
 }
 
 // Actualizar un videojuego
 adminVideogameController.putVideogame = async (req, res) => {
   var updatedFields = {};
 
-  /* if(req.body.filepath) {} */
+  if(req.body.filepath) {
+    if(path.extname(req.body.filepath) == ".zip") {
+      console.log("Upload new file");
+    } else {
+      res.status(500).json({ error: 'Game file must be a zip file' });
+    }
+  }
 
   if(req.body.imagepath) {
     if (isValidImageExtension(req.body.imagepath)) {

@@ -1,13 +1,16 @@
 const devVideogameController = {};
 
 const Videogame = require("../models/videogame");
-const mongodb = require("mongodb");
 
+// Obtener los videojuegos de un desarrollador específico
 devVideogameController.getVideogames = async (req, res) => {
-  const foundVideogames = await Videogame.find({
-    usuario: req.params.developer
-  });
-  res.send(foundVideogames);
+  Videogame.find({ usuario: req.params.developer }, (err, videogames) => {
+    if (err) {
+      res.status(500).json({ error: err.message })
+    } else {
+      res.status(200).send(videogames)
+    }
+  })
 };
 
 module.exports = devVideogameController;

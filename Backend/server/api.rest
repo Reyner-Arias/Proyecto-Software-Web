@@ -88,5 +88,5 @@ DELETE http://localhost:3000/admin-videogames/delete
 Content-Type: application/json
 
 {
-    "_id": "64017a5085e6e7d7952fe0fd"
+    "_id": "640549b973108c0ad51e7906"
 }
