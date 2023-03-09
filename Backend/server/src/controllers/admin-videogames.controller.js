@@ -44,13 +44,12 @@ adminVideogameController.postVideogame = async function (req, res) {
         contentType: req.body.tipoArchivo
       });
       readStream.pipe(uploadStream);
-      uploadStream.on('finish', () => {
+      uploadStream.on('finish', async () => {
         console.log('File uploaded to MongoDB');
+        const videojuego = new Videojuego(req.body)
+        await videojuego.save();
+        res.send("Videogame posted successfully");
       });
-      
-      const videojuego = new Videojuego(req.body)
-      await videojuego.save();
-      res.send("Videogame posted successfully");
     } else {
       res.send("Image file must be jpg, jpeg or png");
     }
