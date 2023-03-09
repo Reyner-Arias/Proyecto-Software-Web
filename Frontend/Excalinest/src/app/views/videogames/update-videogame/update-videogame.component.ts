@@ -14,6 +14,7 @@ export class UpdateVideogameComponent implements OnInit {
   public validatedForm = false;
 
   newVideogame: Videogame = {
+    _id: '',
     titulo: '',
     usuario: '',
     sinopsis: '',

@@ -2,6 +2,7 @@ import { SafeResourceUrl } from "@angular/platform-browser";
 import { Tag } from "./tag.model";
 
 export interface Videogame {
+    _id: string;
     titulo: string;
     usuario: string;
     sinopsis: string;

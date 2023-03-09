@@ -14,7 +14,7 @@
         </c-row>
         <c-row class="d-grid gap-2 d-md-flex justify-content-md-end crud-buttons">
             <button cButton color="info" class="crud-button" size="sm"><svg cIcon name="cilPencil" class="me-2 icon"></svg>Modificar</button>
-            <button cButton color="danger" class="crud-button" size="sm"><svg cIcon name="cilTrash" class="me-2 icon"></svg>Eliminar</button>
+            <button cButton color="danger" class="crud-button" size="sm" (click)="showDeleteModal()"><svg cIcon name="cilTrash" class="me-2 icon"></svg>Eliminar</button>
         </c-row>
     </c-col>
 </c-row>
@@ -63,3 +63,17 @@
         </c-row>
     </c-col>
 </c-row>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+    <c-modal-header>
+        <h5 cModalTitle>{{this.modalTitle}}</h5>
+        <button (click)="openCloseInfoModal()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body> {{this.modalMessage}} </c-modal-body>
+    <c-modal-footer>
+        <button cButton color="danger" (click)="onDeleteVideogame()">Eliminar</button>
+        <button (click)="openCloseInfoModal()" cButton color="secondary">
+          Cerrar
+        </button>
+    </c-modal-footer>
+  </c-modal>
