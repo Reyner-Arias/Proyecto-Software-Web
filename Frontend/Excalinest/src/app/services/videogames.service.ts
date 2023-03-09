@@ -16,8 +16,13 @@ export class VideogamesService {
   }
 
   developerGetAPI = 'http://localhost:3000/dev-videogames/get'
+  adminGetAPI = 'http://localhost:3000/admin-videogames/get'
 
-  getDeveloperVideogames (developer: String) {
-    return this.http.get<any>(this.developerGetAPI+`/${developer}`);
+  getVideogames(admin: boolean, developer: String) {
+    if(admin) {
+      return this.http.get<any>(this.adminGetAPI);
+    } else {
+      return this.http.get<any>(this.developerGetAPI+`/${developer}`);
+    }
   }
 }
