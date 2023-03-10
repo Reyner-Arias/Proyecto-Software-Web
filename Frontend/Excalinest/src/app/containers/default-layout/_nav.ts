@@ -24,4 +24,9 @@ export const navItems: INavData[] = [
     url: '/videogames/get',
     iconComponent: { name: 'cilPuzzle' }
   },
+  {
+    name: 'Publicar videojuego',
+    url: '/videogames/post',
+    iconComponent: { name: 'cilPuzzle' }
+  },
 ];
