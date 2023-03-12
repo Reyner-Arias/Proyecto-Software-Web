@@ -14,4 +14,10 @@ export class VideogamesService {
   postVideogame (videogame: any) {
     return this.http.post(this.adminPostAPI, videogame, {responseType: 'text'});
   }
+
+  developerGetAPI = 'http://localhost:3000/dev-videogames/get'
+
+  getDeveloperVideogames (developer: String) {
+    return this.http.get<any>(this.developerGetAPI+`/${developer}`);
+  }
 }

@@ -14,8 +14,18 @@ export class UpdateVideogameComponent implements OnInit {
   public validatedForm = false;
 
   newVideogame: Videogame = {
-    name: '',
-    developer: '',
+    titulo: '',
+    usuario: '',
+    sinopsis: '',
+    portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagen: '',
+    tags: [],
+    facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenFacebook: '',
+    instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenInstagram: '',
+    twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenTwitter: '',
   }
 
   constructor(private videogamesService: VideogamesService,
@@ -33,8 +43,8 @@ export class UpdateVideogameComponent implements OnInit {
   }
 
   onPostVideogame() {
-    this.newVideogame.name = this.postVideogameForm.value.name;
-    this.newVideogame.developer = this.postVideogameForm.value.developer;
+    this.newVideogame.titulo = this.postVideogameForm.value.name;
+    this.newVideogame.usuario = this.postVideogameForm.value.developer;
     console.log(this.newVideogame);
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({

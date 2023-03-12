@@ -6,19 +6,34 @@ const mongodb = require("mongodb")
 
 const fs = require('fs')
 
+function isValidImageExtension(imagepath) {
+  switch (path.extname(imagepath)) {
+    case '.png': return true;
+    case '.jpg': return true;
+    case '.jpeg': return true;
+    default: return false;
+  }
+}
+
 //Funciones
 adminVideogameController.postVideogame = async function (req, res) {
-  req.body.portada.data = fs.readFileSync(req.body.imagepath)
-  req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
-  if (path.extname(req.body.filepath) == ".zip"){
-    if (path.extname(req.body.imagepath) == ".png" || path.extname(req.body.imagepath) == ".jpg" || path.extname(req.body.imagepath) == ".jpeg"){
+  if (path.extname(req.body.filepath) == ".zip") {
+    if (isValidImageExtension(req.body.imagepath) && isValidImageExtension(req.body.facepath) 
+      && isValidImageExtension(req.body.instapath) && isValidImageExtension(req.body.twitterpath)) {
+      
+      req.body.portada.data = fs.readFileSync(req.body.imagepath)
+      req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
+      req.body.facebook.data = fs.readFileSync(req.body.facepath)
+      req.body.instagram.data = fs.readFileSync(req.body.instapath)
+      req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
+      
       const videojuego = new Videojuego(req.body)
       await videojuego.save();
       res.send("Videogame posted successfully");
-    }else{
+    } else {
       res.send("Image file must be jpg, jpeg or png");
     }
-  }else{
+  } else {
     res.send("Game file must be a zip file");
   }
 }

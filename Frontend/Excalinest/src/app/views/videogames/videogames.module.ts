@@ -19,6 +19,8 @@ import {
 
 import { UpdateVideogameComponent } from './update-videogame/update-videogame.component';
 import { VideogamesRoutingModule } from './videogames-routing.module';
+import { GetVideogamesComponent } from './get-videogames/get-videogames.component';
+import { VideogameDetailComponent } from './videogame-detail/videogame-detail.component';
 
 @NgModule({
   imports: [
@@ -41,7 +43,9 @@ import { VideogamesRoutingModule } from './videogames-routing.module';
     ModalModule
   ],
   declarations: [
-    UpdateVideogameComponent
+    UpdateVideogameComponent,
+    GetVideogamesComponent,
+    VideogameDetailComponent
   ]
 })
 export class VideogamesModule {
