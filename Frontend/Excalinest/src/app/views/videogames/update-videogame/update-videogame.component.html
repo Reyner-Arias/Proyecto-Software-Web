@@ -59,11 +59,11 @@
 <c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
   <c-modal-header>
       <h5 cModalTitle>{{this.modalTitle}}</h5>
-      <button (click)="openCloseInfoModal()" cButtonClose></button>
+      <button (click)="openCloseInfoModal(false)" cButtonClose></button>
   </c-modal-header>
   <c-modal-body> {{this.modalMessage}} </c-modal-body>
   <c-modal-footer>
-      <button (click)="openCloseInfoModal()" cButton color="secondary">
+      <button (click)="openCloseInfoModal(false)" cButton color="secondary">
         Cerrar
       </button>
   </c-modal-footer>

@@ -59,47 +59,26 @@ export class UpdateVideogameComponent implements OnInit {
   }
 
   onPutVideogame() {
+    this.newVideogame._id = "6405490673108c0ad51e7902";
     this.newVideogame.titulo = this.putVideogameForm.value.title;
     this.newVideogame.sinopsis = this.putVideogameForm.value.sinopsis;
     this.newVideogame.usuario = this.putVideogameForm.value.developer;
     this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);
+    /*this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);
     this.newVideogame.facepath = this.putVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.instapath = this.putVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
+    this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);*/
 
-    if(this.isValidFile()) {
-      if(this.areValidImages()) {
-        /*this.videogamesService.putVideogame(this.newVideogame).subscribe({
-          error: (err: any) => { 
-            this.modalMessage = err;
-            this.openCloseInfoModal();
-          },
-          next: (res: any) => {
-            this.modalMessage = res;
-            this.openCloseInfoModal();
-          }
-        });*/
-      } else {
-        this.modalMessage = "Las imágenes del formulario deben estar ubicadas en C:\\Excalinest\\builds\\NOMBRE_IMAGEN.FORMATO," + 
-          " donde se reemplaza NOMBRE_IMAGEN por el nombre de la respectiva imagen y FORMATO por png, jpg o jpeg.";
-        this.openCloseInfoModal();
+    this.videogamesService.putVideogame(this.newVideogame).subscribe({
+      error: (err: any) => { 
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal(false);
+      },
+      next: (res: any) => {
+        this.modalMessage = res.replace(/['"]+/g, '');
+        this.openCloseInfoModal(true);
       }
-    } else {
-      this.modalMessage = "El archivo build (.zip) del videojuego debe estar ubicado en C:\\Excalinest\\builds\\NOMBRE_ARCHIVO.zip," + 
-        " donde se reemplaza NOMBRE_ARCHIVO por el nombre del archivo.";
-      this.openCloseInfoModal();
-    }
-  }
-
-  isValidFile() {
-    console.log(this.newVideogame);
-    return true;
-  }
-
-  areValidImages() {
-    console.log(this.newVideogame);
-    return true;
+    });
   }
 
   submitVideogame() {
@@ -115,9 +94,9 @@ export class UpdateVideogameComponent implements OnInit {
   public modalTitle = "Atención";
   public visible = false;
 
-  openCloseInfoModal() {
+  openCloseInfoModal(cleanForm: boolean) {
     this.visible = !this.visible;
-    if(!this.visible) {
+    if(this.visible && cleanForm) {
       this.resetForm();
     }
   }

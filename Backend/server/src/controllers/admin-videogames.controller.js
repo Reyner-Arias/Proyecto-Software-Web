@@ -84,43 +84,59 @@ adminVideogameController.putVideogame = async (req, res) => {
     if(path.extname(req.body.filepath) == ".zip") {
       console.log("Upload new file");
     } else {
-      res.status(500).json({ error: 'Game file must be a zip file' });
+      return res.status(500).json('Game file must be a zip file');
     }
   }
 
   if(req.body.imagepath) {
     if (isValidImageExtension(req.body.imagepath)) {
-      Object.assign(updatedFields, { portada: {tipoImagen: getImageType(req.body.imagepath), 
-        data: fs.readFileSync(req.body.imagepath)} });
+      if(fs.existsSync(req.body.imagepath)) {
+        Object.assign(updatedFields, { portada: {tipoImagen: getImageType(req.body.imagepath), 
+          data: fs.readFileSync(req.body.imagepath)} });
+      } else {
+        return res.status(404).json('Image file not found.');
+      }
     } else {
-      res.status(500).json({ error: 'Image file must be jpg, jpeg or png' });
+      return res.status(500).json('Image file must be jpg, jpeg or png');
     }
   }
 
   if(req.body.facepath) {
     if (isValidImageExtension(req.body.facepath)) {
-      Object.assign(updatedFields, { facebook: {tipoImagen: getImageType(req.body.facepath), 
-        data: fs.readFileSync(req.body.facepath)} });
+      if(fs.existsSync(req.body.facepath)) {
+        Object.assign(updatedFields, { facebook: {tipoImagen: getImageType(req.body.facepath), 
+          data: fs.readFileSync(req.body.facepath)} });
+      } else {
+        return res.status(404).json('Image file not found.');
+      }
     } else {
-      res.status(500).json({ error: 'Image file must be jpg, jpeg or png' });
+      return res.status(500).json('Image file must be jpg, jpeg or png');
     }
   }
 
   if(req.body.instapath) {
     if (isValidImageExtension(req.body.instapath)) {
-      Object.assign(updatedFields, { instagram: {tipoImagen: getImageType(req.body.instapath), 
-        data: fs.readFileSync(req.body.instapath)} });
+      if(fs.existsSync(req.body.instapath)) {
+        Object.assign(updatedFields, { instagram: {tipoImagen: getImageType(req.body.instapath), 
+          data: fs.readFileSync(req.body.instapath)} });
+      } else {
+        return res.status(404).json('Image file not found.');
+      }
     } else {
-      res.status(500).json({ error: 'Image file must be jpg, jpeg or png' });
+      return res.status(500).json('Image file must be jpg, jpeg or png');
     }
   }
 
   if(req.body.twitterpath) {
     if (isValidImageExtension(req.body.twitterpath)) {
-      Object.assign(updatedFields, { twitter: {tipoImagen: getImageType(req.body.twitterpath), 
-        data: fs.readFileSync(req.body.twitterpath)} });
+      if(fs.existsSync(req.body.twitterpath)) {
+        Object.assign(updatedFields, { twitter: {tipoImagen: getImageType(req.body.twitterpath), 
+          data: fs.readFileSync(req.body.twitterpath)} });
+      } else {
+        return res.status(404).json('Image file not found.');
+      }
     } else {
-      res.status(500).json({ error: 'Image file must be jpg, jpeg or png' });
+      return res.status(500).json('Image file must be jpg, jpeg or png');
     }
   }
 
@@ -129,11 +145,11 @@ adminVideogameController.putVideogame = async (req, res) => {
 
   Videojuego.findOneAndUpdate({ _id: req.body._id }, updatedFieldsSet, (err, videogame) => {
     if (err) {
-      res.status(500).json({ error: err.message });
+      return res.status(500).json(err.message);
     } else if (!videogame) {
-      res.status(404).json({ message: 'Videogame not found' });
+      return res.status(404).json('Videogame not found');
     } else {
-      res.status(200).json({ message: 'Videogame updated' });
+      return res.status(200).json('Videogame updated');
     }
   })
 };
