@@ -21,4 +21,10 @@ export class TagsService {
     return this.http.get<any>(this.adminGetAPI);
   }
 
+  adminDeleteAPI = 'http://localhost:3000/admin-tags/delete'
+
+  deleteTag (id: Number) {
+    return this.http.delete<any>(this.adminDeleteAPI+`/${id}`);
+  }
+
 }

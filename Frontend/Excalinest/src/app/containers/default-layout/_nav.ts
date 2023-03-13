@@ -33,4 +33,9 @@ export const navItems: INavData[] = [
     url: '/tags/get',
     iconComponent: { name: 'cil-tags' }
   },
+  {
+    name: 'Crear',
+    url: '/tags/post',
+    iconComponent: { name: 'cil-tag'}
+  },
 ];
