@@ -8,7 +8,7 @@
   </c-col>
   <c-col md="4">
     <label cLabel for="cover">Portada</label>
-    <input cFormControl id="cover" formControlName="cover" required type="file" >
+    <input cFormControl id="cover" formControlName="cover" accept="image/png, image/jpeg" required type="file">
     <c-form-feedback [valid]="true">Portada válida</c-form-feedback>
     <c-form-feedback [valid]="false">Ingrese la portada</c-form-feedback>
   </c-col>
@@ -26,25 +26,25 @@
   </c-col>
   <c-col md="12">
     <label cLabel for="zip">Archivo</label>
-    <input cFormControl id="zip" formControlName="zip" required type="file" >
+    <input cFormControl id="zip" formControlName="zip" accept="application/zip" required type="file" >
     <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
     <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
   </c-col>
   <c-col md="4">
     <label cLabel for="facebook">Facebook</label>
-    <input cFormControl id="facebook" formControlName="facebook" required type="file" >
+    <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" required type="file" >
     <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
     <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
   </c-col>
   <c-col md="4">
     <label cLabel for="instagram">Instagram</label>
-    <input cFormControl id="instagram" formControlName="instagram" required type="file" >
+    <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" required type="file" >
     <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
     <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
   </c-col>
   <c-col md="4">
     <label cLabel for="twitter">Twitter</label>
-    <input cFormControl id="twitter" formControlName="twitter" required type="file" >
+    <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" required type="file" >
     <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
     <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
   </c-col>

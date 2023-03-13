@@ -54,7 +54,7 @@ export class PostVideogameComponent implements OnInit{
       twitter: ['', Validators.required]
     });
   }
-  
+
   onPostVideogame() {
     this.newVideogame.titulo = this.postVideogameForm.value.title;
     this.newVideogame.usuario = this.postVideogameForm.value.developer;
@@ -64,7 +64,6 @@ export class PostVideogameComponent implements OnInit{
     this.newVideogame.facepath = this.postVideogameForm.value.facebook;
     this.newVideogame.instapath = this.postVideogameForm.value.instagram;
     this.newVideogame.twitterpath = this.postVideogameForm.value.twitter;
-    console.log(this.postVideogameForm.value.cover);
     console.log(this.newVideogame);
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
