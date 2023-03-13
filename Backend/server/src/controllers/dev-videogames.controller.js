@@ -6,7 +6,7 @@ const Videogame = require("../models/videogame");
 devVideogameController.getVideogames = async (req, res) => {
   Videogame.find({ usuario: req.params.developer }, (err, videogames) => {
     if (err) {
-      res.status(500).json({ error: err.message })
+      res.status(500).json(err.message)
     } else {
       res.status(200).send(videogames)
     }

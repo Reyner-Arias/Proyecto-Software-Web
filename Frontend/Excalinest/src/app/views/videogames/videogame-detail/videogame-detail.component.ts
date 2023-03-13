@@ -76,10 +76,10 @@ export class VideogameDetailComponent implements OnInit {
   onDeleteVideogame() {
     this.videogamesService.deleteVideogame({_id: this.videogame._id}).subscribe({
       error: (err: any) => { 
-        console.log(err);
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
       },
       next: (res: any) => {
-        console.log(res);
         this.router.navigate(['/videogames']);
       }
     });

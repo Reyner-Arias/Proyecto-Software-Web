@@ -21,7 +21,8 @@ export class GetVideogamesComponent implements OnInit {
   ngOnInit(): void {
     this.videogamesService.getVideogames(this.admin, this.user).subscribe({
       error: (err: any) => { 
-        console.log(err);
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
       },
       next: (res: Array<Videogame>) => {
         this.showSpinner = false;

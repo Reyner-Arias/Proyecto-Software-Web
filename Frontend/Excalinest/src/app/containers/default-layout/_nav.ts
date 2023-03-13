@@ -15,11 +15,6 @@ export const navItems: INavData[] = [
     title: true
   },
   {
-    name: 'Update',
-    url: '/videogames/update',
-    iconComponent: { name: 'cil-pencil' }
-  },
-  {
     name: 'Mis videojuegos',
     url: '/videogames/get',
     iconComponent: { name: 'cilPuzzle' }

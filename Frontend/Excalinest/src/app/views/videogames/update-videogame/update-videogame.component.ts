@@ -16,6 +16,7 @@ export class UpdateVideogameComponent implements OnInit {
   private excalinestImgPath = "C:\\Excalinest\\img\\";
   private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
   private fakePath = "C:\\fakepath\\";
+  public listOfTags = []
 
   newVideogame: Videogame = {
     _id: '',

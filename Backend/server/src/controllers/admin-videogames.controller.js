@@ -56,7 +56,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 adminVideogameController.getVideogame = async function (req, res) {
   Videojuego.find({}, (err, videogames) => {
     if (err) {
-      res.status(500).json({ error: err.message })
+      res.status(500).json(err.message)
     } else {
       res.status(200).send(videogames)
     }
@@ -67,11 +67,11 @@ adminVideogameController.getVideogame = async function (req, res) {
 adminVideogameController.deleteVideogame = async function (req, res) {
   Videojuego.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, (err, videogame) => {
     if (err) {
-      res.status(500).json({ error: err.message })
+      res.status(500).json(err.message)
     } else if (!videogame) {
-      res.status(404).json({ message: 'Videogame not found' })
+      res.status(404).json('Videogame not found')
     } else {
-      res.status(200).json({ message: 'Videogame deleted successfully' })
+      res.status(200).json('Videogame deleted successfully')
     }
   })
 }

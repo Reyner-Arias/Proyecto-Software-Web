@@ -1,5 +1,4 @@
 import { SafeResourceUrl } from "@angular/platform-browser";
-import { Tag } from "./tag.model";
 
 export interface Videogame {
     _id: string;
@@ -11,7 +10,7 @@ export interface Videogame {
     portada: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagen: SafeResourceUrl | undefined;
     imagepath: string;
-    tags: Tag [];
+    tags: {id: number, name: string} [];
     facebook: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenFacebook: SafeResourceUrl | undefined;
     facepath: string;
