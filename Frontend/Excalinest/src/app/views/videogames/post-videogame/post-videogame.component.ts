@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { Videogame } from '../../../models/Videogame.model'
 import { VideogamesService } from '../../../services/videogames.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-videogame',
@@ -17,15 +18,21 @@ export class PostVideogameComponent implements OnInit{
     titulo: '',
     usuario: '',
     sinopsis: '',
+    juegoZip: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
+    filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
+    imagepath: '',
     tags: [],
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
+    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
+    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
+    twitterpath: '',
   }
 
   constructor(private videogamesService: VideogamesService,
@@ -41,17 +48,23 @@ export class PostVideogameComponent implements OnInit{
       developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
       cover: ['', Validators.required],
-      zip: ['', Validators.required]
+      zip: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
     });
   }
   
   onPostVideogame() {
-    this.newVideogame.titulo = this.postVideogameForm.value.name;
-    //this.newVideogame.portada = this.postVideogameForm.value.portada;
-    //this.newVideogame.imagen = this.postVideogameForm.value.portada.name;
-    this.newVideogame.sinopsis = this.postVideogameForm.value.sinopsis;
+    this.newVideogame.titulo = this.postVideogameForm.value.title;
     this.newVideogame.usuario = this.postVideogameForm.value.developer;
-    //this.newVideogame.juegoZip = this.postVideogameForm.value.juegoZip;
+    this.newVideogame.sinopsis = this.postVideogameForm.value.sinopsis;
+    this.newVideogame.imagepath = this.postVideogameForm.value.cover;
+    this.newVideogame.filepath = this.postVideogameForm.value.zip;
+    this.newVideogame.facepath = this.postVideogameForm.value.facebook;
+    this.newVideogame.instapath = this.postVideogameForm.value.instagram;
+    this.newVideogame.twitterpath = this.postVideogameForm.value.twitter;
+    console.log(this.postVideogameForm.value.cover);
     console.log(this.newVideogame);
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
@@ -67,6 +80,7 @@ export class PostVideogameComponent implements OnInit{
   }
 
   submitVideogame() {
+    
     this.validatedForm = true;
     if (this.postVideogameForm.dirty && this.postVideogameForm.valid) {
       this.onPostVideogame();
@@ -95,8 +109,11 @@ export class PostVideogameComponent implements OnInit{
   resetForm() {
     this.validatedForm = false;
     this.postVideogameForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      developer: ['', Validators.required]
+      title: ['', Validators.required],
+      developer: ['', Validators.required],
+      sinopsis: ['', Validators.required],
+      cover: ['', Validators.required],
+      zip: ['', Validators.required]
     });
   }
 }

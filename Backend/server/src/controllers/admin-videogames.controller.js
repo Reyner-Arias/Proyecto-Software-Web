@@ -22,7 +22,7 @@ adminVideogameController.postVideogame = async function (req, res) {
       && isValidImageExtension(req.body.instapath) && isValidImageExtension(req.body.twitterpath)) {
       
       req.body.portada.data = fs.readFileSync(req.body.imagepath)
-      req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
+      /*req.body.juegoZip.data = fs.readFileSync(req.body.filepath)*/
       req.body.facebook.data = fs.readFileSync(req.body.facepath)
       req.body.instagram.data = fs.readFileSync(req.body.instapath)
       req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
