@@ -7,6 +7,7 @@ import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { UpdateVideogameComponent } from './views/videogames/update-videogame/update-videogame.component';
+import { GetTagsComponent } from './views/tags/get-tags/get-tags.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,11 @@ const routes: Routes = [
         path: 'videogames',
         loadChildren: () =>
           import('./views/videogames/videogames.module').then((m) => m.VideogamesModule)
+      },
+      {
+        path: 'tags',
+        loadChildren: () =>
+          import('./views/tags/tags.module').then((m) => m.TagsModule)
       },
     ]
   },

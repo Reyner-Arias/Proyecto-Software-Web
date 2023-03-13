@@ -33,7 +33,7 @@ export class GetVideogamesComponent implements OnInit {
               .reduce((data, byte) => data + String.fromCharCode(byte), '')
           );
           videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:" + videogame.portada.tipoImagen + ";base64, " + portadaBase64);
-          videogame.tags = this.tags;
+          //videogame.tags = this.tags;
         });
         this.videogamesByDeveloper = res;
       }

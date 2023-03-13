@@ -24,4 +24,13 @@ export const navItems: INavData[] = [
     url: '/videogames/get',
     iconComponent: { name: 'cilPuzzle' }
   },
+  {
+    name: 'Etiquetas',
+    title: true
+  },
+  {
+    name: 'Lista',
+    url: '/tags/get',
+    iconComponent: { name: 'cil-tags' }
+  },
 ];

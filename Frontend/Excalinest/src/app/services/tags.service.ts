@@ -15,4 +15,10 @@ export class TagsService {
     return this.http.post(this.adminPostAPI, tag, {responseType: 'text'});
   }
 
+  adminGetAPI = 'http://localhost:3000/admin-tags/get'
+
+  getTags () {
+    return this.http.get<any>(this.adminGetAPI);
+  }
+
 }

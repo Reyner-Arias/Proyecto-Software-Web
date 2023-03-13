@@ -1,0 +1,20 @@
+<div *ngIf="showSpinner" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Cargando etiquetas...</span>
+</div>
+
+<c-row>
+    <c-col [sm]="3" *ngFor="let tag of tags">
+        <c-card class="mb-4">
+            <c-card-body>
+            <h5 cCardTitle>{{tag.name}}</h5>
+            <c-row>
+                <c-col class="text-end mb-12">
+                    <button cButton color="dark" class="mb-4" [routerLink]="['/tags/tag']" [state]="tag" size="sm">Editar</button>
+                    <button cButton color="dark" class="mb-4" [routerLink]="['/tags/tag']" [state]="tag" size="sm">Eliminar</button>
+                </c-col>
+            </c-row>
+            </c-card-body>
+        </c-card>
+    </c-col>
+</c-row>
