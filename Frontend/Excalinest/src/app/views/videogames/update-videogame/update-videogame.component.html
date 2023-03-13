@@ -1,21 +1,57 @@
-<h2>Simulación de publicar videojuego</h2>
-<form [formGroup]="getPostVideogameForm()" (ngSubmit)="submitVideogame()" [validated]="validatedForm" 
+<h2>Modificar videojuego</h2>
+<form [formGroup]="getPutVideogameForm()" (ngSubmit)="submitVideogame()" [validated]="validatedForm" 
   cForm class="row g-3 needs-validation">
+  <c-col md="8">
+    <label cLabel for="title">Título</label>
+    <input cFormControl id="title" formControlName="title" required type="text" />
+    <c-form-feedback [valid]="true">Título válido</c-form-feedback>
+    <c-form-feedback [valid]="false">Ingrese el título del videojuego</c-form-feedback>
+  </c-col>
   <c-col md="4">
-    <label cLabel for="name">Nombre</label>
-    <input cFormControl id="name" formControlName="name" required type="text" value="Nombre" />
-    <c-form-feedback [valid]="true">Nombre válido</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese el nombre del videojuego</c-form-feedback>
+    <label cLabel for="cover">Portada</label>
+    <input cFormControl id="cover" formControlName="cover" required type="file" >
+    <c-form-feedback [valid]="true">Portada válida</c-form-feedback>
+    <c-form-feedback [valid]="false">Ingrese la portada</c-form-feedback>
   </c-col>
   <c-col md="4">
     <label cLabel for="developer">Desarrollador</label>
-    <input cFormControl id="developer" formControlName="developer" required type="text" value="Desarrollador" />
+    <input cFormControl id="developer" formControlName="developer" required type="text" />
     <c-form-feedback [valid]="true">Desarrollador válido</c-form-feedback>
     <c-form-feedback [valid]="false">Ingrese el nombre del desarrollador</c-form-feedback>
   </c-col>
+  <c-col md="8">
+    <label cLabel for="sinopsis">Sinopsis</label>
+    <textarea cFormControl id="sinopsis" formControlName="sinopsis" required type="text" ></textarea>
+    <c-form-feedback [valid]="true">Sinopsis válida</c-form-feedback>
+    <c-form-feedback [valid]="false">Ingrese la sinopsis</c-form-feedback>
+  </c-col>
+  <c-col md="12">
+    <label cLabel for="zip">Archivo</label>
+    <input cFormControl id="zip" formControlName="zip" required type="file" value="" >
+    <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+    <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+  </c-col>
+  <c-col md="4">
+    <label cLabel for="facebook">Facebook</label>
+    <input cFormControl id="facebook" formControlName="facebook" required type="file" >
+    <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+    <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+  </c-col>
+  <c-col md="4">
+    <label cLabel for="instagram">Instagram</label>
+    <input cFormControl id="instagram" formControlName="instagram" required type="file" >
+    <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+    <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+  </c-col>
+  <c-col md="4">
+    <label cLabel for="twitter">Twitter</label>
+    <input cFormControl id="twitter" formControlName="twitter" required type="file" >
+    <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+    <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+  </c-col>
   <c-col xs="12">
     <button cButton class="me-1" color="primary" type="submit">
-      Guardar
+      Modificar
     </button>
   </c-col>
 </form>

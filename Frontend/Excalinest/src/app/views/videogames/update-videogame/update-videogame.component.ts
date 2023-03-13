@@ -10,67 +10,109 @@ import { VideogamesService } from '../../../services/videogames.service';
 })
 export class UpdateVideogameComponent implements OnInit {
 
-  private postVideogameForm: any;
+  private putVideogameForm: any;
   public validatedForm = false;
+  private excalinestImgPath = "C:\\Excalinest\\img\\";
+  private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
+  private fakePath = "C:\\fakepath\\";
 
   newVideogame: Videogame = {
     _id: '',
     titulo: '',
     usuario: '',
     sinopsis: '',
+    juegoZip: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
+    filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
+    imagepath: '',
     tags: [],
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
+    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
+    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
+    twitterpath: '',
   }
 
   constructor(private videogamesService: VideogamesService,
     private formBuilder: FormBuilder) {}
 
-  getPostVideogameForm() {
-    return this.postVideogameForm;
+  getPutVideogameForm() {
+    return this.putVideogameForm;
   }
 
   ngOnInit(){
-    this.postVideogameForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      developer: ['', Validators.required]
+    this.putVideogameForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      developer: ['', Validators.required],
+      sinopsis: ['', Validators.required],
+      cover: ['', Validators.required],
+      zip: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
     });
   }
 
-  onPostVideogame() {
-    this.newVideogame.titulo = this.postVideogameForm.value.name;
-    this.newVideogame.usuario = this.postVideogameForm.value.developer;
-    console.log(this.newVideogame);
+  onPutVideogame() {
+    this.newVideogame.titulo = this.putVideogameForm.value.title;
+    this.newVideogame.sinopsis = this.putVideogameForm.value.sinopsis;
+    this.newVideogame.usuario = this.putVideogameForm.value.developer;
+    this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath);
+    this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);
+    this.newVideogame.facepath = this.putVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
+    this.newVideogame.instapath = this.putVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
+    this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
 
-    this.videogamesService.postVideogame(this.newVideogame).subscribe({
-      error: (err: any) => { 
-        this.modalMessage = err;
-        this.openCloseInfoModal();
-      },
-      next: (res: any) => {
-        this.modalMessage = res;
+    if(this.isValidFile()) {
+      if(this.areValidImages()) {
+        /*this.videogamesService.putVideogame(this.newVideogame).subscribe({
+          error: (err: any) => { 
+            this.modalMessage = err;
+            this.openCloseInfoModal();
+          },
+          next: (res: any) => {
+            this.modalMessage = res;
+            this.openCloseInfoModal();
+          }
+        });*/
+      } else {
+        this.modalMessage = "Las imágenes del formulario deben estar ubicadas en C:\\Excalinest\\builds\\NOMBRE_IMAGEN.FORMATO," + 
+          " donde se reemplaza NOMBRE_IMAGEN por el nombre de la respectiva imagen y FORMATO por png, jpg o jpeg.";
         this.openCloseInfoModal();
       }
-    });
+    } else {
+      this.modalMessage = "El archivo build (.zip) del videojuego debe estar ubicado en C:\\Excalinest\\builds\\NOMBRE_ARCHIVO.zip," + 
+        " donde se reemplaza NOMBRE_ARCHIVO por el nombre del archivo.";
+      this.openCloseInfoModal();
+    }
+  }
+
+  isValidFile() {
+    console.log(this.newVideogame);
+    return true;
+  }
+
+  areValidImages() {
+    console.log(this.newVideogame);
+    return true;
   }
 
   submitVideogame() {
     this.validatedForm = true;
-    if (this.postVideogameForm.dirty && this.postVideogameForm.valid) {
-      this.onPostVideogame();
+    if (this.putVideogameForm.dirty && this.putVideogameForm.valid) {
+      this.onPutVideogame();
     }
   }
 
   /* ---------------------- Modal ---------------------- */
 
   public modalMessage = "";
-  public modalTitle = "Creación de videojuego";
+  public modalTitle = "Atención";
   public visible = false;
 
   openCloseInfoModal() {
@@ -88,9 +130,15 @@ export class UpdateVideogameComponent implements OnInit {
 
   resetForm() {
     this.validatedForm = false;
-    this.postVideogameForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      developer: ['', Validators.required]
+    this.putVideogameForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      developer: ['', Validators.required],
+      sinopsis: ['', Validators.required],
+      cover: ['', Validators.required],
+      zip: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
     });
   }
 

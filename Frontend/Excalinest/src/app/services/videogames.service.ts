@@ -32,4 +32,11 @@ export class VideogamesService {
     return this.http.delete(this.adminDeleteAPI,  { headers: new HttpHeaders({ 'Content-Type': 'application/json', }), 
       body: _id, });
   }
+
+  adminPutAPI = 'http://localhost:3000/admin-videogames/put'
+
+  putVideogame(videogame: any) {
+    return this.http.put(this.adminPutAPI, videogame, {responseType: 'text'});
+  }
+  
 }

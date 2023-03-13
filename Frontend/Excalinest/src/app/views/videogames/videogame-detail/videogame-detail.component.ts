@@ -19,17 +19,23 @@ export class VideogameDetailComponent implements OnInit {
     titulo: '',
     usuario: '',
     sinopsis: '',
+    juegoZip: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
+    filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
+    imagepath: '',
     tags: [],
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
+    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
+    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
-    imagenTwitter: ''
+    imagenTwitter: '',
+    twitterpath: '',
   }
-
+  
   ngOnInit(): void {
     this.videogame = history.state;
 
