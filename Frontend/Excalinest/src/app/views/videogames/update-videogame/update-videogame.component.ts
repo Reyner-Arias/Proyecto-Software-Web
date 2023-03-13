@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Videogame } from '../../../models/Videogame.model'
 import { VideogamesService } from '../../../services/videogames.service';
 
@@ -39,17 +40,22 @@ export class UpdateVideogameComponent implements OnInit {
   }
 
   constructor(private videogamesService: VideogamesService,
-    private formBuilder: FormBuilder) {}
+    private formBuilder: FormBuilder, public router: Router) {}
 
   getPutVideogameForm() {
     return this.putVideogameForm;
   }
 
   ngOnInit(){
+    this.newVideogame._id = history.state._id;
+    this.newVideogame.titulo = history.state.titulo;
+    this.newVideogame.sinopsis = history.state.sinopsis;
+    this.newVideogame.usuario = history.state.usuario;
+
     this.putVideogameForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      developer: ['', Validators.required],
-      sinopsis: ['', Validators.required],
+      title: [this.newVideogame.titulo, Validators.required],
+      developer: [this.newVideogame.usuario, Validators.required],
+      sinopsis: [this.newVideogame.sinopsis, Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
@@ -59,15 +65,15 @@ export class UpdateVideogameComponent implements OnInit {
   }
 
   onPutVideogame() {
-    this.newVideogame._id = "6405490673108c0ad51e7902";
     this.newVideogame.titulo = this.putVideogameForm.value.title;
     this.newVideogame.sinopsis = this.putVideogameForm.value.sinopsis;
     this.newVideogame.usuario = this.putVideogameForm.value.developer;
-    this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath);
-    /*this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);
-    this.newVideogame.facepath = this.putVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.instapath = this.putVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);*/
+
+    if(this.putVideogameForm.value.cover != "") { this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath); }
+    if(this.putVideogameForm.value.zip != "") { this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath); }
+    if(this.putVideogameForm.value.facebook != "") { this.newVideogame.facepath = this.putVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath); }
+    if(this.putVideogameForm.value.instagram != "") { this.newVideogame.instapath = this.putVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
+    if(this.putVideogameForm.value.twitter != "") { this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
     this.videogamesService.putVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
@@ -83,7 +89,7 @@ export class UpdateVideogameComponent implements OnInit {
 
   submitVideogame() {
     this.validatedForm = true;
-    if (this.putVideogameForm.dirty && this.putVideogameForm.valid) {
+    if (this.putVideogameForm.dirty) {
       this.onPutVideogame();
     }
   }
@@ -98,6 +104,8 @@ export class UpdateVideogameComponent implements OnInit {
     this.visible = !this.visible;
     if(this.visible && cleanForm) {
       this.resetForm();
+    } else if(!this.visible) {
+      this.router.navigate(['/videogames']);
     }
   }
 
