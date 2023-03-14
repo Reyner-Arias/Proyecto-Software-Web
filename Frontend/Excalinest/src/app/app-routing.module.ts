@@ -119,6 +119,13 @@ const routes: Routes = [
       title: 'Update Videogame'
     }
   },
+  {
+    path: 'get-tags',
+    component: GetTagsComponent,
+    data: {
+      title: 'Get Tags'
+    }
+  },
   {path: '**', redirectTo: 'dashboard'}
 ];
 

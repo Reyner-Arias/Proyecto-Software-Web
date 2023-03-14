@@ -11,14 +11,21 @@ export class TagsService {
 
   adminPostAPI = 'http://localhost:3000/admin-tags/post'
 
-  postTag (tag: any) {
-    return this.http.post(this.adminPostAPI, tag, {responseType: 'text'});
+  postTag(tag: any) {
+    return this.http.post<any>(this.adminPostAPI, tag);
   }
+  
 
   adminGetAPI = 'http://localhost:3000/admin-tags/get'
 
   getTags () {
     return this.http.get<any>(this.adminGetAPI);
+  }
+
+  adminGetMaxIdAPI = 'http://localhost:3000/admin-tags/getMaxId'
+
+  getMaxId () {
+    return this.http.get<any>(this.adminGetMaxIdAPI);
   }
 
   adminDeleteAPI = 'http://localhost:3000/admin-tags/delete'

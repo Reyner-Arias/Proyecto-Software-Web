@@ -73,4 +73,14 @@ adminTagController.deleteTag = async (req, res) => {
     })
 };
 
+adminTagController.getMaxId = async (req, res) => {
+  Tag.find({}, { _id: 0, id: 1 }, { sort: { id: -1 }, limit: 1 }, (err, result) => {
+      if (err) {
+          res.status(500).json({ error: err.message })
+      } else {
+          res.status(200).json(result[0].id)
+      }
+  })
+};
+
 module.exports = adminTagController;

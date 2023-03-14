@@ -19,6 +19,7 @@ import {
 
 import { TagsRoutingModule } from './tags-routing.module';
 import { GetTagsComponent } from './get-tags/get-tags.component';
+import { PostTagComponent } from './post-tag/post-tag.component';
 //import { UpdateTagComponent } from './update-tag/update-tag.component';
 //import { TagDetailComponent } from './tag-detail/tag-detail.component';
 
@@ -44,6 +45,7 @@ import { GetTagsComponent } from './get-tags/get-tags.component';
   ],
   declarations: [
     //UpdateTagComponent,
+    PostTagComponent,
     GetTagsComponent,
     //TagDetailComponent
   ]

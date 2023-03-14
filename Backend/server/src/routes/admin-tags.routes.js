@@ -18,4 +18,7 @@ router.put('/put/:id', adminTagController.putTag);
 // Eliminar una etiqueta
 router.delete('/delete/:id', adminTagController.deleteTag);
 
+// Obtener id mayor
+router.get('/getMaxId', adminTagController.getMaxId);
+
 module.exports = router

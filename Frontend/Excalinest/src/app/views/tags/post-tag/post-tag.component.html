@@ -1,0 +1,27 @@
+<h2>Crear etiqueta</h2>
+<form [formGroup]="getPostTagForm()" (ngSubmit)="submitTag()" novalidate class="row g-3 needs-validation">
+  <div class="col-md-4">
+    <label for="name">Nombre</label>
+    <input id="name" formControlName="name" required type="text" class="form-control" />
+    <div *ngIf="getPostTagForm().get('name')?.valid" class="valid-feedback">Nombre válido</div>
+    <div *ngIf="getPostTagForm().get('name')?.invalid" class="invalid-feedback">Ingrese el nombre de la etiqueta</div>
+  </div>
+  <div class="col-xs-12">
+    <button type="button" class="btn btn-primary" (click)="submitTag()">
+        Guardar
+    </button>
+  </div>
+</form>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+  <c-modal-header>
+      <h5 cModalTitle>{{modalTitle}}</h5>
+      <button (click)="openCloseInfoModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>{{modalMessage}}</c-modal-body>
+  <c-modal-footer>
+      <button (click)="openCloseInfoModal()" cButton color="secondary">
+        Cerrar
+      </button>
+  </c-modal-footer>
+</c-modal>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GetTagsComponent } from './get-tags/get-tags.component';
+import { PostTagComponent } from './post-tag/post-tag.component';
 
 //import { UpdateTagComponent } from './update-tag/update-tag.component';
 //import { TagDetailComponent } from './tag-detail/tag-detail.component';
@@ -14,13 +15,20 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Videojuegos',
+      title: 'Etiquetas',
     },
     children: [
       {
         path: '',
         pathMatch: 'full',
         redirectTo: 'colors',
+      },
+      {
+        path: 'post',
+        component: PostTagComponent,
+        data: {
+          title: 'Post tag',
+        }
       },
       /*
       {
@@ -35,7 +43,7 @@ const routes: Routes = [
         path: 'get',
         component: GetTagsComponent,
         data: {
-          title: 'Mis videojuegos',
+          title: 'Etiquetas',
         }
       },
       /*
