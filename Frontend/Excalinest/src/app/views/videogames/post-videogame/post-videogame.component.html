@@ -49,8 +49,21 @@
     <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
   </c-col>
   <c-col xs="12">
-    <button cButton class="me-1" color="primary" type="submit">
+    <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
       Subir
     </button>
   </c-col>
 </form>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+  <c-modal-header>
+      <h5 cModalTitle>{{this.modalTitle}}</h5>
+      <button (click)="openCloseInfoModal(false)" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body> {{this.modalMessage}} </c-modal-body>
+  <c-modal-footer>
+      <button (click)="openCloseInfoModal(false)" cButton color="secondary">
+        Cerrar
+      </button>
+  </c-modal-footer>
+</c-modal>

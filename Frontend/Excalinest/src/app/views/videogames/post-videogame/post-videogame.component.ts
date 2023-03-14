@@ -3,6 +3,7 @@ import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { Videogame } from '../../../models/Videogame.model'
 import { VideogamesService } from '../../../services/videogames.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-videogame',
@@ -13,6 +14,10 @@ export class PostVideogameComponent implements OnInit{
 
   private postVideogameForm: any;
   public validatedForm = false;
+  private excalinestImgPath = "C:\\Excalinest\\img\\";
+  private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
+  private fakePath = "C:\\fakepath\\";
+  public listOfTags = []
 
   newVideogame: Videogame = {
     titulo: '',
@@ -36,8 +41,8 @@ export class PostVideogameComponent implements OnInit{
   }
 
   constructor(private videogamesService: VideogamesService,
-    private formBuilder: FormBuilder) {}
-  
+    private formBuilder: FormBuilder, public router: Router) {}
+    
   getPostVideogameForm() {
     return this.postVideogameForm;
   }
@@ -59,27 +64,26 @@ export class PostVideogameComponent implements OnInit{
     this.newVideogame.titulo = this.postVideogameForm.value.title;
     this.newVideogame.usuario = this.postVideogameForm.value.developer;
     this.newVideogame.sinopsis = this.postVideogameForm.value.sinopsis;
-    this.newVideogame.imagepath = this.postVideogameForm.value.cover;
-    this.newVideogame.filepath = this.postVideogameForm.value.zip;
-    this.newVideogame.facepath = this.postVideogameForm.value.facebook;
-    this.newVideogame.instapath = this.postVideogameForm.value.instagram;
-    this.newVideogame.twitterpath = this.postVideogameForm.value.twitter;
+    this.newVideogame.imagepath = this.postVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath);
+    /*this.newVideogame.filepath = this.postVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);*/
+    this.newVideogame.facepath = this.postVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
+    this.newVideogame.instapath = this.postVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
+    this.newVideogame.twitterpath = this.postVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
     console.log(this.newVideogame);
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
-        this.modalMessage = err;
-        this.openCloseInfoModal();
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal(false);
       },
       next: (res: any) => {
-        this.modalMessage = res;
-        this.openCloseInfoModal();
+        this.modalMessage = res.replace(/['"]+/g, '');
+        this.openCloseInfoModal(true);
       }
     });
   }
 
   submitVideogame() {
-    
     this.validatedForm = true;
     if (this.postVideogameForm.dirty && this.postVideogameForm.valid) {
       this.onPostVideogame();
@@ -92,10 +96,12 @@ export class PostVideogameComponent implements OnInit{
   public modalTitle = "Creación de videojuego";
   public visible = false;
 
-  openCloseInfoModal() {
+  openCloseInfoModal(cleanForm: boolean) {
     this.visible = !this.visible;
-    if(!this.visible) {
+    if(this.visible && cleanForm) {
       this.resetForm();
+    } else if(!this.visible) {
+      this.router.navigate(['/videogames']);
     }
   }
 
@@ -112,7 +118,10 @@ export class PostVideogameComponent implements OnInit{
       developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
       cover: ['', Validators.required],
-      zip: ['', Validators.required]
+      zip: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
     });
   }
 }
