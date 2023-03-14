@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -16,6 +16,7 @@ export class VideogamesService {
   }
 
   developerGetAPI = 'http://localhost:3000/dev-videogames/get'
+  adminGetAPI = 'http://localhost:3000/admin-videogames/get'
 
   getDeveloperVideogames (developer: String) {
     return this.http.get<any>(this.developerGetAPI+`/${developer}`);

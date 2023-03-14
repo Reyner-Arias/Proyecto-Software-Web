@@ -1,23 +1,22 @@
 import { SafeResourceUrl } from "@angular/platform-browser";
-import { Tag } from "./tag.model";
 
 export interface Videogame {
     titulo: string;
     usuario: string;
     sinopsis: string;
-    juegoZip:  {data: {data: ArrayBuffer, type: String}, tipoArchivo: String};
-    filepath: String;
-    portada: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
+    juegoZip: {data: {data: ArrayBuffer, type: string}, tipoArchivo: string};
+    filepath: string;
+    portada: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagen: SafeResourceUrl | undefined;
-    imagepath: String;
-    tags: Tag [];
-    facebook: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
+    imagepath: string;
+    tags: {id: number, name: string} [];
+    facebook: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenFacebook: SafeResourceUrl | undefined;
-    facepath: String;
-    instagram: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
+    facepath: string;
+    instagram: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenInstagram: SafeResourceUrl | undefined;
-    instapath: String;
-    twitter: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
+    instapath: string;
+    twitter: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenTwitter: SafeResourceUrl | undefined;
-    twitterpath: String;
+    twitterpath: string;
 }

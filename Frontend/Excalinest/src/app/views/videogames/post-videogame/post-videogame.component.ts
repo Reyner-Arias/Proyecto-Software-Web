@@ -65,7 +65,7 @@ export class PostVideogameComponent implements OnInit{
     this.newVideogame.usuario = this.postVideogameForm.value.developer;
     this.newVideogame.sinopsis = this.postVideogameForm.value.sinopsis;
     this.newVideogame.imagepath = this.postVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath);
-    /*this.newVideogame.filepath = this.postVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);*/
+    this.newVideogame.filepath = this.postVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);
     this.newVideogame.facepath = this.postVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.instapath = this.postVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.twitterpath = this.postVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
