@@ -14,7 +14,7 @@ adminTagController.postTag = async (req, res) => {
         if (err) {
         res.status(500).json( err.message )
         } else {
-        res.status(201).json({ message: 'Tag created' })
+        res.status(201).json( 'Etiqueta creada' )
         }
     })
 };
