@@ -1,37 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagsService {
 
+  private apiUrl = 'http://localhost:3000/admin-tags';
+
   constructor(private http: HttpClient, private router: Router) { }
 
-  adminPostAPI = 'http://localhost:3000/admin-tags/post'
-
   postTag(tag: any) {
-    return this.http.post<any>(this.adminPostAPI, tag);
+    return this.http.post<any>(`${this.apiUrl}/post`, tag);
   }
-  
-
-  adminGetAPI = 'http://localhost:3000/admin-tags/get'
 
   getTags () {
-    return this.http.get<any>(this.adminGetAPI);
+    return this.http.get<any>(`${this.apiUrl}/get`);
   }
 
-  adminGetMaxIdAPI = 'http://localhost:3000/admin-tags/getMaxId'
-
-  getMaxId () {
-    return this.http.get<any>(this.adminGetMaxIdAPI);
+  getMaxId(): Observable<{ maxId: number }> {
+    return this.http.get<{ maxId: number }>(`${this.apiUrl}/getMaxId`);
   }
-
-  adminDeleteAPI = 'http://localhost:3000/admin-tags/delete'
 
   deleteTag (id: Number) {
-    return this.http.delete<any>(this.adminDeleteAPI+`/${id}`);
+    return this.http.delete<any>(`${this.apiUrl}/delete`+`/${id}`);
   }
 
 }

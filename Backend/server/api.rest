@@ -26,6 +26,11 @@ GET http://localhost:3000/admin-tags/get
 GET http://localhost:3000/admin-tags/get/1
 
 ######
+# Obtener el mayor id
+GET http://localhost:3000/admin-tags/getMaxId
+
+
+######
 # Actualizar la etiqueta 1
 PUT http://localhost:3000/admin-tags/put/1
 Content-Type: application/json
