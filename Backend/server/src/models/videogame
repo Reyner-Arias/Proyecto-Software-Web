@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const tag = require("./Tag");
 
 const videogameSchema = new Schema(
   {
@@ -8,10 +7,10 @@ const videogameSchema = new Schema(
     sinopsis: { type: String, required: false },
     usuario: { type: String, required: false },
     juegoZip: { tipoArchivo: String, data: Buffer, required: false },
-    facebook: {tipoImagen: String, data: Buffer, required: false },
-    instagram: {tipoImagen: String, data: Buffer, required: false },
-    twitter: {tipoImagen: String, data: Buffer, required: false },
-    tags: [{id: Number, name: String, required: false}],
+    facebook: { tipoImagen: String, data: Buffer, required: false },
+    instagram: { tipoImagen: String, data: Buffer, required: false },
+    twitter: { tipoImagen: String, data: Buffer, required: false },
+    tags: [ { id: Number, name: String, required: false } ],
   },
   {
     timestamps: true,

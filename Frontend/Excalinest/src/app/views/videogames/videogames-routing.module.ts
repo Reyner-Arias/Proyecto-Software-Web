@@ -4,6 +4,7 @@ import { GetVideogamesComponent } from './get-videogames/get-videogames.componen
 
 import { UpdateVideogameComponent } from './update-videogame/update-videogame.component';
 import { VideogameDetailComponent } from './videogame-detail/videogame-detail.component';
+import { PostVideogameComponent } from './post-videogame/post-videogame.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,13 @@ const routes: Routes = [
         component: GetVideogamesComponent,
         data: {
           title: 'Mis videojuegos',
+        }
+      },
+      {
+        path: 'post',
+        component: PostVideogameComponent,
+        data: {
+          title: 'Post'
         }
       },
       {
