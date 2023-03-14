@@ -20,8 +20,8 @@ export class TagsService {
     return this.http.get<any>(`${this.apiUrl}/get`);
   }
 
-  getMaxId(): Observable<{ maxId: number }> {
-    return this.http.get<{ maxId: number }>(`${this.apiUrl}/getMaxId`);
+  getMaxId() {
+    return this.http.get<any>(`${this.apiUrl}/getMaxId`);
   }
 
   deleteTag (id: Number) {

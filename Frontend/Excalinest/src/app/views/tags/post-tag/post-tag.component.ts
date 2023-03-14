@@ -34,9 +34,9 @@ export class PostTagComponent implements OnInit {
 
   onPostTag() {
     this.TagsService.getMaxId().subscribe((response) => {
-      const maxId = response.maxId;
-      this.newTag.id = maxId + 1;
+      this.newTag.id = response + 1;
       this.newTag.name = this.postTagForm.value.name;
+      console.log(this.newTag);
 
       this.TagsService.postTag(this.newTag).subscribe({
         error: (err: any) => { 
