@@ -40,6 +40,8 @@ adminVideogameController.postVideogame = async function (req, res) {
   if (path.extname(req.body.filepath) == ".zip") {
     if (isValidImageExtension(req.body.imagepath) && isValidImageExtension(req.body.facepath) 
       && isValidImageExtension(req.body.instapath) && isValidImageExtension(req.body.twitterpath)) {
+
+      delete req.body._id;
       
       if(req.body.imagepath) {
         if(fs.existsSync(req.body.imagepath)){

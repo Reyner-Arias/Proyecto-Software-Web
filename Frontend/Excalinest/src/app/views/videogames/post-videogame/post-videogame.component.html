@@ -1,58 +1,85 @@
 <h2>Publicar videojuego</h2>
 <form [formGroup]="getPostVideogameForm()" (ngSubmit)="submitVideogame()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
-  <c-col md="8">
-    <label cLabel for="title">Título</label>
-    <input cFormControl id="title" formControlName="title" required type="text" />
-    <c-form-feedback [valid]="true">Título válido</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese el título del videojuego</c-form-feedback>
-  </c-col>
-  <c-col md="4">
-    <label cLabel for="cover">Portada</label>
-    <input cFormControl id="cover" formControlName="cover" accept="image/png, image/jpeg" required type="file">
-    <c-form-feedback [valid]="true">Portada válida</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese la portada</c-form-feedback>
-  </c-col>
-  <c-col md="4">
-    <label cLabel for="developer">Desarrollador</label>
-    <input cFormControl id="developer" formControlName="developer" required type="text" />
-    <c-form-feedback [valid]="true">Desarrollador válido</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese el nombre del desarrollador</c-form-feedback>
-  </c-col>  
-  <c-col md="8">
-    <label cLabel for="sinopsis">Sinopsis</label>
-    <textarea cFormControl id="sinopsis" formControlName="sinopsis" required type="text" ></textarea>
-    <c-form-feedback [valid]="true">Sinopsis válida</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese la sinopsis</c-form-feedback>
-  </c-col>
-  <c-col md="12">
-    <label cLabel for="zip">Archivo</label>
-    <input cFormControl id="zip" formControlName="zip" accept="application/zip" required type="file" >
-    <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
-  </c-col>
-  <c-col md="4">
-    <label cLabel for="facebook">Facebook</label>
-    <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" required type="file" >
-    <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
-  </c-col>
-  <c-col md="4">
-    <label cLabel for="instagram">Instagram</label>
-    <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" required type="file" >
-    <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
-  </c-col>
-  <c-col md="4">
-    <label cLabel for="twitter">Twitter</label>
-    <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" required type="file" >
-    <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
-    <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
-  </c-col>
-  <c-col xs="12">
-    <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
-      Subir
-    </button>
-  </c-col>
+  <c-row>
+    <c-col md="8">
+      <label cLabel for="title">Título</label>
+      <input cFormControl id="title" formControlName="title" required type="text" />
+      <c-form-feedback [valid]="true">Título válido</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese el título del videojuego</c-form-feedback>
+    </c-col>
+    <c-col md="4">
+      <label cLabel for="cover">Portada</label>
+      <input cFormControl id="cover" formControlName="cover" accept="image/png, image/jpeg" required type="file">
+      <c-form-feedback [valid]="true">Portada válida</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese la portada</c-form-feedback>
+    </c-col>
+  </c-row>
+  <c-row class="row">
+    <c-col md="4">
+      <label cLabel for="developer">Desarrollador</label>
+      <input cFormControl id="developer" formControlName="developer" required type="text" />
+      <c-form-feedback [valid]="true">Desarrollador válido</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese el nombre del desarrollador</c-form-feedback>
+    </c-col>  
+    <c-col md="8">
+      <label cLabel for="sinopsis">Sinopsis</label>
+      <textarea cFormControl id="sinopsis" formControlName="sinopsis" required type="text" ></textarea>
+      <c-form-feedback [valid]="true">Sinopsis válida</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese la sinopsis</c-form-feedback>
+    </c-col>
+  </c-row>
+  <c-row class="row">
+    <c-col md="12">
+      <label cLabel for="zip">Archivo</label>
+      <input cFormControl id="zip" formControlName="zip" accept="application/zip" required type="file" >
+      <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+    </c-col>
+  </c-row>
+  <c-row class="row">
+    <c-col md="4">
+      <label cLabel for="facebook">Facebook</label>
+      <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" required type="file" >
+      <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+    </c-col>
+    <c-col md="4">
+      <label cLabel for="instagram">Instagram</label>
+      <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" required type="file" >
+      <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+    </c-col>
+    <c-col md="4">
+      <label cLabel for="twitter">Twitter</label>
+      <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" required type="file" >
+      <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+    </c-col>
+  </c-row>
+  <c-row class="row">
+    <c-col [sm]="2" class="columns-tags">
+      <label cLabel for="tags">Tags</label>
+    </c-col>
+    <c-col [sm]="10" class="columns-tags">
+      <select formControlName="tags" #selectTags cSelect size="3" sizing="md" (change)="addTag(selectTags.value)" required>
+        <option *ngFor="let tag of listOfTags" [selected]="tags.length != 1 || tags[0].id != -1">
+          {{tag.id}} - {{tag.name}}
+        </option>
+      </select>
+      <c-form-feedback [valid]="true">Etiquetas válidas</c-form-feedback>
+      <c-form-feedback [valid]="false">Ingrese mínimo una etiqueta</c-form-feedback>
+    </c-col>
+    <c-col [sm]="10" class="columns-tags" *ngIf="tags.length != 1 || tags[0].id != -1">
+        <button cButton color="light" shape="rounded-pill" *ngFor="let tag of tags" class="tag" disabled>{{tag.name}}</button>
+    </c-col>
+  </c-row>
+  <c-row class="row">
+    <c-col md="4">
+      <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
+        Publicar
+      </button>
+    </c-col>
+  </c-row>
 </form>
 
 <c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">

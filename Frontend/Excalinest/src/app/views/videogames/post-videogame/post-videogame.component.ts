@@ -4,6 +4,7 @@ import { Videogame } from '../../../models/Videogame.model'
 import { VideogamesService } from '../../../services/videogames.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { TagsService } from '../../../services/tags.service';
 
 @Component({
   selector: 'app-post-videogame',
@@ -17,7 +18,8 @@ export class PostVideogameComponent implements OnInit{
   private excalinestImgPath = "C:\\Excalinest\\img\\";
   private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
   private fakePath = "C:\\fakepath\\";
-  public listOfTags = []
+  public listOfTags = [{id: -1, name: ""}];
+  public tags = [{id: -1, name: ""}];
 
   newVideogame: Videogame = {
     _id:'',
@@ -42,7 +44,8 @@ export class PostVideogameComponent implements OnInit{
   }
 
   constructor(private videogamesService: VideogamesService,
-    private formBuilder: FormBuilder, public router: Router) {}
+    private formBuilder: FormBuilder, public router: Router,
+    private tagsService: TagsService) {}
     
   getPostVideogameForm() {
     return this.postVideogameForm;
@@ -57,8 +60,35 @@ export class PostVideogameComponent implements OnInit{
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
-      twitter: ['', Validators.required]
+      twitter: ['', Validators.required],
+      tags: ['', Validators.required]
     });
+
+    this.tagsService.getTags().subscribe({
+      error: (err: any) => { 
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal(false);
+      },
+      next: (res: any) => {
+        this.listOfTags = res;
+      }
+    });
+  }
+
+  addTag(selectedTag: any) {
+    let id = parseInt(selectedTag.split(" - ")[0]);
+    let name = selectedTag.split(" - ")[1];
+    if(this.tags.find(tag => { return tag.id ===  id })) {
+      if(this.tags.length == 1 && this.tags[0].id != -1) {
+        this.tags.push({id: -1, name: ""});
+      }
+      this.tags.splice(this.tags.findIndex(item => item.id === id), 1);
+    } else {
+      if(this.tags.length == 1 && this.tags[0].id == -1) {
+        this.tags.splice(this.tags.findIndex(item => item.id === -1), 1);
+      }
+      this.tags.push({id: id, name: name});
+    }
   }
 
   onPostVideogame() {
@@ -70,7 +100,7 @@ export class PostVideogameComponent implements OnInit{
     this.newVideogame.facepath = this.postVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.instapath = this.postVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.twitterpath = this.postVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
-    console.log(this.newVideogame);
+    this.newVideogame.tags = this.tags;
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
@@ -86,7 +116,8 @@ export class PostVideogameComponent implements OnInit{
 
   submitVideogame() {
     this.validatedForm = true;
-    if (this.postVideogameForm.dirty && this.postVideogameForm.valid) {
+    if (this.postVideogameForm.dirty && this.postVideogameForm.valid
+      && (this.tags.length != 1 || this.tags[0].id != -1)) {
       this.onPostVideogame();
     }
   }
@@ -122,7 +153,8 @@ export class PostVideogameComponent implements OnInit{
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
-      twitter: ['', Validators.required]
+      twitter: ['', Validators.required],
+      tags: ['', Validators.required]
     });
   }
 }
