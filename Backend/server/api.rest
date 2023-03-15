@@ -54,11 +54,11 @@ Content-Type: application/json
     "facebook": { "tipoImagen": "image/png" },
     "instagram": { "tipoImagen": "image/png" },
     "twitter": { "tipoImagen": "image/png" },
-    "imagepath": "C:\\Users\\DAADIOS\\Downloads\\Mirror.jpg",
-    "filepath": "C:\\Users\\DAADIOS\\Downloads\\Wednesday.zip",
-    "facepath": "C:\\Users\\DAADIOS\\Downloads\\Facebook.png",
-    "instapath": "C:\\Users\\DAADIOS\\Downloads\\Instagram.png",
-    "twitterpath": "C:\\Users\\DAADIOS\\Downloads\\Twitter.png"
+    "imagepath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\MirrorLogo.jpg",
+    "filepath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\Mirror.zip",
+    "facepath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\qr.png",
+    "instapath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\qr.png",
+    "twitterpath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\qr.png"
 }
 
 ####
@@ -75,4 +75,17 @@ Content-Type: application/json
 
 {
     "_id": "64017a5085e6e7d7952fe0fd"
+}
+
+
+####
+
+# Obtener zip
+
+GET http://localhost:3000/admin-videogames/get-zip-file
+Content-Type: application/json
+
+{
+    "filename": "Mirror.zip",
+    "destPath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\Descarga\\"
 }
