@@ -17,8 +17,8 @@ export class UpdateVideogameComponent implements OnInit {
   private excalinestImgPath = "C:\\Excalinest\\img\\";
   private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
   private fakePath = "C:\\fakepath\\";
-  public listOfTags = []
-  public tags = [{id: 5, name: "Indie"}, {id: 3, name: "2D"}, {id: 7, name: "Singleplayer"}];
+  public listOfTags = [{id: -1, name: ""}];
+  public tags = [{id: -1, name: ""}];
 
   newVideogame: Videogame = {
     _id: '',
@@ -64,7 +64,8 @@ export class UpdateVideogameComponent implements OnInit {
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
-      twitter: ['', Validators.required]
+      twitter: ['', Validators.required],
+      tags: ['', Validators.required]
     });
 
     this.tagsService.getTags().subscribe({
@@ -74,9 +75,24 @@ export class UpdateVideogameComponent implements OnInit {
       },
       next: (res: any) => {
         this.listOfTags = res;
-        console.log(this.listOfTags);
       }
     });
+  }
+
+  addTag(selectedTag: any) {
+    let id = selectedTag.split(" - ")[0];
+    let name = selectedTag.split(" - ")[1];
+    if(this.tags.find(tag => { return tag.id ===  id })) {
+      if(this.tags.length == 1 && this.tags[0].id != -1) {
+        this.tags.push({id: -1, name: ""});
+      }
+      this.tags.splice(this.tags.findIndex(item => item.id === id), 1);
+    } else {
+      if(this.tags.length == 1 && this.tags[0].id == -1) {
+        this.tags.splice(this.tags.findIndex(item => item.id === -1), 1);
+      }
+      this.tags.push({id: id, name: name});
+    }
   }
 
   onPutVideogame() {
@@ -102,9 +118,16 @@ export class UpdateVideogameComponent implements OnInit {
     });
   }
 
+  isValidForm() {
+    return this.putVideogameForm.value.titulo != "" &&
+      this.putVideogameForm.value.sinopsis != "" &&
+      this.putVideogameForm.value.usuario != "" &&
+      (this.tags.length != 1 || this.tags[0].id != -1);
+  }
+
   submitVideogame() {
     this.validatedForm = true;
-    if (this.putVideogameForm.dirty) {
+    if (this.putVideogameForm.dirty && this.isValidForm()) {
       this.onPutVideogame();
     }
   }
@@ -140,7 +163,8 @@ export class UpdateVideogameComponent implements OnInit {
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
-      twitter: ['', Validators.required]
+      twitter: ['', Validators.required],
+      tags: ['', Validators.required]
     });
   }
 
