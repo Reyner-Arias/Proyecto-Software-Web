@@ -55,6 +55,7 @@ export class UpdateVideogameComponent implements OnInit {
     this.newVideogame.titulo = history.state.titulo;
     this.newVideogame.sinopsis = history.state.sinopsis;
     this.newVideogame.usuario = history.state.usuario;
+    this.tags = history.state.tags;
 
     this.putVideogameForm = this.formBuilder.group({
       title: [this.newVideogame.titulo, Validators.required],
@@ -80,7 +81,7 @@ export class UpdateVideogameComponent implements OnInit {
   }
 
   addTag(selectedTag: any) {
-    let id = selectedTag.split(" - ")[0];
+    let id = parseInt(selectedTag.split(" - ")[0]);
     let name = selectedTag.split(" - ")[1];
     if(this.tags.find(tag => { return tag.id ===  id })) {
       if(this.tags.length == 1 && this.tags[0].id != -1) {
