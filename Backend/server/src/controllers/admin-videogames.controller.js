@@ -208,4 +208,18 @@ adminVideogameController.putVideogame = async (req, res) => {
   })
 };
 
+// Descargar un videojuego archivo zip
+adminVideogameController.getZipFile = async function (req,res) {
+  const writeStream = fs.createWriteStream(req.body.destPath + req.body.filename);
+  const downloadStream = bucket.openDownloadStreamByName(req.body.filename);
+
+  downloadStream.pipe(writeStream);
+
+  writeStream.on('finish', function() {
+    console.log('File downloaded successfully');
+  });
+  
+  res.send("Failed to download file");
+}
+
 module.exports = adminVideogameController
