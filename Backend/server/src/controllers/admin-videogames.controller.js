@@ -43,13 +43,14 @@ adminVideogameController.postVideogame = async function (req, res) {
       
       req.body.portada.data = fs.readFileSync(req.body.imagepath)
       //req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
+      req.body.juegoZip.data = null;
       req.body.facebook.data = fs.readFileSync(req.body.facepath)
       req.body.instagram.data = fs.readFileSync(req.body.instapath)
       req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
 
       const readStream = fs.createReadStream(req.body.filepath);
 
-      const uploadStream = bucket.openUploadStream('Mirror.zip', {
+      const uploadStream = bucket.openUploadStream(req.body.titulo + '.zip', {
         contentType: req.body.tipoArchivo
       });
       readStream.pipe(uploadStream);
