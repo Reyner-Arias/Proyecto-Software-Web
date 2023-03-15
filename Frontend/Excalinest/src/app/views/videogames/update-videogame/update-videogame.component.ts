@@ -3,6 +3,7 @@ import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Videogame } from '../../../models/Videogame.model'
 import { VideogamesService } from '../../../services/videogames.service';
+import { TagsService } from '../../../services/tags.service';
 
 @Component({
   selector: 'app-update-videogame',
@@ -17,6 +18,7 @@ export class UpdateVideogameComponent implements OnInit {
   private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
   private fakePath = "C:\\fakepath\\";
   public listOfTags = []
+  public tags = [{id: 5, name: "Indie"}, {id: 3, name: "2D"}, {id: 7, name: "Singleplayer"}];
 
   newVideogame: Videogame = {
     _id: '',
@@ -41,7 +43,8 @@ export class UpdateVideogameComponent implements OnInit {
   }
 
   constructor(private videogamesService: VideogamesService,
-    private formBuilder: FormBuilder, public router: Router) {}
+    private formBuilder: FormBuilder, public router: Router,
+    private tagsService: TagsService) {}
 
   getPutVideogameForm() {
     return this.putVideogameForm;
@@ -62,6 +65,17 @@ export class UpdateVideogameComponent implements OnInit {
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required]
+    });
+
+    this.tagsService.getTags().subscribe({
+      error: (err: any) => { 
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal(false);
+      },
+      next: (res: any) => {
+        this.listOfTags = res;
+        console.log(this.listOfTags);
+      }
     });
   }
 

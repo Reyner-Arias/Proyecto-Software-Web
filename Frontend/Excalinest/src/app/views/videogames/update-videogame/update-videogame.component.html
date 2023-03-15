@@ -58,6 +58,14 @@
     </c-col>
   </c-row>
   <c-row class="row">
+    <c-col [sm]="2" class="columns-tags">
+        <label clabel for="tags">Tags</label>
+    </c-col>
+    <c-col [sm]="10" class="columns-tags">
+        <button cButton color="light" shape="rounded-pill" *ngFor="let tag of tags" class="tag" disabled>{{tag.name}}</button>
+    </c-col>
+</c-row>
+  <c-row class="row">
     <c-col md="4">
       <button cButton color="primary" class="update-button row-margin-bottom" type="submit">Editar</button>
     </c-col>
