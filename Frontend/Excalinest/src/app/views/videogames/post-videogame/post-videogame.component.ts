@@ -20,6 +20,7 @@ export class PostVideogameComponent implements OnInit{
   public listOfTags = []
 
   newVideogame: Videogame = {
+    _id:'',
     titulo: '',
     usuario: '',
     sinopsis: '',

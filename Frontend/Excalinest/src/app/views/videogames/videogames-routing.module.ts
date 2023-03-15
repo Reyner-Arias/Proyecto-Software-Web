@@ -41,7 +41,7 @@ const routes: Routes = [
         path: 'post',
         component: PostVideogameComponent,
         data: {
-          title: 'Post'
+          title: 'Publicar videojuego'
         }
       },
       {
