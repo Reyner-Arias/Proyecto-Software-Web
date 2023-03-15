@@ -140,7 +140,12 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  Object.assign(updatedFields, {titulo: req.body.titulo, sinopsis: req.body.sinopsis, usuario: req.body.usuario});
+  if(req.body.tags.length == 0) {
+    return res.status(404).json('Tags not found.');
+  }
+
+  Object.assign(updatedFields, {titulo: req.body.titulo, sinopsis: req.body.sinopsis, 
+    usuario: req.body.usuario, tags: req.body.tags});
   var updatedFieldsSet =  { $set: updatedFields };
 
   Videojuego.findOneAndUpdate({ _id: req.body._id }, updatedFieldsSet, (err, videogame) => {

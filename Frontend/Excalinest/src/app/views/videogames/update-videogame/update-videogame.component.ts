@@ -99,6 +99,7 @@ export class UpdateVideogameComponent implements OnInit {
     this.newVideogame.titulo = this.putVideogameForm.value.title;
     this.newVideogame.sinopsis = this.putVideogameForm.value.sinopsis;
     this.newVideogame.usuario = this.putVideogameForm.value.developer;
+    this.newVideogame.tags = this.tags;
 
     if(this.putVideogameForm.value.cover != "") { this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putVideogameForm.value.zip != "") { this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath); }

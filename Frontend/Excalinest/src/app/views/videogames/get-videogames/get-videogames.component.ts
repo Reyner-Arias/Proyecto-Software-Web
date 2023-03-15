@@ -11,7 +11,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class GetVideogamesComponent implements OnInit {
 
   videogames = new Array<Videogame>();
-  tags = [{id: 5, name: "Indie"}, {id: 3, name: "2D"}, {id: 7, name: "Singleplayer"}];
   admin = true
   user = "sirodriguez"
  
@@ -36,7 +35,6 @@ export class GetVideogamesComponent implements OnInit {
               .reduce((data, byte) => data + String.fromCharCode(byte), '')
           );
           videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:" + videogame.portada.tipoImagen + ";base64, " + portadaBase64);
-          videogame.tags = this.tags;
         });
         this.videogames = res;
       }
