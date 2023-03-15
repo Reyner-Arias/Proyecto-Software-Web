@@ -41,13 +41,46 @@ adminVideogameController.postVideogame = async function (req, res) {
     if (isValidImageExtension(req.body.imagepath) && isValidImageExtension(req.body.facepath) 
       && isValidImageExtension(req.body.instapath) && isValidImageExtension(req.body.twitterpath)) {
       
-      req.body.portada.data = fs.readFileSync(req.body.imagepath)
-      //req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
-      req.body.juegoZip.data = null;
-      req.body.facebook.data = fs.readFileSync(req.body.facepath)
-      req.body.instagram.data = fs.readFileSync(req.body.instapath)
-      req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
+      if(req.body.imagepath) {
+        if(fs.existsSync(req.body.imagepath)){
+          req.body.portada.data = fs.readFileSync(req.body.imagepath)
+        }else{
+          return res.status(404).json('Image file for cover not found.');
+        }
+      }
 
+      if(req.body.filepath) {
+        if(fs.existsSync(req.body.filepath)){
+          req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
+        }else{
+          return res.status(404).json('Zip file not found.');
+        }
+      }
+
+      if(req.body.facepath) {
+        if(fs.existsSync(req.body.facepath)){
+          req.body.facebook.data = fs.readFileSync(req.body.facepath)
+        }else{
+          return res.status(404).json('Image file for facebook QR not found.');
+        }
+      }
+
+      if(req.body.instapath) {
+        if(fs.existsSync(req.body.instapath)){
+          req.body.instagram.data = fs.readFileSync(req.body.instapath)
+        }else{
+          return res.status(404).json('Image file for Instagram QR not found.');
+        }
+      }
+      
+      if(req.body.twitterpath) {
+        if(fs.existsSync(req.body.twitterpath)){
+          req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
+        }else{
+          return res.status(404).json('Image file for Twitter QR not found.');
+        }
+      }
+      
       const readStream = fs.createReadStream(req.body.filepath);
 
       const uploadStream = bucket.openUploadStream(req.body.titulo + '.zip', {
