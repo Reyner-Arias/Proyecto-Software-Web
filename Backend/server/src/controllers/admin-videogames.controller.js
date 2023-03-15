@@ -125,7 +125,6 @@ adminVideogameController.deleteVideogame = async function (req, res) {
   })
 }
 
-
 // Actualizar un videojuego
 adminVideogameController.putVideogame = async (req, res) => {
   var updatedFields = {};
@@ -190,7 +189,12 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  Object.assign(updatedFields, {titulo: req.body.titulo, sinopsis: req.body.sinopsis, usuario: req.body.usuario});
+  if(req.body.tags.length == 0) {
+    return res.status(404).json('Tags not found.');
+  }
+
+  Object.assign(updatedFields, {titulo: req.body.titulo, sinopsis: req.body.sinopsis, 
+    usuario: req.body.usuario, tags: req.body.tags});
   var updatedFieldsSet =  { $set: updatedFields };
 
   Videojuego.findOneAndUpdate({ _id: req.body._id }, updatedFieldsSet, (err, videogame) => {
@@ -203,21 +207,5 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   })
 };
-
-// Descargar un videojuego archivo zip
-adminVideogameController.getZipFile = async function (req,res) {
-  
-  const writeStream = fs.createWriteStream(req.body.destPath + req.body.filename);
-
-  const downloadStream = bucket.openDownloadStreamByName(req.body.filename);
-
-  downloadStream.pipe(writeStream);
-
-  writeStream.on('finish', function() {
-    console.log('File downloaded successfully');
-  });
-
-  res.send("Failed to download file");
-}
 
 module.exports = adminVideogameController

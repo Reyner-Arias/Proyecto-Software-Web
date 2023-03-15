@@ -1,6 +1,7 @@
 import { SafeResourceUrl } from "@angular/platform-browser";
 
 export interface Videogame {
+    _id: string;
     titulo: string;
     usuario: string;
     sinopsis: string;

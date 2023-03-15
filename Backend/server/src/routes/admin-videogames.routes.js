@@ -15,6 +15,6 @@ router.post("/post", adminVideogameController.postVideogame);
 router.get("/get", adminVideogameController.getVideogame);
 router.delete("/delete", adminVideogameController.deleteVideogame);
 router.get("/get-zip-file", adminVideogameController.getZipFile);
-
+router.put("/put", adminVideogameController.putVideogame);
 
 module.exports = router;

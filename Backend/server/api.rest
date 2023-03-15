@@ -63,6 +63,20 @@ Content-Type: application/json
 
 ####
 
+#Actualizar Videojuego
+PUT http://localhost:3000/admin-videogames/put
+Content-Type: application/json
+
+{
+    "_id": "640989c84a3d5e5fb668f576",
+    "titulo": "Mirror",
+    "sinopsis": "Josué despierta en un cuarto, pero hay algo extraño. Esta es la casa en la que vivía hace 37 años, cuando era sólo un niño. Ahora para volver al futuro tendrá que obtener ayuda de un niño, quien es el que tiene las herramientas para abrir los portales que lo llevarán de regreso al presente. ",
+    "usuario": "mhidalgos",
+    "imagepath": "C:\\Users\\DAADIOS\\Downloads\\Mirror.jpg"
+}
+
+####
+
 #Get videojuego
 GET http://localhost:3000/admin-videogames/get
 Content-Type: application/json
@@ -74,7 +88,7 @@ DELETE http://localhost:3000/admin-videogames/delete
 Content-Type: application/json
 
 {
-    "_id": "64017a5085e6e7d7952fe0fd"
+    "_id": "640549b973108c0ad51e7906"
 }
 
 

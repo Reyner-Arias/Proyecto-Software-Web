@@ -27,7 +27,7 @@ const routes: Routes = [
         path: 'update',
         component: UpdateVideogameComponent,
         data: {
-          title: 'Update videogame',
+          title: 'Editar videojuego',
         }
       },
       {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Videogame } from 'src/app/models/Videogame.model';
+import { VideogamesService } from '../../../services/videogames.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-videogame-detail',
@@ -9,9 +11,11 @@ import { Videogame } from 'src/app/models/Videogame.model';
 })
 export class VideogameDetailComponent implements OnInit {
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  constructor(private domSanitizer: DomSanitizer,  public router: Router,
+    private videogamesService: VideogamesService) {}
 
   videogame: Videogame = {
+    _id: '',
     titulo: '',
     usuario: '',
     sinopsis: '',
@@ -31,7 +35,7 @@ export class VideogameDetailComponent implements OnInit {
     imagenTwitter: '',
     twitterpath: '',
   }
-
+  
   ngOnInit(): void {
     this.videogame = history.state;
 
@@ -63,5 +67,38 @@ export class VideogameDetailComponent implements OnInit {
     this.videogame.imagenTwitter = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
       this.videogame.twitter.tipoImagen +";base64, " + twitterBase64);
   }
+
+  showDeleteModal() {
+    this.modalMessage = "¿Está seguro de eliminar "+ this.videogame.titulo +"?"
+    this.openCloseInfoModal();
+  }
+
+  onDeleteVideogame() {
+    this.videogamesService.deleteVideogame({_id: this.videogame._id}).subscribe({
+      error: (err: any) => { 
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.router.navigate(['/videogames']);
+      }
+    });
+  }
+
+  /* ---------------------- Modal ---------------------- */
+
+  public modalMessage = "";
+  public modalTitle = "Atención";
+  public visible = false;
+
+  openCloseInfoModal() {
+    this.visible = !this.visible;
+  }
+
+  handleInfoModalChange(event: any) {
+    this.visible = event;
+  }
+
+  /* ---------------------- ----- ---------------------- */
 
 }

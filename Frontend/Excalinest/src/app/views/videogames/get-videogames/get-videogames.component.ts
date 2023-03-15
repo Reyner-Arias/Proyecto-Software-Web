@@ -10,16 +10,18 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class GetVideogamesComponent implements OnInit {
 
-  videogamesByDeveloper = new Array<Videogame>();
-  tags = [{id: 5, name: "Indie"}, {id: 3, name: "2D"}, {id: 7, name: "Singleplayer"}];
+  videogames = new Array<Videogame>();
+  admin = true
+  user = "sirodriguez"
  
   constructor(private videogamesService: VideogamesService,
     private domSanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.videogamesService.getDeveloperVideogames("sirodriguez").subscribe({
+    this.videogamesService.getVideogames(this.admin, this.user).subscribe({
       error: (err: any) => { 
-        console.log(err);
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
       },
       next: (res: Array<Videogame>) => {
         this.showSpinner = false;
@@ -33,9 +35,8 @@ export class GetVideogamesComponent implements OnInit {
               .reduce((data, byte) => data + String.fromCharCode(byte), '')
           );
           videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:" + videogame.portada.tipoImagen + ";base64, " + portadaBase64);
-          videogame.tags = this.tags;
         });
-        this.videogamesByDeveloper = res;
+        this.videogames = res;
       }
     });
   }
