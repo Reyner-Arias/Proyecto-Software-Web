@@ -71,10 +71,12 @@ export class UpdateVideogameComponent implements OnInit {
 
     this.tagsService.getTags().subscribe({
       error: (err: any) => { 
+        this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal(false);
       },
       next: (res: any) => {
+        this.error = false;
         this.listOfTags = res;
       }
     });
@@ -110,10 +112,12 @@ export class UpdateVideogameComponent implements OnInit {
 
     this.videogamesService.putVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
+        this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal(false);
       },
       next: (res: any) => {
+        this.error = false;
         this.modalMessage = res.replace(/['"]+/g, '');
         this.openCloseInfoModal(true);
       }
@@ -139,12 +143,14 @@ export class UpdateVideogameComponent implements OnInit {
   public modalMessage = "";
   public modalTitle = "Atención";
   public visible = false;
+  public error = false;
 
   openCloseInfoModal(cleanForm: boolean) {
     this.visible = !this.visible;
     if(this.visible && cleanForm) {
       this.resetForm();
-    } else if(!this.visible) {
+    }
+    if(!this.visible && !this.error) {
       this.router.navigate(['/videogames']);
     }
   }
