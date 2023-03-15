@@ -51,7 +51,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 
       if(req.body.filepath) {
         if(fs.existsSync(req.body.filepath)){
-          req.body.juegoZip.data = fs.readFileSync(req.body.filepath)
+          req.body.juegoZip.data = null;
         }else{
           return res.status(404).json('Zip file not found.');
         }
