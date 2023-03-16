@@ -25,14 +25,14 @@ const routes: Routes = [
         path: 'post',
         component: PostTagComponent,
         data: {
-          title: 'Post tag',
+          title: 'Crear etiqueta',
         }
       },
       {
         path: 'update',
         component: UpdateTagComponent,
         data: {
-          title: 'Update tag',
+          title: 'Actualizar etiqueta',
         }
       },
       {
