@@ -16,8 +16,16 @@ export class TagsService {
     return this.http.post<any>(`${this.apiUrl}/post`, tag);
   }
 
+  putTag(tag: any) {
+    return this.http.post<any>(`${this.apiUrl}/put`, tag);
+  }
+
   getTags () {
     return this.http.get<any>(`${this.apiUrl}/get`);
+  }
+
+  getTag (id: Number) {
+    return this.http.get<any>(`${this.apiUrl}/get`+`/${id}`);
   }
 
   getMaxId() {

@@ -10,7 +10,7 @@
             <h5 cCardTitle>{{tag.name}}</h5>
             <c-row>
                 <c-col class="text-end mb-12">
-                    <button cButton color="dark" class="mb-4" [routerLink]="['/tags/tag']" [state]="tag" size="sm">Editar</button>
+                    <a cButton color="dark" class="mb-4" [routerLink]="['/tags/update']" [queryParams]="{tag: tag.id}" size="sm">Editar</a>
                     <button cButton color="dark" class="mb-4" (click)="deleteTag(tag.id)" size="sm">Eliminar</button>
                 </c-col>
             </c-row>

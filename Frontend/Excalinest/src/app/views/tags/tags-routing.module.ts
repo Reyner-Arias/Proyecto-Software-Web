@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GetTagsComponent } from './get-tags/get-tags.component';
 import { PostTagComponent } from './post-tag/post-tag.component';
-
-//import { UpdateTagComponent } from './update-tag/update-tag.component';
-//import { TagDetailComponent } from './tag-detail/tag-detail.component';
+import { UpdateTagComponent } from './update-tag/update-tag.component';
 
 const routes: Routes = [
   {
@@ -30,7 +28,6 @@ const routes: Routes = [
           title: 'Post tag',
         }
       },
-      /*
       {
         path: 'update',
         component: UpdateTagComponent,
@@ -38,7 +35,6 @@ const routes: Routes = [
           title: 'Update tag',
         }
       },
-      */
       {
         path: 'get',
         component: GetTagsComponent,
@@ -46,15 +42,6 @@ const routes: Routes = [
           title: 'Etiquetas',
         }
       },
-      /*
-      {
-        path: 'tag',
-        component: TagDetailComponent,
-        data: {
-          title: 'Detalles del videojuego'
-        }
-      }
-      */
     ]
   },
 ];

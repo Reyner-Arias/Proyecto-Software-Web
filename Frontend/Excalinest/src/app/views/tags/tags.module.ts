@@ -20,8 +20,7 @@ import {
 import { TagsRoutingModule } from './tags-routing.module';
 import { GetTagsComponent } from './get-tags/get-tags.component';
 import { PostTagComponent } from './post-tag/post-tag.component';
-//import { UpdateTagComponent } from './update-tag/update-tag.component';
-//import { TagDetailComponent } from './tag-detail/tag-detail.component';
+import { UpdateTagComponent } from './update-tag/update-tag.component';
 
 @NgModule({
   imports: [
@@ -44,10 +43,9 @@ import { PostTagComponent } from './post-tag/post-tag.component';
     ModalModule
   ],
   declarations: [
-    //UpdateTagComponent,
+    UpdateTagComponent,
     PostTagComponent,
     GetTagsComponent,
-    //TagDetailComponent
   ]
 })
 export class TagsModule {

@@ -54,7 +54,7 @@ adminTagController.putTag = async (req, res) => {
       } else if (!tag) {
         res.status(404).json( 'Tag not found' )
       } else {
-        res.status(200).json({ message: 'Tag updated' })
+        res.status(200).json( 'Etiqueta actualizada' )
       }
     })
 };
