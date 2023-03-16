@@ -10,7 +10,7 @@
             <h5>Publicado por {{videogame.usuario}}</h5>
         </c-row>
         <c-row class="col-download-button">
-            <button cButton color="dark" class="download-button"><svg cIcon name="cilCloudDownload" class="me-2 icon"></svg>Descargar .zip</button>
+            <button cButton color="dark" class="download-button" (click)="downloadFile()"><svg cIcon name="cilCloudDownload" class="me-2 icon"></svg>Descargar .zip</button>
         </c-row>
         <c-row class="d-grid gap-2 d-md-flex justify-content-md-end crud-buttons">
             <button cButton color="info" class="crud-button" size="sm" [routerLink]="['/videogames/update']" [state]="videogame"><svg cIcon name="cilPencil" class="me-2 icon"></svg>Modificar</button>

@@ -129,7 +129,7 @@ export class PostVideogameComponent implements OnInit{
   /* ---------------------- Modal ---------------------- */
 
   public modalMessage = "";
-  public modalTitle = "Creación de videojuego";
+  public modalTitle = "Atención";
   public visible = false;
   public error = false;
 

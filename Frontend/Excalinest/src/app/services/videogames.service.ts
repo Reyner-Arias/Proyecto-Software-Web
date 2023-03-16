@@ -38,5 +38,11 @@ export class VideogamesService {
   putVideogame(videogame: any) {
     return this.http.put(this.adminPutAPI, videogame, {responseType: 'text'});
   }
+
+  adminGetZipFileAPI = 'http://localhost:3000/admin-videogames/get-zip-file'
+
+  getZipFile(body: any) {
+    return this.http.post(this.adminGetZipFileAPI, body, {responseType: 'text'});
+  }
   
 }

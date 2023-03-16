@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class VideogameDetailComponent implements OnInit {
 
+  private excalinestDownloadsPath = "C:\\Excalinest\\";
+
   constructor(private domSanitizer: DomSanitizer,  public router: Router,
     private videogamesService: VideogamesService) {}
 
@@ -81,6 +83,23 @@ export class VideogameDetailComponent implements OnInit {
       },
       next: (res: any) => {
         this.router.navigate(['/videogames']);
+      }
+    });
+  }
+
+  downloadFile() {
+    let body = {
+      "destPath": this.excalinestDownloadsPath,
+      "filename": this.videogame.titulo+".zip"
+    }
+    this.videogamesService.getZipFile(body).subscribe({
+      error: (err: any) => {
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.modalMessage = res+". Excalinest coloca el archivo en C:\\Excalinest";
+        this.openCloseInfoModal();
       }
     });
   }
