@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class VideogameDetailComponent implements OnInit {
 
   private excalinestDownloadsPath = "C:\\Excalinest\\";
+  public deleteButton = false;
 
   constructor(private domSanitizer: DomSanitizer,  public router: Router,
     private videogamesService: VideogamesService) {}
@@ -71,13 +72,15 @@ export class VideogameDetailComponent implements OnInit {
   }
 
   showDeleteModal() {
+    this.deleteButton = true;
     this.modalMessage = "¿Está seguro de eliminar "+ this.videogame.titulo +"?"
     this.openCloseInfoModal();
   }
 
   onDeleteVideogame() {
     this.videogamesService.deleteVideogame({_id: this.videogame._id}).subscribe({
-      error: (err: any) => { 
+      error: (err: any) => {
+        this.deleteButton = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
       },
@@ -94,11 +97,13 @@ export class VideogameDetailComponent implements OnInit {
     }
     this.videogamesService.getZipFile(body).subscribe({
       error: (err: any) => {
+        this.deleteButton = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
       },
       next: (res: any) => {
-        this.modalMessage = res+". Excalinest coloca el archivo en C:\\Excalinest";
+        this.deleteButton = false;
+        this.modalMessage = res+" Excalinest coloca el archivo en C:\\Excalinest";
         this.openCloseInfoModal();
       }
     });

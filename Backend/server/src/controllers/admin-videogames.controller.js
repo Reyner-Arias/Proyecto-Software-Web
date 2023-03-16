@@ -224,14 +224,21 @@ adminVideogameController.putVideogame = async (req, res) => {
 // Descargar un videojuego archivo zip
 adminVideogameController.getZipFile = async function (req,res) {
   const writeStream = fs.createWriteStream(req.body.destPath + req.body.filename);
-  const downloadStream = bucket.openDownloadStreamByName(req.body.filename);
+  const downloadStream = bucket.openDownloadStreamByName(req.body.filename)
+    .on('error', function (error) {
+      if (error.name === 'MongoRuntimeError' && error.message.includes('FileNotFound')) {
+        return res.status(404).send("Error: No se encontró el archivo zip.");
+      } else {
+        return res.status(500).send("Error al descargar el archivo zip: " + error);
+      }
+    });
 
   downloadStream.pipe(writeStream)
   .on('error', function (error) {
-    return res.send("Error al descargar el archivo zip: " + error);
+    return res.status(500).send("Error al descargar el archivo zip: " + error);
   })
   .on('finish', function () {
-    return res.send("Archivo descargado.");
+    return res.status(200).send("Archivo descargado.");
   });
 }
 

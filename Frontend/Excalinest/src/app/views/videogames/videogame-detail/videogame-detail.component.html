@@ -71,7 +71,7 @@
     </c-modal-header>
     <c-modal-body> {{this.modalMessage}} </c-modal-body>
     <c-modal-footer>
-        <button cButton color="danger" (click)="onDeleteVideogame()">Eliminar</button>
+        <button cButton color="danger" (click)="onDeleteVideogame()" *ngIf="deleteButton">Eliminar</button>
         <button (click)="openCloseInfoModal()" cButton color="secondary">
           Cerrar
         </button>
