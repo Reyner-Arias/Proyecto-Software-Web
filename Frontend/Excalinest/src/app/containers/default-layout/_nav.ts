@@ -25,12 +25,12 @@ export const navItems: INavData[] = [
     title: true
   },
   {
-    name: 'Lista',
+    name: 'Lista de etiquetas',
     url: '/tags/get',
     iconComponent: { name: 'cil-tags' }
   },
   {
-    name: 'Crear',
+    name: 'Crear etiqueta',
     url: '/tags/post',
     iconComponent: { name: 'cil-pencil'}
   },
