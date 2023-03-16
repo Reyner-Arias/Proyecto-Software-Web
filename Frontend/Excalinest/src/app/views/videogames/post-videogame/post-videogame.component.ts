@@ -26,7 +26,7 @@ export class PostVideogameComponent implements OnInit{
     titulo: '',
     usuario: '',
     sinopsis: '',
-    juegoZip: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
+    bucketId: '',
     filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',

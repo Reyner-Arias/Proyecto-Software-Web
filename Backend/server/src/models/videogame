@@ -6,7 +6,7 @@ const videogameSchema = new Schema(
     portada:{ tipoImagen: String, data: Buffer, required: false },
     sinopsis: { type: String, required: false },
     usuario: { type: String, required: false },
-    juegoZip: { tipoArchivo: String, data: Buffer, required: false },
+    bucketId: { type: String, required: false },
     facebook: { tipoImagen: String, data: Buffer, required: false },
     instagram: { tipoImagen: String, data: Buffer, required: false },
     twitter: { tipoImagen: String, data: Buffer, required: false },

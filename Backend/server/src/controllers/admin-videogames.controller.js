@@ -94,6 +94,7 @@ adminVideogameController.postVideogame = async function (req, res) {
         res.status(500).send("Error al subir el archivo zip: " + error);
       })
       .on('finish', async () => {
+        req.body.bucketId = uploadStream.id;
         const videojuego = new Videojuego(req.body)
         await videojuego.save((err) => {
           if (err) {
@@ -143,18 +144,30 @@ adminVideogameController.deleteVideogame = async function (req, res) {
 // Actualizar un videojuego
 adminVideogameController.putVideogame = async (req, res) => {
   var updatedFields = {};
+  var videogame = req.body.videogame;
+  var previousFilename = req.body.previousTitle+".zip";
+  var newFilename = videogame.titulo+".zip";
 
-  if(req.body.filepath) {
-    if(path.extname(req.body.filepath) != ".zip") {
+  if(previousFilename != newFilename) {
+    const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
+    if (!file) {
+      return res.status(404).send('Error: No se ha encontrado el archivo ' + 
+        previousFilename + ' para actualizar el título del videojuego.');
+    }
+    await bucket.rename(file[0]._id, newFilename);
+  }
+
+  if(videogame.filepath) {
+    if(path.extname(videogame.filepath) != ".zip") {
       return res.status(500).json('Error: El archivo del videojuego debe ser un zip.');
     }
   }
 
-  if(req.body.imagepath) {
-    if (isValidImageExtension(req.body.imagepath)) {
-      if(fs.existsSync(req.body.imagepath)) {
-        Object.assign(updatedFields, { portada: {tipoImagen: getImageType(req.body.imagepath), 
-          data: fs.readFileSync(req.body.imagepath)} });
+  if(videogame.imagepath) {
+    if (isValidImageExtension(videogame.imagepath)) {
+      if(fs.existsSync(videogame.imagepath)) {
+        Object.assign(updatedFields, { portada: {tipoImagen: getImageType(videogame.imagepath), 
+          data: fs.readFileSync(videogame.imagepath)} });
       } else {
         return res.status(404).json('Error: No se ha encontrado la imagen de portada.');
       }
@@ -163,11 +176,11 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  if(req.body.facepath) {
-    if (isValidImageExtension(req.body.facepath)) {
-      if(fs.existsSync(req.body.facepath)) {
-        Object.assign(updatedFields, { facebook: {tipoImagen: getImageType(req.body.facepath), 
-          data: fs.readFileSync(req.body.facepath)} });
+  if(videogame.facepath) {
+    if (isValidImageExtension(videogame.facepath)) {
+      if(fs.existsSync(videogame.facepath)) {
+        Object.assign(updatedFields, { facebook: {tipoImagen: getImageType(videogame.facepath), 
+          data: fs.readFileSync(videogame.facepath)} });
       } else {
         return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Facebook.');
       }
@@ -176,11 +189,11 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  if(req.body.instapath) {
-    if (isValidImageExtension(req.body.instapath)) {
-      if(fs.existsSync(req.body.instapath)) {
-        Object.assign(updatedFields, { instagram: {tipoImagen: getImageType(req.body.instapath), 
-          data: fs.readFileSync(req.body.instapath)} });
+  if(videogame.instapath) {
+    if (isValidImageExtension(videogame.instapath)) {
+      if(fs.existsSync(videogame.instapath)) {
+        Object.assign(updatedFields, { instagram: {tipoImagen: getImageType(videogame.instapath), 
+          data: fs.readFileSync(videogame.instapath)} });
       } else {
         return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Instagram.');
       }
@@ -189,11 +202,11 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  if(req.body.twitterpath) {
-    if (isValidImageExtension(req.body.twitterpath)) {
-      if(fs.existsSync(req.body.twitterpath)) {
-        Object.assign(updatedFields, { twitter: {tipoImagen: getImageType(req.body.twitterpath), 
-          data: fs.readFileSync(req.body.twitterpath)} });
+  if(videogame.twitterpath) {
+    if (isValidImageExtension(videogame.twitterpath)) {
+      if(fs.existsSync(videogame.twitterpath)) {
+        Object.assign(updatedFields, { twitter: {tipoImagen: getImageType(videogame.twitterpath), 
+          data: fs.readFileSync(videogame.twitterpath)} });
       } else {
         return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Twitter.');
       }
@@ -202,15 +215,15 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  if(req.body.tags.length == 0) {
+  if(videogame.tags.length == 0) {
     return res.status(404).json('Error: No se encontraron etiquetas.');
   }
 
-  Object.assign(updatedFields, {titulo: req.body.titulo, sinopsis: req.body.sinopsis, 
-    usuario: req.body.usuario, tags: req.body.tags});
+  Object.assign(updatedFields, {titulo: videogame.titulo, sinopsis: videogame.sinopsis, 
+    usuario: videogame.usuario, tags: videogame.tags});
   var updatedFieldsSet =  { $set: updatedFields };
 
-  Videojuego.findOneAndUpdate({ _id: req.body._id }, updatedFieldsSet, (err, videogame) => {
+  Videojuego.findOneAndUpdate({ _id: videogame._id }, updatedFieldsSet, (err, videogame) => {
     if (err) {
       return res.status(500).json(err.message);
     } else if (!videogame) {

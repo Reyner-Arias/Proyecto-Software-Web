@@ -5,7 +5,7 @@ export interface Videogame {
     titulo: string;
     usuario: string;
     sinopsis: string;
-    juegoZip: {data: {data: ArrayBuffer, type: string}, tipoArchivo: string};
+    bucketId: string;
     filepath: string;
     portada: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagen: SafeResourceUrl | undefined;

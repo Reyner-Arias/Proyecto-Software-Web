@@ -25,7 +25,7 @@ export class UpdateVideogameComponent implements OnInit {
     titulo: '',
     usuario: '',
     sinopsis: '',
-    juegoZip: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
+    bucketId: '',
     filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
@@ -55,6 +55,7 @@ export class UpdateVideogameComponent implements OnInit {
     this.newVideogame.titulo = history.state.titulo;
     this.newVideogame.sinopsis = history.state.sinopsis;
     this.newVideogame.usuario = history.state.usuario;
+    this.newVideogame.bucketId = history.state.bucketId;
     this.tags = history.state.tags;
 
     this.putVideogameForm = this.formBuilder.group({
@@ -110,7 +111,7 @@ export class UpdateVideogameComponent implements OnInit {
     if(this.putVideogameForm.value.instagram != "") { this.newVideogame.instapath = this.putVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putVideogameForm.value.twitter != "") { this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
-    this.videogamesService.putVideogame(this.newVideogame).subscribe({
+    this.videogamesService.putVideogame({"videogame": this.newVideogame, "previousTitle":history.state.titulo}).subscribe({
       error: (err: any) => { 
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
