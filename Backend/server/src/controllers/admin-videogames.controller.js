@@ -52,9 +52,7 @@ adminVideogameController.postVideogame = async function (req, res) {
       }
 
       if(req.body.filepath) {
-        if(fs.existsSync(req.body.filepath)){
-          req.body.juegoZip.data = null;
-        }else{
+        if(!fs.existsSync(req.body.filepath)){
           return res.status(404).json('Error: No se encontró el archivo zip.');
         }
       }
@@ -91,7 +89,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 
       uploadStream
       .on('error', function (error) {
-        res.status(500).send("Error al subir el archivo zip: " + error);
+        return res.status(500).send("Error al subir el archivo zip: " + error);
       })
       .on('finish', async () => {
         req.body.bucketId = uploadStream.id;
@@ -148,7 +146,7 @@ adminVideogameController.putVideogame = async (req, res) => {
   var previousFilename = req.body.previousTitle+".zip";
   var newFilename = videogame.titulo+".zip";
 
-  if(previousFilename != newFilename) {
+  if(previousFilename != newFilename && !videogame.filepath) {
     const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
     if (!file) {
       return res.status(404).send('Error: No se ha encontrado el archivo ' + 
@@ -160,6 +158,24 @@ adminVideogameController.putVideogame = async (req, res) => {
   if(videogame.filepath) {
     if(path.extname(videogame.filepath) != ".zip") {
       return res.status(500).json('Error: El archivo del videojuego debe ser un zip.');
+    } else {
+      const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
+      if (!file) {
+        return res.status(404).send('Error: No se ha encontrado el archivo ' + previousFilename + ' para actualizarlo.');
+      }
+
+      const uploadStream = bucket.openUploadStream(newFilename);
+      const readStream = fs.createReadStream(videogame.filepath);
+
+      readStream.pipe(uploadStream)
+        .on('finish', async () => {
+          await bucket.delete(file[0]._id);
+        })
+        .on('error', async (error) => {
+          return res.status(500).send("Error al subir el archivo zip: " + error);
+        });
+
+      Object.assign(updatedFields, { bucketId: uploadStream.id });
     }
   }
 

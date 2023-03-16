@@ -111,7 +111,7 @@ export class UpdateVideogameComponent implements OnInit {
     if(this.putVideogameForm.value.instagram != "") { this.newVideogame.instapath = this.putVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putVideogameForm.value.twitter != "") { this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
-    this.videogamesService.putVideogame({"videogame": this.newVideogame, "previousTitle":history.state.titulo}).subscribe({
+    this.videogamesService.putVideogame({videogame: this.newVideogame, previousTitle:history.state.titulo}).subscribe({
       error: (err: any) => { 
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
