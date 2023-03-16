@@ -14,7 +14,7 @@ adminTagController.postTag = async (req, res) => {
     if (err) {
       res.status(500).json({ error: err.message })
     } else {
-      res.status(201).json({ message: 'Tag created' })
+      res.status(201).json({ message: 'La etiqueta se ha creado correctamente.' })
     }
   })
 };
@@ -37,7 +37,7 @@ adminTagController.getTag = async (req, res) => {
     if (err) {
       res.status(500).json({ error: err.message })
     } else if (!tag) {
-      res.status(404).json({ message: 'Tag not found' })
+      res.status(404).json({ message: 'No se ha encontrado la etiqueta solicitada.' })
     } else {
       res.status(200).json(tag)
     }
@@ -52,9 +52,9 @@ adminTagController.putTag = async (req, res) => {
     if (err) {
       res.status(500).json({ error: err.message })
     } else if (!tag) {
-      res.status(404).json({ message: 'Tag not found' })
+      res.status(404).json({ message: 'No se ha encontrado la etiqueta solicitada.' })
     } else {
-      res.status(200).json({ message: 'Tag updated' })
+      res.status(200).json({ message: 'La etiqueta se ha actualizado exitosamente.' })
     }
   })
 };
@@ -66,9 +66,9 @@ adminTagController.deleteTag = async (req, res) => {
     if (err) {
       res.status(500).json({ error: err.message })
     } else if (!tag) {
-      res.status(404).json({ message: 'Tag not found' })
+      res.status(404).json({ message: 'No se ha encontrado la etiqueta solicitada.' })
     } else {
-      res.status(200).json({ message: 'Tag deleted' })
+      res.status(200).json({ message: 'La etiqueta se ha eliminado correctamente.' })
     }
   })
 };

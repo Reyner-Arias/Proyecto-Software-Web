@@ -47,7 +47,7 @@ adminVideogameController.postVideogame = async function (req, res) {
         if(fs.existsSync(req.body.imagepath)){
           req.body.portada.data = fs.readFileSync(req.body.imagepath)
         }else{
-          return res.status(404).json('Image file for cover not found.');
+          return res.status(404).json('No se encontró la imagen de portada.');
         }
       }
 
@@ -55,7 +55,7 @@ adminVideogameController.postVideogame = async function (req, res) {
         if(fs.existsSync(req.body.filepath)){
           req.body.juegoZip.data = null;
         }else{
-          return res.status(404).json('Zip file not found.');
+          return res.status(404).json('No se encontró el archivo zip.');
         }
       }
 
@@ -63,7 +63,7 @@ adminVideogameController.postVideogame = async function (req, res) {
         if(fs.existsSync(req.body.facepath)){
           req.body.facebook.data = fs.readFileSync(req.body.facepath)
         }else{
-          return res.status(404).json('Image file for facebook QR not found.');
+          return res.status(404).json('No se encontró la imagen del código QR de Facebook.');
         }
       }
 
@@ -71,7 +71,7 @@ adminVideogameController.postVideogame = async function (req, res) {
         if(fs.existsSync(req.body.instapath)){
           req.body.instagram.data = fs.readFileSync(req.body.instapath)
         }else{
-          return res.status(404).json('Image file for Instagram QR not found.');
+          return res.status(404).json('No se encontró la imagen del código QR de Instagram.');
         }
       }
       
@@ -79,7 +79,7 @@ adminVideogameController.postVideogame = async function (req, res) {
         if(fs.existsSync(req.body.twitterpath)){
           req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
         }else{
-          return res.status(404).json('Image file for Twitter QR not found.');
+          return res.status(404).json('No se encontró la imagen del código QR de Twitter.');
         }
       }
       
@@ -93,13 +93,13 @@ adminVideogameController.postVideogame = async function (req, res) {
         console.log('File uploaded to MongoDB');
         const videojuego = new Videojuego(req.body)
         await videojuego.save();
-        res.send("Videogame posted successfully");
+        res.send("El videojuego se ha publicado correctamente.");
       });
     } else {
-      res.status(500).json({ error: 'Image file must be jpg, jpeg or png' });
+      res.status(500).json({ error: 'El formato de la imagen debe ser jpg, png o jpeg.' });
     }
   } else {
-    res.status(500).json({ error: 'Game file must be a zip file' });
+    res.status(500).json({ error: 'El archivo del videojuego debe ser un zip.' });
   }
 }
 
@@ -120,9 +120,9 @@ adminVideogameController.deleteVideogame = async function (req, res) {
     if (err) {
       res.status(500).json(err.message)
     } else if (!videogame) {
-      res.status(404).json('Videogame not found')
+      res.status(404).json('No se ha encontrado el videojuego.')
     } else {
-      res.status(200).json('Videogame deleted successfully')
+      res.status(200).json('El videojuego se ha eliminado correctamente.')
     }
   })
 }
@@ -133,9 +133,9 @@ adminVideogameController.putVideogame = async (req, res) => {
 
   if(req.body.filepath) {
     if(path.extname(req.body.filepath) == ".zip") {
-      console.log("Upload new file");
+      console.log("Actualizar archivo");
     } else {
-      return res.status(500).json('Game file must be a zip file');
+      return res.status(500).json('El archivo del videojuego debe ser un zip.');
     }
   }
 
@@ -145,10 +145,10 @@ adminVideogameController.putVideogame = async (req, res) => {
         Object.assign(updatedFields, { portada: {tipoImagen: getImageType(req.body.imagepath), 
           data: fs.readFileSync(req.body.imagepath)} });
       } else {
-        return res.status(404).json('Image file not found.');
+        return res.status(404).json('No se ha encontrado la imagen de portada.');
       }
     } else {
-      return res.status(500).json('Image file must be jpg, jpeg or png');
+      return res.status(500).json('La imagen debe tener formato jpg, jpeg o png');
     }
   }
 
@@ -158,10 +158,10 @@ adminVideogameController.putVideogame = async (req, res) => {
         Object.assign(updatedFields, { facebook: {tipoImagen: getImageType(req.body.facepath), 
           data: fs.readFileSync(req.body.facepath)} });
       } else {
-        return res.status(404).json('Image file not found.');
+        return res.status(404).json('No se ha encontrado la imagen del código QR de Facebook.');
       }
     } else {
-      return res.status(500).json('Image file must be jpg, jpeg or png');
+      return res.status(500).json('La imagen debe tener formato jpg, jpeg o png');
     }
   }
 
@@ -171,10 +171,10 @@ adminVideogameController.putVideogame = async (req, res) => {
         Object.assign(updatedFields, { instagram: {tipoImagen: getImageType(req.body.instapath), 
           data: fs.readFileSync(req.body.instapath)} });
       } else {
-        return res.status(404).json('Image file not found.');
+        return res.status(404).json('No se ha encontrado la imagen del código QR de Instagram.');
       }
     } else {
-      return res.status(500).json('Image file must be jpg, jpeg or png');
+      return res.status(500).json('La imagen debe tener formato jpg, jpeg o png');
     }
   }
 
@@ -184,15 +184,15 @@ adminVideogameController.putVideogame = async (req, res) => {
         Object.assign(updatedFields, { twitter: {tipoImagen: getImageType(req.body.twitterpath), 
           data: fs.readFileSync(req.body.twitterpath)} });
       } else {
-        return res.status(404).json('Image file not found.');
+        return res.status(404).json('No se ha encontrado la imagen del código QR de Twitter.');
       }
     } else {
-      return res.status(500).json('Image file must be jpg, jpeg or png');
+      return res.status(500).json('La imagen debe tener formato jpg, jpeg o png');
     }
   }
 
   if(req.body.tags.length == 0) {
-    return res.status(404).json('Tags not found.');
+    return res.status(404).json('No se encontraron etiquetas.');
   }
 
   Object.assign(updatedFields, {titulo: req.body.titulo, sinopsis: req.body.sinopsis, 
@@ -203,9 +203,9 @@ adminVideogameController.putVideogame = async (req, res) => {
     if (err) {
       return res.status(500).json(err.message);
     } else if (!videogame) {
-      return res.status(404).json('Videogame not found');
+      return res.status(404).json('No se encontró el videojuego.');
     } else {
-      return res.status(200).json('Videogame updated');
+      return res.status(200).json('El videojuego se ha actualizado correctamente.');
     }
   })
 };
@@ -218,10 +218,10 @@ adminVideogameController.getZipFile = async function (req,res) {
   downloadStream.pipe(writeStream);
 
   writeStream.on('finish', function() {
-    console.log('File downloaded successfully');
+    console.log('Archivo descargado');
   });
   
-  res.send("Failed to download file");
+  res.send("Falló la descarga del archivo.");
 }
 
 module.exports = adminVideogameController
