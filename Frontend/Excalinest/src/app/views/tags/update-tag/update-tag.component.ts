@@ -19,8 +19,6 @@ export class UpdateTagComponent implements OnInit {
     name: ''
   }
 
-
-
   constructor(
     private activatedRoute: ActivatedRoute, 
     private TagsService: TagsService, 
@@ -30,53 +28,48 @@ export class UpdateTagComponent implements OnInit {
       name: new FormControl('', Validators.required)
     });
   }
-    
 
   getUpdateTagForm(): FormGroup {
     return this.updateTagForm;
   }
-    
 
   ngOnInit(): void {
+    
     this.updateTagForm = this.formBuilder.group({
       name: ['', Validators.required],
     });
   
     this.activatedRoute.queryParams.subscribe(params => {
-      const tagId = params['tag'];
-      this.TagsService.getTag(tagId).subscribe(tag => {
+      console.log(params);
+      this.tagId = params['tag'];
+      console.log(this.tagId);
+      this.TagsService.getTag(this.tagId).subscribe(tag => {
         this.updateTagForm.setValue({
           name: tag.name
         });
       });
-    });    
+    });
+    
   }
   
-  
-
   onUpdateTag() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      const tagId = params['tag'];
-      this.updatedTag.id = tagId;
-      this.updatedTag.name = this.updateTagForm.value.name;
-      console.log(this.updatedTag);
+    const id = +this.tagId;
+    this.updatedTag.id = id;
+    this.updatedTag.name = this.updateTagForm.value.name;
+    console.log(this.updatedTag);
 
-      this.TagsService.putTag(this.updatedTag).subscribe({
-        error: (err: any) => { 
-          this.modalMessage = err;
-          this.openCloseInfoModal();
-        },
-        next: (res: any) => {
-          this.modalMessage = res;
-          this.openCloseInfoModal();
-        }
-      });
+    this.TagsService.putTag(id, this.updatedTag).subscribe({
+      error: (err: any) => { 
+        this.modalMessage = err;
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.modalMessage = res;
+        this.openCloseInfoModal();
+      }
     });
   }
   
-  
-  
-
   updateTag() {
     this.validatedForm = true;
     if (this.updateTagForm.dirty && this.updateTagForm.valid) {

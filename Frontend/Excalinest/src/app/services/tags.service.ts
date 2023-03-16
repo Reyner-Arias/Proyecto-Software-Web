@@ -16,8 +16,8 @@ export class TagsService {
     return this.http.post<any>(`${this.apiUrl}/post`, tag);
   }
 
-  putTag(tag: any) {
-    return this.http.post<any>(`${this.apiUrl}/put`, tag);
+  putTag(id: Number,tag: any) {
+    return this.http.put<any>(`${this.apiUrl}/put`+`/${id}`, tag);
   }
 
   getTags () {
