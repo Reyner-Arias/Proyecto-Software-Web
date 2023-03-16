@@ -7,6 +7,8 @@ import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { UpdateVideogameComponent } from './views/videogames/update-videogame/update-videogame.component';
+import { GetTagsComponent } from './views/tags/get-tags/get-tags.component';
+import { UpdateTagComponent } from './views/tags/update-tag/update-tag.component';
 
 const routes: Routes = [
   {
@@ -76,6 +78,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/videogames/videogames.module').then((m) => m.VideogamesModule)
       },
+      {
+        path: 'tags',
+        loadChildren: () =>
+          import('./views/tags/tags.module').then((m) => m.TagsModule)
+      },
     ]
   },
   {
@@ -111,6 +118,20 @@ const routes: Routes = [
     component: UpdateVideogameComponent,
     data: {
       title: 'Update Videogame'
+    }
+  },
+  {
+    path: 'get-tags',
+    component: GetTagsComponent,
+    data: {
+      title: 'Get Tags'
+    }
+  },
+  {
+    path: 'update-tag',
+    component: UpdateTagComponent,
+    data: {
+      title: 'Update Tag'
     }
   },
   {path: '**', redirectTo: 'dashboard'}

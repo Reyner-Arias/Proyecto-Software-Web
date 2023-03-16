@@ -4,6 +4,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -87,7 +88,8 @@ const APP_CONTAINERS = [
     ListGroupModule,
     CardModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

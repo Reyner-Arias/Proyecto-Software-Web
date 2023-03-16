@@ -35,6 +35,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@coreui/coreui/dist/css/coreui.css",
+              "node_modules/@coreui/icons/css/all.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/scss/styles.scss"
             ],
             "scripts": [],
