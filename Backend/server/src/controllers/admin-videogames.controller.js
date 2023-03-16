@@ -128,13 +128,24 @@ adminVideogameController.getVideogame = async function (req, res) {
 
 // Eliminar un videojuego
 adminVideogameController.deleteVideogame = async function (req, res) {
-  Videojuego.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, (err, videogame) => {
+  Videojuego.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, async (err, videogame) => {
     if (err) {
-      res.status(500).json(err.message)
+      return res.status(500).json(err.message)
     } else if (!videogame) {
-      res.status(404).json('Error: No se ha encontrado el videojuego.')
+      return res.status(404).json('Error: No se ha encontrado el videojuego.')
     } else {
-      res.status(200).json('El videojuego se ha eliminado correctamente.')
+
+      var bucketId = req.body.bucketId;
+      console.log(bucketId);
+  
+      const file = await bucket.find({ _id: new mongodb.ObjectId(bucketId) }).toArray();
+        if (!file) {
+          console.log("No se ha encontrado el archivo para eliminarlo.");
+          return res.status(404).send('Error: No se ha encontrado el archivo para eliminarlo.');
+        }
+        console.log("archivo encontrado, a eliminarse");
+        await bucket.delete(file[0]._id);
+        return res.status(204).send("Archivo eliminado.");
     }
   })
 }
@@ -270,5 +281,20 @@ adminVideogameController.getZipFile = async function (req,res) {
     return res.status(200).send("Archivo descargado.");
   });
 }
+
+adminVideogameController.deleteZipFile = async function (req,res) {
+  var bucketId = req.params.bucketId;
+  
+  const file = await bucket.find({ _id: new mongodb.ObjectId(bucketId) }).toArray();
+    if (!file) {
+      return res.status(404).send('Error: No se ha encontrado el archivo ' + 
+        previousFilename + ' para eliminarlo.');
+    }
+    await bucket.delete(file[0]._id);
+    return res.status(200).send("Archivo eliminado.");
+  
+}
+
+
 
 module.exports = adminVideogameController

@@ -78,8 +78,9 @@ export class VideogameDetailComponent implements OnInit {
   }
 
   onDeleteVideogame() {
-    this.videogamesService.deleteVideogame({_id: this.videogame._id}).subscribe({
+    this.videogamesService.deleteVideogame({_id: this.videogame._id, bucketId: this.videogame.bucketId}).subscribe({
       error: (err: any) => {
+        console.log("Error: " + JSON.stringify(err));
         this.deleteButton = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
@@ -87,7 +88,7 @@ export class VideogameDetailComponent implements OnInit {
       next: (res: any) => {
         this.router.navigate(['/videogames']);
       }
-    });
+    });   
   }
 
   downloadFile() {

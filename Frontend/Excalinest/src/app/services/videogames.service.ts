@@ -28,9 +28,9 @@ export class VideogamesService {
 
   adminDeleteAPI = 'http://localhost:3000/admin-videogames/delete'
 
-  deleteVideogame(_id: any) {
+  deleteVideogame(body: any) {
     return this.http.delete(this.adminDeleteAPI,  { headers: new HttpHeaders({ 'Content-Type': 'application/json', }), 
-      body: _id, });
+      body: body, });
   }
 
   adminPutAPI = 'http://localhost:3000/admin-videogames/put'
@@ -43,6 +43,12 @@ export class VideogamesService {
 
   getZipFile(body: any) {
     return this.http.post(this.adminGetZipFileAPI, body, {responseType: 'text'});
+  }
+
+  adminDeleteZipFileAPI = 'http://localhost:3000/admin-videogames/delete-zip-file'
+
+  deleteZipFile(bucketId: any) {
+    return this.http.delete(this.adminDeleteZipFileAPI+`/${bucketId}`);
   }
   
 }
