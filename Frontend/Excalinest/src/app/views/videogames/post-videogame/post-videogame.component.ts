@@ -93,6 +93,13 @@ export class PostVideogameComponent implements OnInit{
     }
   }
 
+  playAudio() {
+    let audio = new Audio();
+    audio.src = "../../../../assets/audio/success.mp3";
+    audio.load();
+    audio.play();
+  }
+
   onPostVideogame() {
     this.newVideogame.titulo = this.postVideogameForm.value.title;
     this.newVideogame.usuario = this.postVideogameForm.value.developer;
@@ -104,6 +111,8 @@ export class PostVideogameComponent implements OnInit{
     this.newVideogame.twitterpath = this.postVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.tags = this.tags;
 
+    this.showSpinner = true;
+
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
         this.error = true;
@@ -111,6 +120,8 @@ export class PostVideogameComponent implements OnInit{
         this.openCloseInfoModal(false);
       },
       next: (res: any) => {
+        this.playAudio();
+        this.showSpinner = false;
         this.error = false;
         this.modalMessage = res.replace(/['"]+/g, '');
         this.openCloseInfoModal(true);
@@ -125,6 +136,10 @@ export class PostVideogameComponent implements OnInit{
       this.onPostVideogame();
     }
   }
+
+  /* --------------------- Spinner --------------------- */
+
+  public showSpinner = false;
 
   /* ---------------------- Modal ---------------------- */
 

@@ -4,10 +4,11 @@ const Videojuego = require("../models/videogame");
 const path = require("path");
 const mongodb = require("mongodb");
 const fs = require("fs");
+const mongoose = require("../database");
 
 const MongoClient = require('mongodb').MongoClient;
 const GridFSBucket = require('mongodb').GridFSBucket;
-const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
+const uri = 'mongodb://aketech:ake123@140.84.181.248:27017/ExcalinestDB';
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   if (err) throw err;
@@ -16,6 +17,13 @@ client.connect(err => {
 
 const db = client.db('ExcalinestDB');
 const bucket = new GridFSBucket(db, { bucketName: 'builds' });
+
+process.on('SIGINT', () => {
+  mongoose.connection.close(() => {
+    console.log('Mongoose default connection closed');
+    process.exit(0);
+  })
+});
 
 function isValidImageExtension(imagepath) {
   switch (path.extname(imagepath)) {
