@@ -67,13 +67,23 @@
         <label cLabel for="tags">Tags</label>
       </c-col>
       <c-col [sm]="10" class="columns-tags">
-        <select formControlName="tags" #selectTags cSelect size="3" sizing="md" (change)="addTag(selectTags.value)" required>
-          <option *ngFor="let tag of listOfTags" [selected]="tags.length != 1 || tags[0].id != -1">
+        <select #selectTags cSelect size="3" sizing="md" (change)="addTag(selectTags.value)" class="tag-picker" *ngIf="validatedForm == false">
+          <option *ngFor="let tag of listOfTags">
             {{tag.id}} - {{tag.name}}
           </option>
         </select>
-        <c-form-feedback [valid]="true">Etiquetas válidas</c-form-feedback>
-        <c-form-feedback [valid]="false">Ingrese mínimo una etiqueta</c-form-feedback>
+        <select #selectTags cSelect size="3" sizing="md" (change)="addTag(selectTags.value)" style="border: 1px solid #e55353;" *ngIf="validatedForm == true && tags[0].id == -1">
+          <option *ngFor="let tag of listOfTags">
+            {{tag.id}} - {{tag.name}}
+          </option>
+        </select>
+        <select #selectTags cSelect size="3" sizing="md" (change)="addTag(selectTags.value)" style="border: 1px solid #2eb85c;" *ngIf="validatedForm == true && tags[0].id != -1">
+          <option *ngFor="let tag of listOfTags">
+            {{tag.id}} - {{tag.name}}
+          </option>
+        </select>
+        <label *ngIf="validatedForm == true && tags[0].id != -1" style="margin-top: 0.25rem; font-size: 0.875em; color: #2eb85c;">Etiqueta válida</label>
+        <label *ngIf="validatedForm == true && tags[0].id == -1" style="margin-top: 0.25rem; font-size: 0.875em; color: #e55353;">Ingrese mínimo una etiqueta</label>
       </c-col>
       <c-col [sm]="10" class="columns-tags" *ngIf="tags.length != 1 || tags[0].id != -1">
           <button cButton color="light" shape="rounded-pill" *ngFor="let tag of tags" class="tag" disabled>{{tag.name}}</button>

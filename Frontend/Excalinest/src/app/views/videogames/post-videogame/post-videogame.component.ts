@@ -60,8 +60,7 @@ export class PostVideogameComponent implements OnInit{
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
-      twitter: ['', Validators.required],
-      tags: ['', Validators.required]
+      twitter: ['', Validators.required]
     });
 
     this.tagsService.getTags().subscribe({
@@ -174,8 +173,7 @@ export class PostVideogameComponent implements OnInit{
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
-      twitter: ['', Validators.required],
-      tags: ['', Validators.required]
+      twitter: ['', Validators.required]
     });
   }
 }

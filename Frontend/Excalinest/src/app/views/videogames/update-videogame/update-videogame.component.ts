@@ -66,8 +66,7 @@ export class UpdateVideogameComponent implements OnInit {
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
-      twitter: ['', Validators.required],
-      tags: ['', Validators.required]
+      twitter: ['', Validators.required]
     });
 
     this.tagsService.getTags().subscribe({
@@ -111,6 +110,8 @@ export class UpdateVideogameComponent implements OnInit {
     if(this.putVideogameForm.value.instagram != "") { this.newVideogame.instapath = this.putVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putVideogameForm.value.twitter != "") { this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
+    this.showSpinner = true;
+
     this.videogamesService.putVideogame({videogame: this.newVideogame, previousTitle:history.state.titulo}).subscribe({
       error: (err: any) => { 
         this.error = true;
@@ -119,6 +120,7 @@ export class UpdateVideogameComponent implements OnInit {
       },
       next: (res: any) => {
         this.error = false;
+        this.showSpinner = false;
         this.modalMessage = res.replace(/['"]+/g, '');
         this.openCloseInfoModal(true);
       }
@@ -126,18 +128,22 @@ export class UpdateVideogameComponent implements OnInit {
   }
 
   isValidForm() {
-    return this.putVideogameForm.value.titulo != "" &&
+    return this.putVideogameForm.value.title != "" &&
       this.putVideogameForm.value.sinopsis != "" &&
-      this.putVideogameForm.value.usuario != "" &&
+      this.putVideogameForm.value.developer != "" &&
       (this.tags.length != 1 || this.tags[0].id != -1);
   }
 
   submitVideogame() {
     this.validatedForm = true;
-    if (this.putVideogameForm.dirty && this.isValidForm()) {
+    if(this.isValidForm()) {
       this.onPutVideogame();
     }
   }
+
+  /* --------------------- Spinner --------------------- */
+
+  public showSpinner = false;
 
   /* ---------------------- Modal ---------------------- */
 
@@ -172,8 +178,7 @@ export class UpdateVideogameComponent implements OnInit {
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
-      twitter: ['', Validators.required],
-      tags: ['', Validators.required]
+      twitter: ['', Validators.required]
     });
   }
 
