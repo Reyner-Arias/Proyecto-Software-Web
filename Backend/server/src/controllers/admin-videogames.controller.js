@@ -128,7 +128,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 }
 
 // Obtener todos los videojuegos
-adminVideogameController.getVideogame = async function (req, res) {
+adminVideogameController.getVideogames = async function (req, res) {
   Videojuego.find({}, (err, videogames) => {
     if (err) {
       res.status(500).json(err.message)
@@ -294,6 +294,7 @@ adminVideogameController.getZipFile = async function (req,res) {
   });
 }
 
+// Eliminar un videojuego archivo zip
 adminVideogameController.deleteZipFile = async function (req,res) {
   var bucketId = req.params.bucketId;
   
@@ -306,7 +307,5 @@ adminVideogameController.deleteZipFile = async function (req,res) {
     return res.status(200).send("Archivo eliminado.");
   
 }
-
-
 
 module.exports = adminVideogameController
