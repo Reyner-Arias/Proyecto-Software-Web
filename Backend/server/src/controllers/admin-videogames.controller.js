@@ -34,12 +34,12 @@ function isValidImageExtension(imagepath) {
   }
 }
 
-function getImageType(imagepath) {
+function getImageExtension(imagepath) {
   switch (path.extname(imagepath)) {
     case '.png': return 'image/png';
     case '.jpg': return 'image/jpg';
     case '.jpeg': return 'image/jpeg';
-    default: return 'a';
+    default: return '';
   }
 }
 
@@ -53,6 +53,7 @@ adminVideogameController.postVideogame = async function (req, res) {
       
       if(req.body.imagepath) {
         if(fs.existsSync(req.body.imagepath)){
+          req.body.portada.tipoImagen = getImageExtension(req.body.imagepath)
           req.body.portada.data = fs.readFileSync(req.body.imagepath)
         }else{
           return res.status(404).json('Error: No se encontró la imagen de portada.');
@@ -67,6 +68,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 
       if(req.body.facepath) {
         if(fs.existsSync(req.body.facepath)){
+          req.body.facebook.tipoImagen = getImageExtension(req.body.imagepath)
           req.body.facebook.data = fs.readFileSync(req.body.facepath)
         }else{
           return res.status(404).json('Error: No se encontró la imagen del código QR de Facebook.');
@@ -75,6 +77,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 
       if(req.body.instapath) {
         if(fs.existsSync(req.body.instapath)){
+          req.body.instagram.tipoImagen = getImageExtension(req.body.imagepath)
           req.body.instagram.data = fs.readFileSync(req.body.instapath)
         }else{
           return res.status(404).json('Error: No se encontró la imagen del código QR de Instagram.');
@@ -83,6 +86,7 @@ adminVideogameController.postVideogame = async function (req, res) {
       
       if(req.body.twitterpath) {
         if(fs.existsSync(req.body.twitterpath)){
+          req.body.twitter.tipoImagen = getImageExtension(req.body.imagepath)
           req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
         }else{
           return res.status(404).json('Error: No se encontró la imagen del código QR de Twitter.');
@@ -201,7 +205,7 @@ adminVideogameController.putVideogame = async (req, res) => {
   if(videogame.imagepath) {
     if (isValidImageExtension(videogame.imagepath)) {
       if(fs.existsSync(videogame.imagepath)) {
-        Object.assign(updatedFields, { portada: {tipoImagen: getImageType(videogame.imagepath), 
+        Object.assign(updatedFields, { portada: {tipoImagen: getImageExtension(videogame.imagepath), 
           data: fs.readFileSync(videogame.imagepath)} });
       } else {
         return res.status(404).json('Error: No se ha encontrado la imagen de portada.');
@@ -214,7 +218,7 @@ adminVideogameController.putVideogame = async (req, res) => {
   if(videogame.facepath) {
     if (isValidImageExtension(videogame.facepath)) {
       if(fs.existsSync(videogame.facepath)) {
-        Object.assign(updatedFields, { facebook: {tipoImagen: getImageType(videogame.facepath), 
+        Object.assign(updatedFields, { facebook: {tipoImagen: getImageExtension(videogame.facepath), 
           data: fs.readFileSync(videogame.facepath)} });
       } else {
         return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Facebook.');
@@ -227,7 +231,7 @@ adminVideogameController.putVideogame = async (req, res) => {
   if(videogame.instapath) {
     if (isValidImageExtension(videogame.instapath)) {
       if(fs.existsSync(videogame.instapath)) {
-        Object.assign(updatedFields, { instagram: {tipoImagen: getImageType(videogame.instapath), 
+        Object.assign(updatedFields, { instagram: {tipoImagen: getImageExtension(videogame.instapath), 
           data: fs.readFileSync(videogame.instapath)} });
       } else {
         return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Instagram.');
@@ -240,7 +244,7 @@ adminVideogameController.putVideogame = async (req, res) => {
   if(videogame.twitterpath) {
     if (isValidImageExtension(videogame.twitterpath)) {
       if(fs.existsSync(videogame.twitterpath)) {
-        Object.assign(updatedFields, { twitter: {tipoImagen: getImageType(videogame.twitterpath), 
+        Object.assign(updatedFields, { twitter: {tipoImagen: getImageExtension(videogame.twitterpath), 
           data: fs.readFileSync(videogame.twitterpath)} });
       } else {
         return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Twitter.');
