@@ -8,7 +8,7 @@ devVideogameController.getVideogames = async (req, res) => {
     if (err) {
       res.status(500).json(err.message)
     } else {
-      res.status(200).send(videogames)
+      res.status(200).json(videogames)
     }
   })
 };

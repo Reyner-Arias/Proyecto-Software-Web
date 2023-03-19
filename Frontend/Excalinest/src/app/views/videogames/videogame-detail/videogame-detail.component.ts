@@ -78,9 +78,11 @@ export class VideogameDetailComponent implements OnInit {
   }
 
   onDeleteVideogame() {
-    this.videogamesService.deleteVideogame({_id: this.videogame._id, bucketId: this.videogame.bucketId}).subscribe({
+    this.openCloseInfoModal();
+    this.showSpinner = true;
+    this.videogamesService.deleteVideogame({_id: this.videogame._id}).subscribe({
       error: (err: any) => {
-        console.log("Error: " + JSON.stringify(err));
+        this.showSpinner = false;
         this.deleteButton = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
@@ -109,6 +111,10 @@ export class VideogameDetailComponent implements OnInit {
       }
     });
   }
+
+  /* --------------------- Spinner --------------------- */
+
+  public showSpinner = false;
 
   /* ---------------------- Modal ---------------------- */
 
