@@ -4,7 +4,7 @@ content-type: application/json
 
 {
     "id": 1,
-    "name": "RPG"
+    "name": "Shooter"
 }
 
 ######
@@ -36,7 +36,7 @@ PUT http://localhost:3000/admin-tags/put/2
 Content-Type: application/json
 
 {
-  "name": "Shooter"
+  "name": "Adventure"
 }
 
 ######

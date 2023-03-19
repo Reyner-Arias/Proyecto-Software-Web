@@ -11,7 +11,13 @@ adminTagController.postTag = async (req, res) => {
 
   newTag.save((err) => {
     if (err) {
-      res.status(500).json(err.message)
+      if (err.code === 11000) {
+        res.status(422).json('Error: La etiqueta ya existe, cambiar el nombre.');
+      }
+      else{
+        res.status(500).json(err.message)
+      }
+      
     } else {
       res.status(201).json('La etiqueta se ha creado correctamente.')
     }
@@ -60,8 +66,13 @@ adminTagController.putTag = async (req, res) => {
     }
   
     res.status(200).json('La etiqueta se ha actualizado exitosamente.')
-  } catch (error) {
-    res.status(500).json(error.message)
+  } catch (err) {
+    if (err.code === 11000) {
+      res.status(422).json('Error: La etiqueta ya existe, cambiar el nombre.');
+    }
+    else{
+      res.status(500).json(err.message)
+    }
   }
 }
 
