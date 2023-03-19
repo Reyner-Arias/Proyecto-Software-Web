@@ -47,16 +47,24 @@ adminTagController.getTag = async (req, res) => {
 adminTagController.putTag = async (req, res) => {
   const { id } = req.params
   const { name } = req.body
-  Tag.findOneAndUpdate({ id }, { name }, { new: true }, (err, tag) => {
-    if (err) {
-      res.status(500).json(err.message )
-    } else if (!tag) {
-      res.status(404).json('No se ha encontrado la etiqueta solicitada.')
-    } else {
-      res.status(200).json('La etiqueta se ha actualizado exitosamente.')
+
+  try {
+    // Actualizar la etiqueta en todos los videojuegos que la contengan
+    await Videogame.updateMany({ tags: { $elemMatch: { id } } }, { $set: { "tags.$.name": name } });
+  
+    // Actualizar la etiqueta en la colección de etiquetas
+    const updatedTag = await Tag.findOneAndUpdate({ id }, { name }, { new: true });
+  
+    if (!updatedTag) {
+      return res.status(404).json('No se ha encontrado la etiqueta solicitada.')
     }
-  })
-};
+  
+    res.status(200).json('La etiqueta se ha actualizado exitosamente.')
+  } catch (error) {
+    res.status(500).json(error.message)
+  }
+}
+
 
 // Eliminar una etiqueta
 adminTagController.deleteTag = async (req, res) => {
