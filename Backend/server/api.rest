@@ -41,7 +41,12 @@ Content-Type: application/json
 
 ######
 # Eliminar la etiqueta 1
-DELETE http://localhost:3000/admin-tags/delete/1
+DELETE http://localhost:3000/admin-tags/delete/2
+
+
+######
+# Obtener cantidad de videojuegos con solo la etiqueta dad
+GET http://localhost:3000/admin-videogames/get-only-specific-tag-count/2
     
 
 ####

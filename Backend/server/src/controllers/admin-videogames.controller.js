@@ -6,6 +6,7 @@ const mongodb = require("mongodb");
 const fs = require("fs");
 const mongoose = require("../database");
 
+
 const MongoClient = require('mongodb').MongoClient;
 const GridFSBucket = require('mongodb').GridFSBucket;
 const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
@@ -155,9 +156,15 @@ adminVideogameController.getVideogames = async function (req, res) {
 }
 
 // Obtener la cantidad de videojuegos con solo una etiqueta específica
-adminVideogameController.countVideogamesWithOnlySpecificTag = async function (tagId) {
-  const count = await Videojuego.countDocuments({ tags: { $size: 1, $elemMatch: { id: tagId } } });
-  return count;
+adminVideogameController.countVideogamesWithOnlySpecificTag = async function (req, res) {
+  const tagId = req.params.tagId;
+  Videojuego.countDocuments({ tags: { $size: 1, $elemMatch: { id: tagId } } }, (err, count) => {
+    if (err) {
+      return res.status(500).json(err.message)
+    } else {
+      return res.status(200).json(count);
+    }
+  });
 };
 
 

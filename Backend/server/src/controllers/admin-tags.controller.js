@@ -3,6 +3,8 @@ const adminTagController = {};
 const Tag = require('../models/Tag')
 const Videogame = require('../models/videogame');
 const adminVideogameController = require('./admin-videogames.controller');
+const axios = require('axios');
+
 
 // Crear una nueva etiqueta
 adminTagController.postTag = async (req, res) => {
@@ -81,27 +83,40 @@ adminTagController.putTag = async (req, res) => {
 adminTagController.deleteTag = async (req, res) => {
   const { id } = req.params;
 
-  // Verificar si hay uno o más videojuegos que solo tengan la etiqueta a eliminar
-  const count = await adminVideogameController.countVideogamesWithOnlySpecificTag(id);
-  if (count > 0) {
-    return res.status(400).json('No se puede eliminar porque es la única etiqueta de uno o más videojuegos');
+  const options = {
+    'method': 'GET',
+    'url': 'http://localhost:3000/admin-videogames/get-only-specific-tag-count' +`/${id}`
   }
 
-  // Eliminar la etiqueta
-  Tag.findOneAndDelete({ id }, async (err, tag) => {
-    if (err) {
-      res.status(500).json(err.message)
-    } else if (!tag) {
-      res.status(404).json('No se ha encontrado la etiqueta solicitada.')
-    } else {
-      // Eliminar la etiqueta de los videojuegos que la tienen
-      const videogames = await Videogame.find({ tags: { $elemMatch: { id } } });
-      const videogameIds = videogames.map(v => v._id);
-      await Videogame.updateMany({ _id: { $in: videogameIds } }, { $pull: { tags: { id } } });
-
-      res.status(200).json('La etiqueta se ha eliminado correctamente.')
+  try{  
+    // Verificar si hay uno o más videojuegos que solo tengan la etiqueta a eliminar
+    const result = await axios(options);
+    const count = result.data;
+    if (count > 0) {
+      return res.status(400).json('No se puede eliminar porque es la única etiqueta de uno o más videojuegos');
     }
-  })
+
+    // Eliminar la etiqueta
+    Tag.findOneAndDelete({ id }, async (err, tag) => {
+      if (err) {
+        res.status(500).json(err.message)
+      } else if (!tag) {
+        res.status(404).json('No se ha encontrado la etiqueta solicitada.')
+      } else {
+        // Eliminar la etiqueta de los videojuegos que la tienen
+        const videogames = await Videogame.find({ tags: { $elemMatch: { id } } });
+        const videogameIds = videogames.map(v => v._id);
+        await Videogame.updateMany({ _id: { $in: videogameIds } }, { $pull: { tags: { id } } });
+
+        res.status(200).json('La etiqueta se ha eliminado correctamente.')
+      }
+    })
+  }
+  catch(err){
+    console.log(err);
+    return res.status(500).json(err.message);
+  }
+  
 };
 
 
