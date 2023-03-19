@@ -32,11 +32,11 @@ GET http://localhost:3000/admin-tags/getMaxId
 
 ######
 # Actualizar la etiqueta 1
-PUT http://localhost:3000/admin-tags/put/1
+PUT http://localhost:3000/admin-tags/put/2
 Content-Type: application/json
 
 {
-  "name": "Adventure"
+  "name": "Shooter"
 }
 
 ######
@@ -51,19 +51,15 @@ POST http://localhost:3000/admin-videogames/post
 Content-Type: application/json
 
 {
-    "titulo": "WednesdayWithFile",
-    "portada": { "tipoImagen": "image/jpg" },
+    "titulo": "WednesdayWithFile8",
     "sinopsis": "Niam despierta en un cuarto, pero hay algo extraño. Esta es la casa en la que vivía hace 37 años, cuando era sólo un niño. Ahora para volver al futuro tendrá que obtener ayuda de un niño, quien es el que tiene las herramientas para abrir los portales que lo llevarán de regreso al presente. ",
-    "usuario": "sirodriguez",
-    "juegoZip": { "tipoArchivo": "application/zip" },
-    "facebook": { "tipoImagen": "image/png" },
-    "instagram": { "tipoImagen": "image/png" },
-    "twitter": { "tipoImagen": "image/png" },
-    "imagepath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\MirrorLogo.jpg",
-    "filepath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\Mirror.zip",
-    "facepath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\qr.png",
-    "instapath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\qr.png",
-    "twitterpath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\qr.png"
+    "usuario": "a",
+    "imagepath": "C:\\Excalinest\\img\\portada2.png",
+    "filepath": "C:\\Excalinest\\builds\\file.zip",
+    "facepath": "C:\\Excalinest\\img\\Keane.png",
+    "instapath": "C:\\Excalinest\\img\\Crumb.png",
+    "twitterpath": "C:\\Excalinest\\img\\Palace.png",
+    "tags": [{"id": 2, "name": "Shooter"}]
 }
 
 ####
@@ -91,7 +87,7 @@ DELETE http://localhost:3000/admin-videogames/delete
 Content-Type: application/json
 
 {
-    "_id": "640549b973108c0ad51e7906"
+    "_id": "64166d1cb6de4ba4bdaeb8fc"
 }
 
 
