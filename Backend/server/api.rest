@@ -78,7 +78,6 @@ Content-Type: application/json
 
 #Get videojuego
 GET http://localhost:3000/admin-videogames/get
-Content-Type: application/json
 
 ####
 
