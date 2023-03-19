@@ -56,13 +56,13 @@ adminVideogameController.postVideogame = async function (req, res) {
           req.body.portada.tipoImagen = getImageExtension(req.body.imagepath)
           req.body.portada.data = fs.readFileSync(req.body.imagepath)
         }else{
-          return res.status(404).json('Error: No se encontró la imagen de portada.');
+          return res.status(500).json('Error: No se encontró la imagen de portada.');
         }
       }
 
       if(req.body.filepath) {
         if(!fs.existsSync(req.body.filepath)){
-          return res.status(404).json('Error: No se encontró el archivo zip.');
+          return res.status(500).json('Error: No se encontró el archivo zip.');
         }
       }
 
@@ -71,7 +71,7 @@ adminVideogameController.postVideogame = async function (req, res) {
           req.body.facebook.tipoImagen = getImageExtension(req.body.imagepath)
           req.body.facebook.data = fs.readFileSync(req.body.facepath)
         }else{
-          return res.status(404).json('Error: No se encontró la imagen del código QR de Facebook.');
+          return res.status(500).json('Error: No se encontró la imagen del código QR de Facebook.');
         }
       }
 
@@ -80,7 +80,7 @@ adminVideogameController.postVideogame = async function (req, res) {
           req.body.instagram.tipoImagen = getImageExtension(req.body.imagepath)
           req.body.instagram.data = fs.readFileSync(req.body.instapath)
         }else{
-          return res.status(404).json('Error: No se encontró la imagen del código QR de Instagram.');
+          return res.status(500).json('Error: No se encontró la imagen del código QR de Instagram.');
         }
       }
       
@@ -89,7 +89,7 @@ adminVideogameController.postVideogame = async function (req, res) {
           req.body.twitter.tipoImagen = getImageExtension(req.body.imagepath)
           req.body.twitter.data = fs.readFileSync(req.body.twitterpath)
         }else{
-          return res.status(404).json('Error: No se encontró la imagen del código QR de Twitter.');
+          return res.status(500).json('Error: No se encontró la imagen del código QR de Twitter.');
         }
       }
       
@@ -100,25 +100,24 @@ adminVideogameController.postVideogame = async function (req, res) {
       readStream.pipe(uploadStream);
 
       uploadStream
-      .on('error', function (error) {
-        return res.status(500).send("Error al subir el archivo zip: " + error);
-      })
-      .on('finish', async () => {
-        req.body.bucketId = uploadStream.id;
-        const videojuego = new Videojuego(req.body)
-        await videojuego.save((err) => {
-          if (err) {
-            if (err.code === 11000) {
-              res.status(422).send('Error: El videojuego ya existe, cambiar el título.');
+        .on('error', function (error) {
+          return res.status(500).send("Error al subir el archivo zip: " + error);
+        })
+        .on('finish', async () => {
+          req.body.bucketId = uploadStream.id;
+          const videojuego = new Videojuego(req.body)
+          await videojuego.save((err) => {
+            if (err) {
+              if (err.code === 11000) {
+                res.status(422).send('Error: El videojuego ya existe, cambiar el título.');
+              } else {
+                res.status(500).json(err.message)
+              }
             } else {
-              res.status(500).json(err.message)
+              res.status(201).json('El videojuego se ha creado correctamente.')
             }
-          } else {
-            res.status(201).json('El videojuego se ha creado correctamente.')
-          }
+          });
         });
-      });
-
     } else {
       res.status(500).json('Error: El formato de la imagen debe ser jpg, png o jpeg.');
     }
@@ -146,18 +145,14 @@ adminVideogameController.deleteVideogame = async function (req, res) {
     } else if (!videogame) {
       return res.status(404).json('Error: No se ha encontrado el videojuego.')
     } else {
-
       var bucketId = req.body.bucketId;
-      console.log(bucketId);
   
       const file = await bucket.find({ _id: new mongodb.ObjectId(bucketId) }).toArray();
-        if (!file) {
-          console.log("No se ha encontrado el archivo para eliminarlo.");
-          return res.status(404).send('Error: No se ha encontrado el archivo para eliminarlo.');
-        }
-        console.log("archivo encontrado, a eliminarse");
-        await bucket.delete(file[0]._id);
-        return res.status(204).send("Archivo eliminado.");
+      if (!file) {
+        return res.status(404).send('Error: No se ha encontrado el archivo para eliminarlo.');
+      }
+      await bucket.delete(file[0]._id);
+      return res.status(204).send("Archivo eliminado.");
     }
   })
 }
@@ -168,16 +163,22 @@ adminVideogameController.putVideogame = async (req, res) => {
   var videogame = req.body;
 
   if(videogame.titulo && !videogame.filepath) {
-    const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
-    if (!file) {
-      return res.status(404).send('Error: No se ha encontrado el archivo zip para actualizar el título del videojuego.');
+    if(videogame.bucketId) {
+      const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
+      if (!file) {
+        return res.status(404).send('Error: No se ha encontrado el archivo zip para actualizar el título del videojuego.');
+      }
+      await bucket.rename(file[0]._id, videogame.titulo+".zip");
+    } else {
+      return res.status(500).json('Error: Se necesita un bucketId para actualizar el título del videojuego.');
     }
-    await bucket.rename(file[0]._id, videogame.titulo+".zip");
   }
 
   if(videogame.filepath) {
     if(path.extname(videogame.filepath) != ".zip") {
       return res.status(500).json('Error: El archivo del videojuego debe ser un zip.');
+    } else if(!videogame.bucketId) {
+      return res.status(500).json('Error: Se necesita un bucketId para actualizar el archivo del videojuego.');
     } else {
       const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
       if (!file) {
@@ -212,7 +213,7 @@ adminVideogameController.putVideogame = async (req, res) => {
         Object.assign(updatedFields, { portada: {tipoImagen: getImageExtension(videogame.imagepath), 
           data: fs.readFileSync(videogame.imagepath)} });
       } else {
-        return res.status(404).json('Error: No se ha encontrado la imagen de portada.');
+        return res.status(500).json('Error: No se ha encontrado la imagen de portada.');
       }
     } else {
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
@@ -225,7 +226,7 @@ adminVideogameController.putVideogame = async (req, res) => {
         Object.assign(updatedFields, { facebook: {tipoImagen: getImageExtension(videogame.facepath), 
           data: fs.readFileSync(videogame.facepath)} });
       } else {
-        return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Facebook.');
+        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Facebook.');
       }
     } else {
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
@@ -238,7 +239,7 @@ adminVideogameController.putVideogame = async (req, res) => {
         Object.assign(updatedFields, { instagram: {tipoImagen: getImageExtension(videogame.instapath), 
           data: fs.readFileSync(videogame.instapath)} });
       } else {
-        return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Instagram.');
+        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Instagram.');
       }
     } else {
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
@@ -251,7 +252,7 @@ adminVideogameController.putVideogame = async (req, res) => {
         Object.assign(updatedFields, { twitter: {tipoImagen: getImageExtension(videogame.twitterpath), 
           data: fs.readFileSync(videogame.twitterpath)} });
       } else {
-        return res.status(404).json('Error: No se ha encontrado la imagen del código QR de Twitter.');
+        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Twitter.');
       }
     } else {
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
@@ -259,7 +260,7 @@ adminVideogameController.putVideogame = async (req, res) => {
   }
 
   if(videogame.tags && videogame.tags.length == 0) {
-    return res.status(404).json('Error: No se encontraron etiquetas.');
+    return res.status(500).json('Error: No se encontraron etiquetas.');
   } else {
     Object.assign(updatedFields, {tags: videogame.tags});
   }
@@ -284,7 +285,7 @@ adminVideogameController.putVideogame = async (req, res) => {
     } else if (!videogame) {
       return res.status(404).json('Error: No se encontró el videojuego.');
     } else {
-      return res.status(200).json('El videojuego se ha actualizado correctamente.');
+      return res.status(200).json('Los campos válidos del videojuego se han actualizado correctamente.');
     }
   })
 };
@@ -302,25 +303,24 @@ adminVideogameController.getZipFile = async function (req,res) {
     });
 
   downloadStream.pipe(writeStream)
-  .on('error', function (error) {
-    return res.status(500).send("Error al descargar el archivo zip: " + error);
-  })
-  .on('finish', function () {
-    return res.status(200).send("Archivo descargado.");
-  });
+    .on('error', function (error) {
+      return res.status(500).send("Error al descargar el archivo zip: " + error);
+    })
+    .on('finish', function () {
+      return res.status(200).send("Archivo descargado.");
+    });
 }
 
 // Eliminar un videojuego archivo zip
 adminVideogameController.deleteZipFile = async function (req,res) {
   var bucketId = req.params.bucketId;
-  
+
   const file = await bucket.find({ _id: new mongodb.ObjectId(bucketId) }).toArray();
-    if (!file) {
-      return res.status(404).send('Error: No se ha encontrado el archivo zip para eliminarlo.');
-    }
-    await bucket.delete(file[0]._id);
-    return res.status(200).send("Archivo eliminado.");
-  
+  if (!file) { 
+    return res.status(404).send('Error: No se ha encontrado el archivo zip para eliminarlo.'); 
+  }
+  await bucket.delete(file[0]._id);
+  return res.status(200).send("Archivo eliminado.");
 }
 
 module.exports = adminVideogameController

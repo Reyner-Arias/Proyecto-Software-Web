@@ -74,8 +74,8 @@ Content-Type: application/json
 
 {
     "_id": "6413646074f47ac27cedc74b",
-    "filepath": "C:\\Excalinest\\builds\\file_v2.zip",
-    "bucketId": "64165aaf0b6426b9f67f0655"
+    "sinopsis": "Sinopsis del videojuego",
+    "usuario": ""
 }
 
 ####
