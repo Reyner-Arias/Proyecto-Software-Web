@@ -3,10 +3,10 @@
     <span class="m-1">Cargando mis videojuegos...</span>
 </div>
 
-<c-row>
-    <c-col [sm]="3" *ngFor="let videogame of videogamesByDeveloper">
+<c-row class="row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    <c-col [sm]="3" *ngFor="let videogame of videogames">
         <c-card class="mb-4">
-            <img cCardImg="top" [src]=videogame.imagen height="250" style="object-fit: cover;">
+            <img cCardImg="top" [src]=videogame.imagen height="200" style="object-fit: cover;">
             <c-card-body>
             <h5 cCardTitle>{{videogame.titulo}}</h5>
             <c-row>
@@ -29,7 +29,7 @@
     </c-modal-header>
     <c-modal-body> {{this.modalMessage}} </c-modal-body>
     <c-modal-footer>
-        <button cButton color="dark" [routerLink]="['/videogames/update']">Publicar videojuego</button>
+        <button cButton color="dark" [routerLink]="['/videogames/post']">Publicar videojuego</button>
         <button (click)="openCloseInfoModal()" cButton color="secondary">
           Cerrar
         </button>

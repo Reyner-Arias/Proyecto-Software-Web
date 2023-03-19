@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const upload = require("../controllers/admin-videogames.controller");
 
 const router = Router();
 const adminVideogameController = require("../controllers/admin-videogames.controller");
@@ -12,8 +11,10 @@ const token = require("../controllers/token");
 */ 
 
 router.post("/post", adminVideogameController.postVideogame);
-router.get("/get", adminVideogameController.getVideogame);
+router.get("/get", adminVideogameController.getVideogames);
 router.delete("/delete", adminVideogameController.deleteVideogame);
-
+router.post("/get-zip-file", adminVideogameController.getZipFile);
+router.put("/put", adminVideogameController.putVideogame);
+router.delete("/delete-zip-file/:bucketId", adminVideogameController.deleteZipFile);
 
 module.exports = router;

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Videogame } from 'src/app/models/Videogame.model';
+import { VideogamesService } from '../../../services/videogames.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-videogame-detail',
@@ -9,23 +11,34 @@ import { Videogame } from 'src/app/models/Videogame.model';
 })
 export class VideogameDetailComponent implements OnInit {
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  private excalinestDownloadsPath = "C:\\Excalinest\\";
+  public deleteButton = false;
+
+  constructor(private domSanitizer: DomSanitizer,  public router: Router,
+    private videogamesService: VideogamesService) {}
 
   videogame: Videogame = {
+    _id: '',
     titulo: '',
     usuario: '',
     sinopsis: '',
+    bucketId: '',
+    filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
+    imagepath: '',
     tags: [],
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
+    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
+    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
-    imagenTwitter: ''
+    imagenTwitter: '',
+    twitterpath: '',
   }
-
+  
   ngOnInit(): void {
     this.videogame = history.state;
 
@@ -57,5 +70,66 @@ export class VideogameDetailComponent implements OnInit {
     this.videogame.imagenTwitter = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
       this.videogame.twitter.tipoImagen +";base64, " + twitterBase64);
   }
+
+  showDeleteModal() {
+    this.deleteButton = true;
+    this.modalMessage = "¿Está seguro de eliminar "+ this.videogame.titulo +"?"
+    this.openCloseInfoModal();
+  }
+
+  onDeleteVideogame() {
+    this.openCloseInfoModal();
+    this.showSpinner = true;
+    this.videogamesService.deleteVideogame({_id: this.videogame._id}).subscribe({
+      error: (err: any) => {
+        this.showSpinner = false;
+        this.deleteButton = false;
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.router.navigate(['/videogames']);
+      }
+    });   
+  }
+
+  downloadFile() {
+    let body = {
+      "destPath": this.excalinestDownloadsPath,
+      "filename": this.videogame.titulo+".zip"
+    }
+    this.videogamesService.getZipFile(body).subscribe({
+      error: (err: any) => {
+        this.deleteButton = false;
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.deleteButton = false;
+        this.modalMessage = res+" Excalinest coloca el archivo en C:\\Excalinest";
+        this.openCloseInfoModal();
+      }
+    });
+  }
+
+  /* --------------------- Spinner --------------------- */
+
+  public showSpinner = false;
+
+  /* ---------------------- Modal ---------------------- */
+
+  public modalMessage = "";
+  public modalTitle = "Atención";
+  public visible = false;
+
+  openCloseInfoModal() {
+    this.visible = !this.visible;
+  }
+
+  handleInfoModalChange(event: any) {
+    this.visible = event;
+  }
+
+  /* ---------------------- ----- ---------------------- */
 
 }

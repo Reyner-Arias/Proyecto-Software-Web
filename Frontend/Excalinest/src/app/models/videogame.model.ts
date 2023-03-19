@@ -1,17 +1,23 @@
 import { SafeResourceUrl } from "@angular/platform-browser";
-import { Tag } from "./tag.model";
 
 export interface Videogame {
+    _id: string;
     titulo: string;
     usuario: string;
     sinopsis: string;
-    portada: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
+    bucketId: string;
+    filepath: string;
+    portada: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagen: SafeResourceUrl | undefined;
-    tags: {id: string, name: number} [];
-    facebook: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
+    imagepath: string;
+    tags: {id: number, name: string} [];
+    facebook: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenFacebook: SafeResourceUrl | undefined;
-    instagram: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
+    facepath: string;
+    instagram: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenInstagram: SafeResourceUrl | undefined;
-    twitter: {data: {data: ArrayBuffer, type: String}, tipoImagen: string};
+    instapath: string;
+    twitter: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenTwitter: SafeResourceUrl | undefined;
+    twitterpath: string;
 }

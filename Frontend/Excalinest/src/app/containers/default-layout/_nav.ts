@@ -2,22 +2,13 @@ import { INavData } from '@coreui/angular';
 
 export const navItems: INavData[] = [
   {
-    name: 'Dashboard',
-    url: '/dashboard',
-    iconComponent: { name: 'cil-speedometer' },
-    badge: {
-      color: 'info',
-      text: 'NEW'
-    }
+    name: 'Home',
+    url: '/home',
+    iconComponent: { name: 'cil-home' }
   },
   {
     name: 'Videojuegos',
     title: true
-  },
-  {
-    name: 'Update',
-    url: '/videogames/update',
-    iconComponent: { name: 'cil-pencil' }
   },
   {
     name: 'Mis videojuegos',
@@ -25,17 +16,22 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cilPuzzle' }
   },
   {
+    name: 'Publicar videojuego',
+    url: '/videogames/post',
+    iconComponent: { name: 'cil-paper-plane' }
+  },
+  {
     name: 'Etiquetas',
     title: true
   },
   {
-    name: 'Lista',
+    name: 'Lista de etiquetas',
     url: '/tags/get',
     iconComponent: { name: 'cil-tags' }
   },
   {
-    name: 'Crear',
+    name: 'Crear etiqueta',
     url: '/tags/post',
-    iconComponent: { name: 'cil-file'}
+    iconComponent: { name: 'cil-pencil'}
   },
 ];

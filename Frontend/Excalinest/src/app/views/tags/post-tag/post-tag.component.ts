@@ -40,7 +40,7 @@ export class PostTagComponent implements OnInit {
 
       this.TagsService.postTag(this.newTag).subscribe({
         error: (err: any) => { 
-          this.modalMessage = err;
+          this.modalMessage = err.error.replace(/['"]+/g, '');
           this.openCloseInfoModal();
         },
         next: (res: any) => {
