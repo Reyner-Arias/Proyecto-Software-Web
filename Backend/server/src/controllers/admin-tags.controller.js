@@ -1,6 +1,7 @@
 const adminTagController = {};
 
 const Tag = require('../models/Tag')
+const adminVideogameController = require('./admin-videogames.controller');
 
 // Crear una nueva etiqueta
 adminTagController.postTag = async (req, res) => {
@@ -58,7 +59,14 @@ adminTagController.putTag = async (req, res) => {
 
 // Eliminar una etiqueta
 adminTagController.deleteTag = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
+
+  // Verificar si hay uno o más videojuegos que solo tengan la etiqueta a eliminar
+  const count = await adminVideogameController.countVideogamesWithOnlySpecificTag(id);
+  if (count > 0) {
+    return res.status(400).json('No se puede eliminar porque es la única etiqueta de uno o más videojuegos');
+  }
+
   Tag.findOneAndDelete({ id }, (err, tag) => {
     if (err) {
       res.status(500).json(err.message)
@@ -69,6 +77,7 @@ adminTagController.deleteTag = async (req, res) => {
     }
   })
 };
+
 
 adminTagController.getMaxId = async (req, res) => {
   Tag.find({}, { _id: 0, id: 1 }, { sort: { id: -1 }, limit: 1 }, (err, result) => {

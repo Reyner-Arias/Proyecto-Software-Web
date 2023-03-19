@@ -154,6 +154,14 @@ adminVideogameController.getVideogames = async function (req, res) {
   })
 }
 
+// Obtener la cantidad de videojuegos con solo una etiqueta específica
+adminVideogameController.countVideogamesWithOnlySpecificTag = async function (tagId) {
+  const count = await Videojuego.countDocuments({ tags: { $size: 1, $elemMatch: { id: tagId } } });
+  return count;
+};
+
+
+
 // Eliminar un videojuego
 adminVideogameController.deleteVideogame = async function (req, res) {
   Videojuego.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, async (err, videogame) => {
