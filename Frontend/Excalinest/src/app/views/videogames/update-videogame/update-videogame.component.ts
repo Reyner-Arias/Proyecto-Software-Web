@@ -112,7 +112,7 @@ export class UpdateVideogameComponent implements OnInit {
 
     this.showSpinner = true;
 
-    this.videogamesService.putVideogame({videogame: this.newVideogame, previousTitle:history.state.titulo}).subscribe({
+    this.videogamesService.putVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');

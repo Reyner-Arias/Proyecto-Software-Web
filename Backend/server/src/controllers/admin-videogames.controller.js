@@ -165,17 +165,14 @@ adminVideogameController.deleteVideogame = async function (req, res) {
 // Actualizar un videojuego
 adminVideogameController.putVideogame = async (req, res) => {
   var updatedFields = {};
-  var videogame = req.body.videogame;
-  var previousFilename = req.body.previousTitle+".zip";
-  var newFilename = videogame.titulo+".zip";
+  var videogame = req.body;
 
-  if(previousFilename != newFilename && !videogame.filepath) {
+  if(videogame.titulo && !videogame.filepath) {
     const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
     if (!file) {
-      return res.status(404).send('Error: No se ha encontrado el archivo ' + 
-        previousFilename + ' para actualizar el título del videojuego.');
+      return res.status(404).send('Error: No se ha encontrado el archivo zip para actualizar el título del videojuego.');
     }
-    await bucket.rename(file[0]._id, newFilename);
+    await bucket.rename(file[0]._id, videogame.titulo+".zip");
   }
 
   if(videogame.filepath) {
@@ -184,10 +181,17 @@ adminVideogameController.putVideogame = async (req, res) => {
     } else {
       const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
       if (!file) {
-        return res.status(404).send('Error: No se ha encontrado el archivo ' + previousFilename + ' para actualizarlo.');
+        return res.status(404).send('Error: No se ha encontrado el archivo zip para actualizarlo.');
       }
 
-      const uploadStream = bucket.openUploadStream(newFilename);
+      var uploadStream;
+
+      if(videogame.titulo) {
+        uploadStream = bucket.openUploadStream(videogame.titulo+".zip");
+      } else {
+        uploadStream = bucket.openUploadStream(file[0].filename);
+      }
+    
       const readStream = fs.createReadStream(videogame.filepath);
 
       readStream.pipe(uploadStream)
@@ -254,12 +258,24 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  if(videogame.tags.length == 0) {
+  if(videogame.tags && videogame.tags.length == 0) {
     return res.status(404).json('Error: No se encontraron etiquetas.');
+  } else {
+    Object.assign(updatedFields, {tags: videogame.tags});
   }
 
-  Object.assign(updatedFields, {titulo: videogame.titulo, sinopsis: videogame.sinopsis, 
-    usuario: videogame.usuario, tags: videogame.tags});
+  if(videogame.titulo) {
+    Object.assign(updatedFields, {titulo: videogame.titulo})
+  }
+
+  if(videogame.sinopsis) {
+    Object.assign(updatedFields, {sinopsis: videogame.sinopsis})
+  }
+
+  if(videogame.usuario) {
+    Object.assign(updatedFields, {usuario: videogame.usuario})
+  }
+
   var updatedFieldsSet =  { $set: updatedFields };
 
   Videojuego.findOneAndUpdate({ _id: videogame._id }, updatedFieldsSet, (err, videogame) => {
@@ -300,8 +316,7 @@ adminVideogameController.deleteZipFile = async function (req,res) {
   
   const file = await bucket.find({ _id: new mongodb.ObjectId(bucketId) }).toArray();
     if (!file) {
-      return res.status(404).send('Error: No se ha encontrado el archivo ' + 
-        previousFilename + ' para eliminarlo.');
+      return res.status(404).send('Error: No se ha encontrado el archivo zip para eliminarlo.');
     }
     await bucket.delete(file[0]._id);
     return res.status(200).send("Archivo eliminado.");
