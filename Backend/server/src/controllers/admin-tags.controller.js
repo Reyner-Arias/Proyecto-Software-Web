@@ -1,6 +1,7 @@
 const adminTagController = {};
 
 const Tag = require('../models/Tag')
+const Videogame = require('../models/videogame');
 const adminVideogameController = require('./admin-videogames.controller');
 
 // Crear una nueva etiqueta
@@ -67,16 +68,23 @@ adminTagController.deleteTag = async (req, res) => {
     return res.status(400).json('No se puede eliminar porque es la única etiqueta de uno o más videojuegos');
   }
 
-  Tag.findOneAndDelete({ id }, (err, tag) => {
+  // Eliminar la etiqueta
+  Tag.findOneAndDelete({ id }, async (err, tag) => {
     if (err) {
       res.status(500).json(err.message)
     } else if (!tag) {
       res.status(404).json('No se ha encontrado la etiqueta solicitada.')
     } else {
+      // Eliminar la etiqueta de los videojuegos que la tienen
+      const videogames = await Videogame.find({ tags: { $elemMatch: { id } } });
+      const videogameIds = videogames.map(v => v._id);
+      await Videogame.updateMany({ _id: { $in: videogameIds } }, { $pull: { tags: { id } } });
+
       res.status(200).json('La etiqueta se ha eliminado correctamente.')
     }
   })
 };
+
 
 
 adminTagController.getMaxId = async (req, res) => {
