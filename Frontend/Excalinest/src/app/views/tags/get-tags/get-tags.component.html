@@ -10,8 +10,6 @@
             <h5 cCardTitle>{{tag.name}}</h5>
             <c-row>
                 <c-col class="text-end mb-12">
-                    <!--<a cButton color="info" class="update-button" [routerLink]="['/tags/update']" [queryParams]="{tag: tag.id}" size="sm"><svg cIcon name="cilPencil" class="me-2 icon"></svg></a>
-                    <button cButton color="danger" (click)="deleteTag(tag.id)" size="sm"><svg cIcon name="cilTrash" class="me-2 icon"></svg></button>-->
                     <a cButton color="info" class="update-button" [routerLink]="['/tags/update']" [queryParams]="{tag: tag.id}" size="sm">Editar</a>
                     <button cButton color="danger" (click)="deleteTag(tag.id)" size="sm">Eliminar</button>
                 </c-col>
