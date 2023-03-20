@@ -40,7 +40,7 @@ export class GetTagsComponent implements OnInit {
         this.toastr.success('La etiqueta se eliminó correctamente', 'Éxito');
         setTimeout(() => {
           location.reload();
-        }, 3000); // Espera 3 segundos (3000 milisegundos) antes de recargar
+        }, 3000); // Espera 3 segundos (3000 milisegundos) antes de recargar la página
       }
     });
   }
