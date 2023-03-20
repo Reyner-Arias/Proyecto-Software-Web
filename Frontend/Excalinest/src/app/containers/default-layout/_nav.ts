@@ -11,7 +11,7 @@ export const navItems: INavData[] = [
     title: true
   },
   {
-    name: 'Mis videogames',
+    name: 'Mis videojuegos',
     url: '/videogames/get',
     iconComponent: { name: 'cilPuzzle' }
   },
