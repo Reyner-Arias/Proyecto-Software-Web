@@ -24,7 +24,6 @@ export class PostTagComponent implements OnInit {
   getPostTagForm(): FormGroup {
     return this.postTagForm;
   }
-    
 
   ngOnInit(){
     this.postTagForm = this.formBuilder.group({
@@ -36,7 +35,6 @@ export class PostTagComponent implements OnInit {
     this.TagsService.getMaxId().subscribe((response) => {
       this.newTag.id = response + 1;
       this.newTag.name = this.postTagForm.value.name;
-      console.log(this.newTag);
 
       this.TagsService.postTag(this.newTag).subscribe({
         error: (err: any) => { 
@@ -51,9 +49,6 @@ export class PostTagComponent implements OnInit {
     });
   }
   
-  
-  
-
   submitTag() {
     this.validatedForm = true;
     if (this.postTagForm.dirty && this.postTagForm.valid) {
@@ -64,7 +59,7 @@ export class PostTagComponent implements OnInit {
   /* ---------------------- Modal ---------------------- */
 
   public modalMessage = "";
-  public modalTitle = "Creación de etiqueta";
+  public modalTitle = "Atención";
   public visible = false;
 
   openCloseInfoModal() {

@@ -17,7 +17,8 @@ export class GetTagsComponent implements OnInit {
   ngOnInit(): void {
     this.tagsService.getTags().subscribe({
       error: (err: any) => { 
-        console.log(err);
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
       },
       next: (res: Array<Tag>) => {
         this.showSpinner = false;
@@ -33,8 +34,8 @@ export class GetTagsComponent implements OnInit {
   deleteTag(tagId: Number) {
     this.tagsService.deleteTag(tagId).subscribe({
       error: (err: any) =>{
-        this.toastr.error('Ocurrió un error al eliminar la etiqueta', 'Error');
-        console.log(err);
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
       },
       next: () => {
         this.toastr.success('La etiqueta se eliminó correctamente', 'Éxito');
@@ -45,7 +46,6 @@ export class GetTagsComponent implements OnInit {
     });
   }
   
-
   /* --------------------- Spinner --------------------- */
 
   public showSpinner = true;

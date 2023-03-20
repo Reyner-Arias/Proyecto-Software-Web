@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { Tag } from '../../../models/tag.model'
 import { TagsService } from '../../../services/tags.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-tag',
@@ -22,7 +23,8 @@ export class UpdateTagComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute, 
     private TagsService: TagsService, 
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    public router: Router) {
     this.tagId = -1;
     this.updateTagForm = new FormGroup({
       name: new FormControl('', Validators.required)
@@ -40,9 +42,7 @@ export class UpdateTagComponent implements OnInit {
     });
   
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params);
       this.tagId = params['tag'];
-      console.log(this.tagId);
       this.TagsService.getTag(this.tagId).subscribe(tag => {
         this.updateTagForm.setValue({
           name: tag.name
@@ -56,14 +56,15 @@ export class UpdateTagComponent implements OnInit {
     const id = +this.tagId;
     this.updatedTag.id = id;
     this.updatedTag.name = this.updateTagForm.value.name;
-    console.log(this.updatedTag);
 
     this.TagsService.putTag(id, this.updatedTag).subscribe({
       error: (err: any) => { 
-        this.modalMessage = err;
+        this.error = true;
+        this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
       },
       next: (res: any) => {
+        this.error = false;
         this.modalMessage = res;
         this.openCloseInfoModal();
       }
@@ -80,13 +81,17 @@ export class UpdateTagComponent implements OnInit {
   /* ---------------------- Modal ---------------------- */
 
   public modalMessage = "";
-  public modalTitle = "Actualización de etiqueta";
+  public modalTitle = "Atención";
   public visible = false;
+  public error = false;
 
   openCloseInfoModal() {
     this.visible = !this.visible;
     if(!this.visible) {
       this.resetForm();
+    }
+    if(!this.visible && !this.error) {
+      this.router.navigate(['/tags']);
     }
   }
 
