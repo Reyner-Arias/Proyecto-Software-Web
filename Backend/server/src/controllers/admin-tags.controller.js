@@ -56,9 +56,6 @@ adminTagController.putTag = async (req, res) => {
   const { name } = req.body
 
   try {
-    // Actualizar la etiqueta en todos los videojuegos que la contengan
-    await Videogame.updateMany({ tags: { $elemMatch: { id } } }, { $set: { "tags.$.name": name } });
-  
     // Actualizar la etiqueta en la colección de etiquetas
     const updatedTag = await Tag.findOneAndUpdate({ id }, { name }, { new: true });
   
@@ -69,12 +66,19 @@ adminTagController.putTag = async (req, res) => {
     res.status(200).json('La etiqueta se ha actualizado exitosamente.')
   } catch (err) {
     if (err.code === 11000) {
-      res.status(422).json('Error: La etiqueta ya existe, cambiar el nombre.');
-    }
-    else{
-      res.status(500).json(err.message)
+      return res.status(422).json('Error: La etiqueta ya existe, cambiar el nombre.');
+    } else {
+      return res.status(500).json(err.message)
     }
   }
+
+  // Actualizar la etiqueta en todos los videojuegos que la contengan
+  try {
+    await Videogame.updateMany({ tags: { $elemMatch: { id } } }, { $set: { "tags.$.name": name } });
+  } catch (err) {
+    return res.status(500).json(err.message)
+  }
+  
 }
 
 // Eliminar una etiqueta
