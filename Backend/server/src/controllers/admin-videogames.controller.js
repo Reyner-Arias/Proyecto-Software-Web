@@ -4,6 +4,7 @@ const Videojuego = require("../models/videogame");
 const path = require("path");
 const mongodb = require("mongodb");
 const fs = require("fs");
+const axios = require('axios');
 const mongoose = require("../database");
 
 
@@ -56,6 +57,25 @@ adminVideogameController.postVideogame = async function (req, res) {
 
   if(req.body.tags.length == 0) {
     return res.status(500).json('Error: No se encontraron etiquetas.');
+  } else {
+    for (const tag of req.body.tags) {
+      try{
+        const options = {
+          'method': 'GET',
+          'url': 'http://localhost:3000/admin-tags/get/' +`${tag.id}`
+        }
+        const result = await axios(options);
+        if(result.data.name != tag.name) {
+          return res.status(500).json('Error: El id de la etiqueta existe, pero no coincide el nombre de la etiqueta.');
+        }
+      } catch(err) {
+        if(err.response.status == 404) {
+          return res.status(404).json('Error: No se encuentra la etiqueta {id: '+tag.id+', name: '+tag.name+'}. Cree la etiqueta antes de agregarla al videojuego.');
+        } else {
+          return res.status(500).json(err.message);
+        }
+      }
+    }
   }
 
   if (path.extname(req.body.filepath) == ".zip") {
@@ -291,7 +311,26 @@ adminVideogameController.putVideogame = async (req, res) => {
 
   if(videogame.tags && videogame.tags.length == 0) {
     return res.status(500).json('Error: No se encontraron etiquetas.');
-  } else {
+  } else if(videogame.tags) {
+    for (const tag of videogame.tags) {
+      try{
+        const options = {
+          'method': 'GET',
+          'url': 'http://localhost:3000/admin-tags/get/' +`${tag.id}`
+        }
+        const result = await axios(options);
+        if(result.data.name != tag.name) {
+          return res.status(500).json('Error: El id de la etiqueta existe, pero no coincide el nombre de la etiqueta.');
+        }
+      } catch(err) {
+        if(err.response.status == 404) {
+          return res.status(404).json('Error: No se encuentra la etiqueta {id: '+tag.id+', name: '+tag.name+'}. Cree la etiqueta antes de agregarla al videojuego.');
+        } else {
+          return res.status(500).json(err.message);
+        }
+      }
+    }
+
     Object.assign(updatedFields, {tags: videogame.tags});
   }
 

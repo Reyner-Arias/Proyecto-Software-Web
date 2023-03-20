@@ -64,7 +64,7 @@ Content-Type: application/json
     "facepath": "C:\\Excalinest\\img\\Keane.png",
     "instapath": "C:\\Excalinest\\img\\Crumb.png",
     "twitterpath": "C:\\Excalinest\\img\\Palace.png",
-    "tags": [{"id": 2, "name": "Shooter"}]
+    "tags": [{"id": 6, "name": "Horror"}, {"id": 7, "name": "Shooter"}]
 }
 
 ####
@@ -74,9 +74,8 @@ PUT http://localhost:3000/admin-videogames/put
 Content-Type: application/json
 
 {
-    "_id": "6413646074f47ac27cedc74b",
-    "sinopsis": "Sinopsis del videojuego",
-    "usuario": ""
+    "_id": "6418d5e9b8aadd2aa8695092",
+    "sinopsis": "Sinopsis2"
 }
 
 ####
