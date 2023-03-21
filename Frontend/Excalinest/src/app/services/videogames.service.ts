@@ -9,46 +9,36 @@ export class VideogamesService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  adminPostAPI = 'http://localhost:3000/admin-videogames/post'
+  private adminAPI = 'http://localhost:3000/admin-videogames'
+  private devAPI = 'http://localhost:3000/dev-videogames'
 
   postVideogame (videogame: any) {
-    return this.http.post(this.adminPostAPI, videogame, {responseType: 'text'});
+    return this.http.post(`${this.adminAPI}/post`, videogame, {responseType: 'text'});
   }
-
-  developerGetAPI = 'http://localhost:3000/dev-videogames/get'
-  adminGetAPI = 'http://localhost:3000/admin-videogames/get'
 
   getVideogames(admin: boolean, developer: String) {
     if(admin) {
-      return this.http.get<any>(this.adminGetAPI);
+      return this.http.get<any>(`${this.adminAPI}/get`);
     } else {
-      return this.http.get<any>(this.developerGetAPI+`/${developer}`);
+      return this.http.get<any>(`${this.devAPI}/get/${developer}`);
     }
   }
 
-  adminDeleteAPI = 'http://localhost:3000/admin-videogames/delete'
-
   deleteVideogame(body: any) {
-    return this.http.delete(this.adminDeleteAPI,  { headers: new HttpHeaders({ 'Content-Type': 'application/json', }), 
-      body: body, });
+    return this.http.delete(`${this.adminAPI}/delete`,  
+      { headers: new HttpHeaders({ 'Content-Type': 'application/json', }), body: body, });
   }
-
-  adminPutAPI = 'http://localhost:3000/admin-videogames/put'
 
   putVideogame(videogame: any) {
-    return this.http.put(this.adminPutAPI, videogame, {responseType: 'text'});
+    return this.http.put(`${this.adminAPI}/put`, videogame, {responseType: 'text'});
   }
-
-  adminGetZipFileAPI = 'http://localhost:3000/admin-videogames/get-zip-file'
 
   getZipFile(body: any) {
-    return this.http.post(this.adminGetZipFileAPI, body, {responseType: 'text'});
+    return this.http.post(`${this.adminAPI}/get-zip-file`, body, {responseType: 'text'});
   }
 
-  adminDeleteZipFileAPI = 'http://localhost:3000/admin-videogames/delete-zip-file'
-
   deleteZipFile(bucketId: any) {
-    return this.http.delete(this.adminDeleteZipFileAPI+`/${bucketId}`);
+    return this.http.delete(`${this.adminAPI}/delete-zip-file/${bucketId}`);
   }
   
 }
