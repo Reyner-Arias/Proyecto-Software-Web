@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,10 @@ export class VideogamesService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  private adminAPI = 'http://localhost:3000/admin-videogames'
-  private devAPI = 'http://localhost:3000/dev-videogames'
+  //private adminAPI = 'http://localhost:3000/admin-videogames'
+  //private devAPI = 'http://localhost:3000/dev-videogames'
+  private adminAPI = environment.apiUrl + 'admin-videogames'
+  private devAPI = environment.apiUrl + 'dev-videogames'
 
   postVideogame (videogame: any) {
     return this.http.post(`${this.adminAPI}/post`, videogame, {responseType: 'text'});
