@@ -92,26 +92,18 @@ adminTagController.deleteTag = async (req, res) => {
     }
 
     // Eliminar la etiqueta
-    Tag.findOneAndDelete({ id }, async (err, tag) => {
-      if (err) {
-        res.status(500).json(err.message)
-      } else if (!tag) {
-        res.status(404).json('Error: No se ha encontrado la etiqueta solicitada.')
-      } else {
-        // Eliminar la etiqueta de los videojuegos que la tienen
-        const videogames = await Videogame.find({ tags: { $elemMatch: { id } } });
-        const videogameIds = videogames.map(v => v._id);
-        await Videogame.updateMany({ _id: { $in: videogameIds } }, { $pull: { tags: { id } } });
+    const deletedTag = await Tag.findOneAndDelete({ id });
 
-        res.status(200).json('La etiqueta se ha eliminado correctamente.')
-      }
-    })
+    if (!deletedTag) {
+      return res.status(404).json('Error: No se ha encontrado la etiqueta solicitada.')
+    }
+
+    res.status(200).json('La etiqueta se ha eliminado correctamente.')
   }
   catch(err){
     console.log(err);
     return res.status(500).json(err.message);
   }
-  
 };
 
 adminTagController.getMaxId = async (req, res) => {
