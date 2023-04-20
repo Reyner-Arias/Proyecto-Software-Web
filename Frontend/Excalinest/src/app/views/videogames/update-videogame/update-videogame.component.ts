@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Videogame } from '../../../models/Videogame.model'
 import { VideogamesService } from '../../../services/videogames.service';
 import { TagsService } from '../../../services/tags.service';
+import { VideogameTagService } from 'src/app/services/videogame-tag.service';
 
 @Component({
   selector: 'app-update-videogame',
@@ -44,21 +45,32 @@ export class UpdateVideogameComponent implements OnInit {
 
   constructor(private videogamesService: VideogamesService,
     private formBuilder: FormBuilder, public router: Router,
-    private tagsService: TagsService) {}
+    private tagsService: TagsService, private videogameTagService: VideogameTagService) {}
 
   getPutVideogameForm() {
     return this.putVideogameForm;
   }
 
-  getTagInfo(identifiers: any, listOfTags: any) {
+  getTagInfo(listOfTags: any) {
     let tagInfoArray = [{id: -1, name: ""}];
-    for(const id of identifiers) {
-      let newTag = listOfTags.find((item: { id: any; }) => item.id === id)
-      if(newTag)
-        if(tagInfoArray.length == 1 && tagInfoArray[0].id == -1)
-          tagInfoArray.splice(tagInfoArray.findIndex(item => item.id === -1), 1);
-        tagInfoArray.push(newTag);
-    }
+    this.videogameTagService.getVideogameTags(this.newVideogame._id).subscribe({
+      error: (err: any) => {
+        this.error = true;
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal(false);
+      },
+      next: (res: any) => {
+        this.error = false;
+        for(const id of res) {
+          let newTag = listOfTags.find((item: { id: any; }) => item.id === id)
+          if(newTag)
+            if(tagInfoArray.length == 1 && tagInfoArray[0].id == -1)
+              tagInfoArray.splice(tagInfoArray.findIndex(item => item.id === -1), 1);
+            tagInfoArray.push(newTag);
+        }
+        return tagInfoArray;
+      }
+    });
     return tagInfoArray;
   }
 
@@ -89,7 +101,7 @@ export class UpdateVideogameComponent implements OnInit {
       next: (res: any) => {
         this.error = false;
         this.listOfTags = res;
-        this.tags = this.getTagInfo(history.state.tags, res);
+        this.tags = this.getTagInfo(res);
       }
     });
   }

@@ -134,4 +134,4 @@ content-type: application/json
 
 # Verificar si la relación existe
 
-GET http://localhost:3000/videogame-tag/get/Videojuego 5
+GET http://localhost:3000/videogame-tag/exists/64410725936d3f29dde3e666/9

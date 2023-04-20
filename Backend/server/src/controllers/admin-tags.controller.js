@@ -96,6 +96,8 @@ adminTagController.deleteTag = async (req, res) => {
       return res.status(404).json('Error: No se ha encontrado la etiqueta solicitada.')
     }
 
+    await axios.delete("http://localhost:3000/videogame-tag/delete-by-tag/"+`${id}`)
+
     res.status(200).json('La etiqueta se ha eliminado correctamente.')
   }
   catch(err){

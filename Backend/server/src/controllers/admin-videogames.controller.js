@@ -59,10 +59,7 @@ adminVideogameController.postVideogame = async function (req, res) {
   } else {
     for (const tag of req.body.tags) {
       try{
-        const options = {
-          'method': 'GET',
-          'url': 'http://localhost:3000/admin-tags/get/' +`${tag}`
-        }
+        const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
       } catch(err) {
         if(err.response.status == 404) {
@@ -139,7 +136,7 @@ adminVideogameController.postVideogame = async function (req, res) {
           newVideogame.sinopsis = req.body.sinopsis;
           newVideogame.usuario = req.body.usuario;
 
-          await newVideogame.save(async (err) => {
+          await newVideogame.save(async (err, newVideogame) => {
             if (err) {
               if (err.code === 11000) {
                 res.status(422).json('Error: El videojuego ya existe, cambiar el título.');
@@ -149,11 +146,8 @@ adminVideogameController.postVideogame = async function (req, res) {
             } else {
               for (const tag of req.body.tags) {
                 try{
-                  let newVideogameTag = {videogame: req.body.titulo, tag: tag};
-                  //let videogameTagExists = await axios.get("http://localhost:3000/videogame-tag/exists", newVideogameTag)
-                  //if(!videogameTagExists) {
-                    await axios.post("http://localhost:3000/videogame-tag/post", newVideogameTag);
-                  //}
+                  let newVideogameTag = {videogame: newVideogame._id, tag: tag};
+                  await axios.post("http://localhost:3000/videogame-tag/post", newVideogameTag);
                 } catch(err) {
                   return res.status(500).json(err.message);
                 }
@@ -206,6 +200,7 @@ adminVideogameController.deleteVideogame = async function (req, res) {
         return res.status(404).json('Error: No se ha encontrado el archivo para eliminarlo.');
       }
       await bucket.delete(file[0]._id);
+      await axios.delete("http://localhost:3000/videogame-tag/delete-by-videogame/"+`${req.body._id}`)
       return res.status(200).json('Archivo eliminado.');
     }
   })
@@ -313,15 +308,12 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  if(videogame.tags && videogame.tags.length == 0) {
+  if(req.body.tags && req.body.tags.length == 0) {
     return res.status(500).json('Error: No se encontraron etiquetas.');
-  } else if(videogame.tags) {
-    for (const tag of videogame.tags) {
+  } else if(req.body.tags) {
+    for (const tag of req.body.tags) {
       try{
-        const options = {
-          'method': 'GET',
-          'url': 'http://localhost:3000/admin-tags/get/' +`${tag}`
-        }
+        const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
       } catch(err) {
         if(err.response.status == 404) {
@@ -331,8 +323,6 @@ adminVideogameController.putVideogame = async (req, res) => {
         }
       }
     }
-
-    Object.assign(updatedFields, {tags: videogame.tags});
   }
 
   if(videogame.titulo) {
@@ -349,13 +339,18 @@ adminVideogameController.putVideogame = async (req, res) => {
 
   var updatedFieldsSet =  { $set: updatedFields };
 
-  Videogame.findOneAndUpdate({ _id: videogame._id }, updatedFieldsSet, (err, videogame) => {
+  Videogame.findOneAndUpdate({ _id: videogame._id }, updatedFieldsSet, async (err, videogame) => {
     if (err) {
       return res.status(500).json(err.message);
     } else if (!videogame) {
       return res.status(404).json('Error: No se encontró el videojuego.');
     } else {
-      return res.status(200).json('Los campos válidos del videojuego se han actualizado correctamente.');
+      try{
+        await axios.post("http://localhost:3000/videogame-tag/update", {_id: req.body._id, tags: req.body.tags});
+        return res.status(200).json('Los campos válidos del videojuego se han actualizado correctamente.');
+      } catch(err) {
+        return res.status(500).json(err.message);
+      }
     }
   })
 };

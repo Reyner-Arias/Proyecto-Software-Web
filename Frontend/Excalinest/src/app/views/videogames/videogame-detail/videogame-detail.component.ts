@@ -45,7 +45,7 @@ export class VideogameDetailComponent implements OnInit {
 
   getTagInfo(listOfTags: any) {
     let tagInfoArray = [{id: -1, name: ""}];
-    this.videogameTagService.getVideogameTags(this.videogame.titulo).subscribe({
+    this.videogameTagService.getVideogameTags(this.videogame._id).subscribe({
       error: (err: any) => {
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
