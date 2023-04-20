@@ -1,30 +1,42 @@
-const adminTagController = {};
+const videogameTagController = {};
 
-const Tag = require('../models/tag')
-const axios = require('axios');
+const VideogameTag = require('../models/videogame-tag')
 
-// Crear una nueva etiqueta
-adminTagController.postTag = async (req, res) => {
-  const { id, name } = req.body
-  const newTag = new Tag({ id, name })
+// Crear una nueva relación
+videogameTagController.postVideogameTag = async (req, res) => {
+  const { videogame, tag } = req.body
+  const newVideogameTag = new VideogameTag({ videogame, tag })
 
-  newTag.save((err) => {
+  newVideogameTag.save((err) => {
     if (err) {
-      if (err.code === 11000) {
-        res.status(422).json('Error: La etiqueta ya existe, cambiar el nombre.');
-      }
-      else{
+      if (err.code !== 11000) {
         res.status(500).json(err.message)
+      } else {
+        res.status(201).json('La relación existe en la base de datos.')
       }
-      
     } else {
-      res.status(201).json('La etiqueta se ha creado correctamente.')
+      res.status(201).json('La relación se ha creado correctamente.')
     }
   })
 };
 
+videogameTagController.videogameTagExists = async (req, res) => {
+  const { videogame, tag } = req.body
+
+  VideogameTag.findOne({ videogame, tag }, (err, videogameTag) => {
+    if (err) {
+      res.status(500).json(err.message)
+    } else if (!videogameTag) {
+      res.status(404).json(null)
+    } else {
+      res.status(200).json(videogameTag)
+    }
+  })
+};
+
+/*
 // Obtener todas las etiquetas
-adminTagController.getTags = async (req, res) => {
+videogameTagController.getTags = async (req, res) => {
   Tag.find({}, (err, tags) => {
     if (err) {
       res.status(500).json(err.message)
@@ -35,7 +47,7 @@ adminTagController.getTags = async (req, res) => {
 };
 
 // Obtener una etiqueta específica
-adminTagController.getTag = async (req, res) => {
+videogameTagController.getTag = async (req, res) => {
   const { id } = req.params
   Tag.findOne({ id }, (err, tag) => {
     if (err) {
@@ -49,7 +61,7 @@ adminTagController.getTag = async (req, res) => {
 };
 
 // Actualizar una etiqueta
-adminTagController.putTag = async (req, res) => {
+videogameTagController.putTag = async (req, res) => {
   const { id } = req.params
   const { name } = req.body
 
@@ -73,7 +85,7 @@ adminTagController.putTag = async (req, res) => {
 
 
 // Eliminar una etiqueta
-adminTagController.deleteTag = async (req, res) => {
+videogameTagController.deleteTag = async (req, res) => {
   const { id } = req.params;
 
   const options = {
@@ -104,7 +116,7 @@ adminTagController.deleteTag = async (req, res) => {
   }
 };
 
-adminTagController.getMaxId = async (req, res) => {
+videogameTagController.getMaxId = async (req, res) => {
   Tag.find({}, { _id: 0, id: 1 }, { sort: { id: -1 }, limit: 1 }, (err, result) => {
     if (err) {
       res.status(500).json( err.message )
@@ -116,6 +128,6 @@ adminTagController.getMaxId = async (req, res) => {
       }
     }
   })
-};
+};*/
 
-module.exports = adminTagController;
+module.exports = videogameTagController;

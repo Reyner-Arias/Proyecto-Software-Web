@@ -105,3 +105,27 @@ Content-Type: application/json
     "filename": "Mirror.zip",
     "destPath": "C:\\Users\\Silvia Rodríguez\\Desktop\\Juego\\Descarga\\"
 }
+
+####
+
+# Crear relación videojuego-etiqueta
+
+POST http://localhost:3000/videogame-tag/post
+content-type: application/json
+
+{
+    "videogame": "1",
+    "tag": 9
+}
+
+####
+
+# Verificar si la relación existe
+
+GET http://localhost:3000/videogame-tag/exists
+content-type: application/json
+
+{
+    "videogame": "Videojuego 1000",
+    "tag": 8
+}

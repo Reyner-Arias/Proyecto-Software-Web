@@ -17,5 +17,6 @@ app.use(cors())
 app.use("/admin-videogames", require("./routes/admin-videogames.routes"));
 app.use("/admin-tags", require("./routes/admin-tags.routes"));
 app.use("/dev-videogames", require("./routes/dev-videogames.routes"));
+app.use("/videogame-tag", require("./routes/videogame-tag.routes"));
 
 module.exports = app;

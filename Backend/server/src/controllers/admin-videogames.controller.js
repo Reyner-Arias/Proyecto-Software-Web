@@ -1,6 +1,6 @@
 const adminVideogameController = {};
 
-const Videojuego = require("../models/videogame");
+const Videogame = require("../models/videogame");
 const path = require("path");
 const mongodb = require("mongodb");
 const fs = require("fs");
@@ -46,7 +46,7 @@ function getImageExtension(imagepath) {
 
 // Crear un nuevo videojuego
 adminVideogameController.postVideogame = async function (req, res) {
-  const newVideogame = new Videojuego();
+  const newVideogame = new Videogame();
 
   if(!req.body.titulo || !req.body.sinopsis || !req.body.usuario || !req.body.imagepath ||
      !req.body.facepath || !req.body.instapath || !req.body.twitterpath || !req.body.filepath ||
@@ -140,7 +140,7 @@ adminVideogameController.postVideogame = async function (req, res) {
           newVideogame.usuario = req.body.usuario;
           newVideogame.tags = req.body.tags;
 
-          await newVideogame.save((err) => {
+          await newVideogame.save(async (err) => {
             if (err) {
               if (err.code === 11000) {
                 res.status(422).json('Error: El videojuego ya existe, cambiar el título.');
@@ -148,6 +148,17 @@ adminVideogameController.postVideogame = async function (req, res) {
                 res.status(500).json(err.message)
               }
             } else {
+              for (const tag of req.body.tags) {
+                try{
+                  let newVideogameTag = {videogame: req.body.titulo, tag: tag};
+                  //let videogameTagExists = await axios.get("http://localhost:3000/videogame-tag/exists", newVideogameTag)
+                  //if(!videogameTagExists) {
+                    await axios.post("http://localhost:3000/videogame-tag/post", newVideogameTag);
+                  //}
+                } catch(err) {
+                  return res.status(500).json(err.message);
+                }
+              }
               res.status(201).json('El videojuego se ha creado correctamente.')
             }
           });
@@ -162,7 +173,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 
 // Obtener todos los videojuegos
 adminVideogameController.getVideogames = async function (req, res) {
-  Videojuego.find({}, (err, videogames) => {
+  Videogame.find({}, (err, videogames) => {
     if (err) {
       res.status(500).json(err.message)
     } else {
@@ -174,7 +185,7 @@ adminVideogameController.getVideogames = async function (req, res) {
 // Obtener la cantidad de videojuegos con solo una etiqueta específica
 adminVideogameController.countVideogamesWithOnlySpecificTag = async function (req, res) {
   const tagId = req.params.tagId;
-  Videojuego.countDocuments({ tags: { $size: 1, $elemMatch: { id: tagId } } }, (err, count) => {
+  Videogame.countDocuments({ tags: { $size: 1, $elemMatch: { id: tagId } } }, (err, count) => {
     if (err) {
       return res.status(500).json(err.message)
     } else {
@@ -185,7 +196,7 @@ adminVideogameController.countVideogamesWithOnlySpecificTag = async function (re
 
 // Eliminar un videojuego
 adminVideogameController.deleteVideogame = async function (req, res) {
-  Videojuego.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, async (err, videogame) => {
+  Videogame.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, async (err, videogame) => {
     if (err) {
       return res.status(500).json(err.message)
     } else if (!videogame) {
@@ -339,7 +350,7 @@ adminVideogameController.putVideogame = async (req, res) => {
 
   var updatedFieldsSet =  { $set: updatedFields };
 
-  Videojuego.findOneAndUpdate({ _id: videogame._id }, updatedFieldsSet, (err, videogame) => {
+  Videogame.findOneAndUpdate({ _id: videogame._id }, updatedFieldsSet, (err, videogame) => {
     if (err) {
       return res.status(500).json(err.message);
     } else if (!videogame) {

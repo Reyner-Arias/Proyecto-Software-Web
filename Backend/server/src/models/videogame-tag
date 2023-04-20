@@ -1,0 +1,14 @@
+const { Schema, model } = require("mongoose");
+
+const videogameTagSchema = new Schema(
+  {
+    videogame: { type: String, required: false },
+    tag:{ type: Number, required: false }
+  },
+  {
+    timestamps: true,
+    versionKey: false
+  }
+);
+
+module.exports = model("videogame-tag", videogameTagSchema)
