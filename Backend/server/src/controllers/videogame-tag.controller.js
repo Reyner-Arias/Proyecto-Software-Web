@@ -65,11 +65,12 @@ videogameTagController.updateVideogameTag = async (req, res) => {
     if(!videogameTagExists.data) {
       await axios.post("http://localhost:3000/videogame-tag/post", newVideogameTag);
     }
-    currentTags.data.splice(currentTags.data.indexOf(id), 1);
   }
 
-  for(const tag of currentTags.data) {
-    await axios.delete("http://localhost:3000/videogame-tag/delete/" + _id + "/" + tag);
+  for(let i = 0; i < currentTags.data.length; i++) {
+    if(req.body.tags.indexOf(currentTags.data[i]) == -1) {
+      await axios.delete("http://localhost:3000/videogame-tag/delete/" + _id + "/" + currentTags.data[i]);
+    }
   }
 
   return res.status(200).json("Relación actualizada exitosamente");
