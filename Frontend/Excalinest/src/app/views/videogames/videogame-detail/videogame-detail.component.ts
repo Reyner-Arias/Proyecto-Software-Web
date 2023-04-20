@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Videogame } from 'src/app/models/Videogame.model';
 import { VideogamesService } from '../../../services/videogames.service';
 import { Router } from '@angular/router';
+import { TagsService } from 'src/app/services/tags.service';
 
 @Component({
   selector: 'app-videogame-detail',
@@ -13,9 +14,10 @@ export class VideogameDetailComponent implements OnInit {
 
   private excalinestDownloadsPath = "C:\\Excalinest\\";
   public deleteButton = false;
+  public videogameTags = [{id: -1, name: ""}];
 
   constructor(private domSanitizer: DomSanitizer,  public router: Router,
-    private videogamesService: VideogamesService) {}
+    private videogamesService: VideogamesService, private tagsService: TagsService) {}
 
   videogame: Videogame = {
     _id: '',
@@ -38,9 +40,33 @@ export class VideogameDetailComponent implements OnInit {
     imagenTwitter: '',
     twitterpath: '',
   }
+
+  getTagInfo(identifiers: any, listOfTags: any) {
+    let tagInfoArray = [{id: -1, name: ""}];
+    for(const id of identifiers) {
+      let newTag = listOfTags.find((item: { id: any; }) => item.id === id)
+      if(newTag)
+        if(tagInfoArray.length == 1 && tagInfoArray[0].id == -1)
+          tagInfoArray.splice(tagInfoArray.findIndex(item => item.id === -1), 1);
+        tagInfoArray.push(newTag);
+    }
+    return tagInfoArray;
+  }
   
   ngOnInit(): void {
     this.videogame = history.state;
+
+    this.tagsService.getTags().subscribe({
+      error: (err: any) => { 
+        this.error = true;
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.error = false;
+        this.videogameTags = this.getTagInfo(history.state.tags, res);
+      }
+    });
 
     var portadaBase64 = btoa(
       new Uint8Array(this.videogame.portada.data.data)
@@ -121,6 +147,7 @@ export class VideogameDetailComponent implements OnInit {
   public modalMessage = "";
   public modalTitle = "Atención";
   public visible = false;
+  public error = false;
 
   openCloseInfoModal() {
     this.visible = !this.visible;
