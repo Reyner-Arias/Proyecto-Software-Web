@@ -114,8 +114,8 @@ POST http://localhost:3000/videogame-tag/post
 content-type: application/json
 
 {
-    "videogame": "1",
-    "tag": 9
+    "videogame": "64412d7166c68ee65346a5e8",
+    "tag": 12
 }
 
 ####

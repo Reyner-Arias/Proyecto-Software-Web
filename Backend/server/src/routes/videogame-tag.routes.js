@@ -3,25 +3,25 @@ const router = Router();
 
 const videogameTagController = require("../controllers/videogame-tag.controller");
 
-// Crear una nueva relación
+// Crear una nueva relación videojuego-etiqueta
 router.post('/post', videogameTagController.postVideogameTag);
 
-// Verificar si la relación existe
+// Verificar si existe la relación videojuego-etiqueta
 router.get('/exists/:videogame/:tag', videogameTagController.videogameTagExists);
 
-// Obtener las relaciones asociadas a un videojuego
+// Obtener las etiquetas de un videojuego
 router.get('/get/:videogame', videogameTagController.getVideogameTags);
 
-// Actualiza las relaciones videojuego-etiqueta
+// Actualiza las relaciones videojuego-etiqueta de un videojuego
 router.post('/update', videogameTagController.updateVideogameTag);
 
-// Elimina las relaciones videojuego-etiqueta
+// Elimina una relación videojuego-etiqueta
 router.delete('/delete/:videogame/:tag', videogameTagController.deleteVideogameTag);
 
-// Elimina las relaciones por videojuego
+// Elimina las relaciones videojuego-etiqueta por videojuego
 router.delete('/delete-by-videogame/:videogame', videogameTagController.deleteVTagByVideogame);
 
-// Elimina las relaciones por etiqueta
+// Elimina las relaciones videojuego-etiqueta por etiqueta
 router.delete('/delete-by-tag/:tag', videogameTagController.deleteVideogameTByTag);
 
 module.exports = router
