@@ -12,5 +12,8 @@ export class VideogameTagService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  
+  getVideogameTags(videogame: String) {
+    return this.http.get<any>(`${this.apiUrl}/get/${videogame}`);
+  }
+
 }

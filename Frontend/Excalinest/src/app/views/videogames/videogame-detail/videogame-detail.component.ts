@@ -4,6 +4,7 @@ import { Videogame } from 'src/app/models/Videogame.model';
 import { VideogamesService } from '../../../services/videogames.service';
 import { Router } from '@angular/router';
 import { TagsService } from 'src/app/services/tags.service';
+import { VideogameTagService } from 'src/app/services/videogame-tag.service'
 
 @Component({
   selector: 'app-videogame-detail',
@@ -17,7 +18,8 @@ export class VideogameDetailComponent implements OnInit {
   public videogameTags = [{id: -1, name: ""}];
 
   constructor(private domSanitizer: DomSanitizer,  public router: Router,
-    private videogamesService: VideogamesService, private tagsService: TagsService) {}
+    private videogamesService: VideogamesService, private tagsService: TagsService,
+    private videogameTagService: VideogameTagService) {}
 
   videogame: Videogame = {
     _id: '',
@@ -41,15 +43,26 @@ export class VideogameDetailComponent implements OnInit {
     twitterpath: '',
   }
 
-  getTagInfo(identifiers: any, listOfTags: any) {
+  getTagInfo(listOfTags: any) {
     let tagInfoArray = [{id: -1, name: ""}];
-    for(const id of identifiers) {
-      let newTag = listOfTags.find((item: { id: any; }) => item.id === id)
-      if(newTag)
-        if(tagInfoArray.length == 1 && tagInfoArray[0].id == -1)
-          tagInfoArray.splice(tagInfoArray.findIndex(item => item.id === -1), 1);
-        tagInfoArray.push(newTag);
-    }
+    this.videogameTagService.getVideogameTags(this.videogame.titulo).subscribe({
+      error: (err: any) => {
+        this.error = true;
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.error = false;
+        for(const id of res) {
+          let newTag = listOfTags.find((item: { id: any; }) => item.id === id)
+          if(newTag)
+            if(tagInfoArray.length == 1 && tagInfoArray[0].id == -1)
+              tagInfoArray.splice(tagInfoArray.findIndex(item => item.id === -1), 1);
+            tagInfoArray.push(newTag);
+        }
+        return tagInfoArray;
+      }
+    });
     return tagInfoArray;
   }
   
@@ -64,7 +77,7 @@ export class VideogameDetailComponent implements OnInit {
       },
       next: (res: any) => {
         this.error = false;
-        this.videogameTags = this.getTagInfo(history.state.tags, res);
+        this.videogameTags = this.getTagInfo(res);
       }
     });
 

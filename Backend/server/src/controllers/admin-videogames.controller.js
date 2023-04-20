@@ -138,7 +138,6 @@ adminVideogameController.postVideogame = async function (req, res) {
           newVideogame.titulo = req.body.titulo;
           newVideogame.sinopsis = req.body.sinopsis;
           newVideogame.usuario = req.body.usuario;
-          newVideogame.tags = req.body.tags;
 
           await newVideogame.save(async (err) => {
             if (err) {

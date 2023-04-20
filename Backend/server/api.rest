@@ -129,3 +129,9 @@ content-type: application/json
     "videogame": "Videojuego 1000",
     "tag": 8
 }
+
+###
+
+# Verificar si la relación existe
+
+GET http://localhost:3000/videogame-tag/get/Videojuego 5

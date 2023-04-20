@@ -34,6 +34,19 @@ videogameTagController.videogameTagExists = async (req, res) => {
   })
 };
 
+videogameTagController.getVideogameTags = async (req, res) => {
+  const { videogame } = req.params
+  VideogameTag.find({ videogame }, (err, videogameTags) => {
+    if (err) {
+      res.status(500).json(err.message)
+    } else if (!videogameTags) {
+      res.status(404).json('Error: No se han encontrado etiquetas asociadas al videojuego.')
+    } else {
+      res.status(200).json(videogameTags.map(({ tag }) => tag))
+    }
+  })
+};
+
 /*
 // Obtener todas las etiquetas
 videogameTagController.getTags = async (req, res) => {
