@@ -100,8 +100,7 @@ adminTagController.deleteTag = async (req, res) => {
 
     res.status(200).json('La etiqueta se ha eliminado correctamente.')
   }
-  catch(err){
-    console.log(err);
+  catch(err) {
     return res.status(500).json(err.message);
   }
 };

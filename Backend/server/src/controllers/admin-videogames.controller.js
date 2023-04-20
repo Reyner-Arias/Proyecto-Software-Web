@@ -200,7 +200,13 @@ adminVideogameController.deleteVideogame = async function (req, res) {
         return res.status(404).json('Error: No se ha encontrado el archivo para eliminarlo.');
       }
       await bucket.delete(file[0]._id);
-      await axios.delete("http://localhost:3000/videogame-tag/delete-by-videogame/"+`${req.body._id}`)
+
+      try {
+        await axios.delete("http://localhost:3000/videogame-tag/delete-by-videogame/"+`${req.body._id}`)
+      } catch(err) {
+        return res.status(500).json(err.message);
+      }
+      
       return res.status(200).json('Archivo eliminado.');
     }
   })
@@ -308,10 +314,10 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  if(req.body.tags && req.body.tags.length == 0) {
+  if(videogame.tags && videogame.tags.length == 0) {
     return res.status(500).json('Error: No se encontraron etiquetas.');
-  } else if(req.body.tags) {
-    for (const tag of req.body.tags) {
+  } else if(videogame.tags) {
+    for (const tag of videogame.tags) {
       try{
         const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
