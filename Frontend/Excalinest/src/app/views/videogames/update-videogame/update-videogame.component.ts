@@ -55,6 +55,8 @@ export class UpdateVideogameComponent implements OnInit {
     for(const id of identifiers) {
       let newTag = listOfTags.find((item: { id: any; }) => item.id === id)
       if(newTag)
+        if(tagInfoArray.length == 1 && tagInfoArray[0].id == -1)
+          tagInfoArray.splice(tagInfoArray.findIndex(item => item.id === -1), 1);
         tagInfoArray.push(newTag);
     }
     return tagInfoArray;
