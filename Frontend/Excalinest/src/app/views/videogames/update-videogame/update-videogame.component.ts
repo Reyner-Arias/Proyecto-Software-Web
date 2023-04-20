@@ -56,7 +56,9 @@ export class UpdateVideogameComponent implements OnInit {
     this.newVideogame.sinopsis = history.state.sinopsis;
     this.newVideogame.usuario = history.state.usuario;
     this.newVideogame.bucketId = history.state.bucketId;
-    this.tags = history.state.tags;
+    //this.tags = history.state.tags;
+    console.log(history.state.tags);
+    this.tags = []
 
     this.putVideogameForm = this.formBuilder.group({
       title: [this.newVideogame.titulo, Validators.required],
@@ -102,7 +104,8 @@ export class UpdateVideogameComponent implements OnInit {
     this.newVideogame.titulo = this.putVideogameForm.value.title;
     this.newVideogame.sinopsis = this.putVideogameForm.value.sinopsis;
     this.newVideogame.usuario = this.putVideogameForm.value.developer;
-    this.newVideogame.tags = this.tags;
+    //this.newVideogame.tags = this.tags;
+    this.newVideogame.tags = [6]
 
     if(this.putVideogameForm.value.cover != "") { this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putVideogameForm.value.zip != "") { this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath); }

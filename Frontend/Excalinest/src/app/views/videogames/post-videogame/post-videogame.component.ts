@@ -108,7 +108,8 @@ export class PostVideogameComponent implements OnInit{
     this.newVideogame.facepath = this.postVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.instapath = this.postVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.twitterpath = this.postVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.tags = this.tags;
+    //this.newVideogame.tags = this.tags;
+    this.newVideogame.tags = [6]
 
     this.showSpinner = true;
 

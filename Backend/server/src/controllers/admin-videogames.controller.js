@@ -7,7 +7,6 @@ const fs = require("fs");
 const axios = require('axios');
 const mongoose = require("../database");
 
-
 const MongoClient = require('mongodb').MongoClient;
 const GridFSBucket = require('mongodb').GridFSBucket;
 const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
@@ -62,15 +61,12 @@ adminVideogameController.postVideogame = async function (req, res) {
       try{
         const options = {
           'method': 'GET',
-          'url': 'http://localhost:3000/admin-tags/get/' +`${tag.id}`
+          'url': 'http://localhost:3000/admin-tags/get/' +`${tag}`
         }
-        const result = await axios(options);
-        if(result.data.name != tag.name) {
-          return res.status(500).json('Error: El id de la etiqueta existe, pero no coincide el nombre de la etiqueta.');
-        }
+        await axios(options);
       } catch(err) {
         if(err.response.status == 404) {
-          return res.status(404).json('Error: No se encuentra la etiqueta {id: '+tag.id+', name: '+tag.name+'}. Cree la etiqueta antes de agregarla al videojuego.');
+          return res.status(404).json('Error: No se encuentra la etiqueta '+ tag +'. Cree la etiqueta antes de agregarla al videojuego.');
         } else {
           return res.status(500).json(err.message);
         }
@@ -186,8 +182,6 @@ adminVideogameController.countVideogamesWithOnlySpecificTag = async function (re
     }
   });
 };
-
-
 
 // Eliminar un videojuego
 adminVideogameController.deleteVideogame = async function (req, res) {
@@ -316,15 +310,12 @@ adminVideogameController.putVideogame = async (req, res) => {
       try{
         const options = {
           'method': 'GET',
-          'url': 'http://localhost:3000/admin-tags/get/' +`${tag.id}`
+          'url': 'http://localhost:3000/admin-tags/get/' +`${tag}`
         }
-        const result = await axios(options);
-        if(result.data.name != tag.name) {
-          return res.status(500).json('Error: El id de la etiqueta existe, pero no coincide el nombre de la etiqueta.');
-        }
+        await axios(options);
       } catch(err) {
         if(err.response.status == 404) {
-          return res.status(404).json('Error: No se encuentra la etiqueta {id: '+tag.id+', name: '+tag.name+'}. Cree la etiqueta antes de agregarla al videojuego.');
+          return res.status(404).json('Error: No se encuentra la etiqueta '+ tag +'. Cree la etiqueta antes de agregarla al videojuego.');
         } else {
           return res.status(500).json(err.message);
         }
