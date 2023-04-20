@@ -50,15 +50,22 @@ export class UpdateVideogameComponent implements OnInit {
     return this.putVideogameForm;
   }
 
-  ngOnInit(){
+  getTagInfo(identifiers: any, listOfTags: any) {
+    let tagInfoArray = [{id: -1, name: ""}];
+    for(const id of identifiers) {
+      let newTag = listOfTags.find((item: { id: any; }) => item.id === id)
+      if(newTag)
+        tagInfoArray.push(newTag);
+    }
+    return tagInfoArray;
+  }
+
+  ngOnInit() {
     this.newVideogame._id = history.state._id;
     this.newVideogame.titulo = history.state.titulo;
     this.newVideogame.sinopsis = history.state.sinopsis;
     this.newVideogame.usuario = history.state.usuario;
     this.newVideogame.bucketId = history.state.bucketId;
-    //this.tags = history.state.tags;
-    console.log(history.state.tags);
-    this.tags = []
 
     this.putVideogameForm = this.formBuilder.group({
       title: [this.newVideogame.titulo, Validators.required],
@@ -80,6 +87,7 @@ export class UpdateVideogameComponent implements OnInit {
       next: (res: any) => {
         this.error = false;
         this.listOfTags = res;
+        this.tags = this.getTagInfo(history.state.tags, res);
       }
     });
   }
@@ -104,8 +112,7 @@ export class UpdateVideogameComponent implements OnInit {
     this.newVideogame.titulo = this.putVideogameForm.value.title;
     this.newVideogame.sinopsis = this.putVideogameForm.value.sinopsis;
     this.newVideogame.usuario = this.putVideogameForm.value.developer;
-    //this.newVideogame.tags = this.tags;
-    this.newVideogame.tags = [6]
+    this.newVideogame.tags = this.tags.map(({ id }) => id);
 
     if(this.putVideogameForm.value.cover != "") { this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putVideogameForm.value.zip != "") { this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath); }
