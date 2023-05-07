@@ -9,7 +9,7 @@ const mongoose = require("../database");
 
 const MongoClient = require('mongodb').MongoClient;
 const GridFSBucket = require('mongodb').GridFSBucket;
-const uri = "mongodb://aketech:ake123@140.84.184.137:27017/ExcalinestDB";
+const uri = "mongodb://hacketech:A83E9VyVMDyZQ38@140.84.184.137:27017/ExcalinestDB";
 //const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
