@@ -47,6 +47,8 @@ export class PostUserComponent implements OnInit {
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal(false);
+        this.showSpinner = false;
+        this.resetForm();
       },
       next: (res: any) => {
         this.showSpinner = false;
