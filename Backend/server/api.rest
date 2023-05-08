@@ -153,3 +153,15 @@ content-type: application/json
 #####
 
 GET http://localhost:3000/admin-users/get-all
+
+
+#####
+
+PUT http://localhost:3000/admin-users/put/64575fdb1973228f341039ed
+content-type: application/json
+
+{
+    "username": "nanahs0708",
+    "email": "mhidalgos0708@estudiantec.cr",
+    "name": "Marianna Hidalgo Sandoval"
+}

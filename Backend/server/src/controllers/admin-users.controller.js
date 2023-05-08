@@ -34,88 +34,39 @@ adminUserController.getAllUsers = async (req, res) => {
   })
 };
 
-// Obtener un usuario específico
-adminUserController.getUser = async (req, res) => {
-  const { id } = req.params
-  User.findOne({ id }, (err, User) => {
-    if (err) {
-      res.status(500).json(err.message)
-    } else if (!User) {
-      res.status(404).json('Error: No se ha encontrado la etiqueta solicitada.')
-    } else {
-      res.status(200).json(User)
-    }
-  })
-};
-
 // Actualizar un usuario
 adminUserController.putUser = async (req, res) => {
-  const { id } = req.params
-  const { name } = req.body
+  var updatedFields = {};
+  const { _id } = req.params
+  const { username, email, name } = req.body
 
-  try {
-    const updatedUser = await User.findOneAndUpdate({ id }, { name }, { new: true });
-
-    if (!updatedUser) {
-      return res.status(404).json('Error: No se ha encontrado la etiqueta solicitada.')
-    }
-
-    res.status(200).json('La etiqueta se ha actualizado exitosamente.')
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(422).json('Error: La etiqueta ya existe, cambiar el nombre.');
-    } else {
-      return res.status(500).json(err.message)
-    }
-  }
-}
-
-
-// Eliminar un usuario
-adminUserController.deleteUser = async (req, res) => {
-  const { id } = req.params;
-
-  const options = {
-    'method': 'GET',
-    'url': 'http://localhost:3000/admin-videogames/get-only-specific-User-count' +`/${id}`
+  if(username) {
+    Object.assign(updatedFields, {username: username})
   }
 
-  try{  
-    // Verificar si hay uno o más videojuegos que solo tengan la etiqueta a eliminar
-    const result = await axios(options);
-    const count = result.data;
-    if (count > 0) {
-      return res.status(400).json('Error: No se puede eliminar porque es la única etiqueta de uno o más videojuegos');
-    }
-
-    // Eliminar la etiqueta
-    const deletedUser = await User.findOneAndDelete({ id });
-
-    if (!deletedUser) {
-      return res.status(404).json('Error: No se ha encontrado la etiqueta solicitada.')
-    }
-
-    await axios.delete("http://localhost:3000/videogame-User/delete-by-User/"+`${id}`)
-
-    res.status(200).json('La etiqueta se ha eliminado correctamente.')
+  if(email) {
+    Object.assign(updatedFields, {email: email})
   }
-  catch(err) {
-    return res.status(500).json(err.message);
-  }
-};
 
-adminUserController.getMaxId = async (req, res) => {
-  User.find({}, { _id: 0, id: 1 }, { sort: { id: -1 }, limit: 1 }, (err, result) => {
+  if(name) {
+    Object.assign(updatedFields, {name: name})
+  }
+
+  var updatedFieldsSet =  { $set: updatedFields };
+
+  User.findOneAndUpdate({ _id: _id }, updatedFieldsSet, async (err, user) => {
     if (err) {
-      res.status(500).json( err.message )
-    } else {
-      if(result.length == 0) {
-        res.status(200).json(0)
+      if (err.code === 11000) {
+        return res.status(422).json('Error: El usuario ya existe, verificar nombre de usuario y correo únicos.');
       } else {
-        res.status(200).json(result[0].id)
+        return res.status(500).json(err.message)
       }
+    } else if (!user) {
+      return res.status(404).json('Error: No se ha encontrado el usuario solicitado.');
+    } else {
+      return res.status(200).json('Los campos válidos del usuario se han actualizado correctamente.');
     }
   })
-};
+}
 
 module.exports = adminUserController;
