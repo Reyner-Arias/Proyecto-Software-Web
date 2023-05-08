@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PutUserComponent } from './put-user/put-user.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 import { PostUserComponent } from './post-user/post-user.component';
 
 const routes: Routes = [
@@ -23,7 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'update',
-        component: PutUserComponent,
+        component: UpdateUserComponent,
         data: {
           title: 'Editar usuario',
         }

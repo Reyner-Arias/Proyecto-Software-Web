@@ -18,8 +18,8 @@ import {
 } from '@coreui/angular';
 
 import { UsersRoutingModule } from './users-routing.module';
-import { PutUserComponent } from './put-user/put-user.component';
 import { PostUserComponent } from './post-user/post-user.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @NgModule({
   imports: [
@@ -42,8 +42,8 @@ import { PostUserComponent } from './post-user/post-user.component';
     ModalModule
   ],
   declarations: [
-    PutUserComponent,
-    PostUserComponent
+    PostUserComponent,
+    UpdateUserComponent
   ]
 })
 export class UsersModule {

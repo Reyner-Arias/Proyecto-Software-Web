@@ -1,11 +1,11 @@
 <div *ngIf="showSpinner" class="fade show spinner">
     <i class="spinner-grow spinner-grow-sm"></i>
-    <span class="m-1">Registrando usuario...</span>
+    <span class="m-1">Actualizar usuario...</span>
 </div>
 
 <div *ngIf="showSpinner == false">
-    <h2>Registrar usuario</h2>
-    <form [formGroup]="getPostUserForm()" (ngSubmit)="submitUser()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
+    <h2>Actualizar usuario</h2>
+    <form [formGroup]="getPutUserForm()" (ngSubmit)="submitUser()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
         <c-row>
             <c-col md="6">
                 <label cLabel for="username">Nombre de usuario</label>
@@ -33,7 +33,7 @@
         <c-row class="row">
             <c-col md="4">
             <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
-                Registrar
+                Actualizar
             </button>
             </c-col>
         </c-row>
