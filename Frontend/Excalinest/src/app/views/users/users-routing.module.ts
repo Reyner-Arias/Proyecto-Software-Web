@@ -25,7 +25,7 @@ const routes: Routes = [
         path: 'update',
         component: UpdateUserComponent,
         data: {
-          title: 'Editar usuario',
+          title: 'Actualizar usuario',
         }
       },
       {
