@@ -1,6 +1,6 @@
 const adminTagController = {};
 
-const Tag = require('../models/tag')
+const Tag = require('../models/Tag')
 const axios = require('axios');
 
 // Crear una nueva etiqueta
