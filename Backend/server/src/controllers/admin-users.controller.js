@@ -95,18 +95,57 @@ adminUserController.getAllUsers = async (req, res) => {
 adminUserController.putUser = async (req, res) => {
   var updatedFields = {};
   const { _id } = req.params
-  const { username, email, name } = req.body
+  var user = req.body;
 
-  if(username) {
-    Object.assign(updatedFields, {username: username})
+  if(user.facepath) {
+    if (isValidImageExtension(user.facepath)) {
+      if(fs.existsSync(user.facepath)) {
+        Object.assign(updatedFields, { facebook: {tipoImagen: getImageExtension(user.facepath), 
+          data: fs.readFileSync(user.facepath)} });
+      } else {
+        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Facebook.');
+      }
+    } else {
+      return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
+    }
   }
 
-  if(email) {
-    Object.assign(updatedFields, {email: email})
+  if(user.instapath) {
+    if (isValidImageExtension(user.instapath)) {
+      if(fs.existsSync(user.instapath)) {
+        Object.assign(updatedFields, { instagram: {tipoImagen: getImageExtension(user.instapath), 
+          data: fs.readFileSync(user.instapath)} });
+      } else {
+        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Instagram.');
+      }
+    } else {
+      return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
+    }
   }
 
-  if(name) {
-    Object.assign(updatedFields, {name: name})
+  if(user.twitterpath) {
+    if (isValidImageExtension(user.twitterpath)) {
+      if(fs.existsSync(user.twitterpath)) {
+        Object.assign(updatedFields, { twitter: {tipoImagen: getImageExtension(user.twitterpath), 
+          data: fs.readFileSync(user.twitterpath)} });
+      } else {
+        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Twitter.');
+      }
+    } else {
+      return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
+    }
+  }
+
+  if(user.username) {
+    Object.assign(updatedFields, {username: user.username})
+  }
+
+  if(user.email) {
+    Object.assign(updatedFields, {email: user.email})
+  }
+
+  if(user.name) {
+    Object.assign(updatedFields, {name: user.name})
   }
 
   var updatedFieldsSet =  { $set: updatedFields };

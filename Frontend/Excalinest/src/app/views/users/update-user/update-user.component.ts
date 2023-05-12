@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class UpdateUserComponent implements OnInit {
 
-  private _id = "645879201d6d96be185338f0"
+  private _id = "645de152a30d413db2bde610"
   private putUserForm: any;
   public validatedForm = false;
   private excalinestImgPath = "C:\\Excalinest\\img\\";
@@ -51,6 +51,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   onPutUser() {
+    console.log("Hola")
     if(this.putUserForm.value.username != "") { this.newUser.username = this.putUserForm.value.username; }
     if(this.putUserForm.value.email != "") { this.newUser.email = this.putUserForm.value.email; }
     if(this.putUserForm.value.name != "") { this.newUser.name = this.putUserForm.value.name; }
@@ -58,6 +59,7 @@ export class UpdateUserComponent implements OnInit {
     if(this.putUserForm.value.instagram != "") { this.newUser.instapath = this.putUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putUserForm.value.twitter != "") { this.newUser.twitterpath = this.putUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
+    console.log(this.newUser)
     this.showSpinner = true;
 
     this.usersService.putUser(this._id, this.newUser).subscribe({
@@ -76,9 +78,18 @@ export class UpdateUserComponent implements OnInit {
     });
   }
 
+  isValidForm() {
+    return this.putUserForm.value.username != "" ||
+      this.putUserForm.value.email != "" ||
+      this.putUserForm.value.name != "" ||
+      this.putUserForm.value.facebook != "" ||
+      this.putUserForm.value.instagram != "" ||
+      this.putUserForm.value.twitter != "";
+  }
+
   submitUser() {
     this.validatedForm = true;
-    if (this.putUserForm.dirty && this.putUserForm.valid) {
+    if (this.isValidForm()) {
       this.onPutUser();
     }
   }
@@ -96,9 +107,11 @@ export class UpdateUserComponent implements OnInit {
 
   openCloseInfoModal(cleanForm: boolean) {
     this.visible = !this.visible;
-    if(this.visible && cleanForm) {
+    if(!cleanForm) {
+      this.completeForm();
+    } else if(this.visible && cleanForm) {
       this.resetForm();
-    } 
+    }
     if(!this.visible && !this.error) {
       this.router.navigate(['/users']);
     }
@@ -119,6 +132,18 @@ export class UpdateUserComponent implements OnInit {
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required],
+    });
+  }
+
+  completeForm() {
+    this.validatedForm = false;
+    this.putUserForm = this.formBuilder.group({
+      username: [this.putUserForm.value.username, Validators.required],
+      email: [this.putUserForm.value.email, Validators.required],
+      name: [this.putUserForm.value.name, Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
     });
   }
 }

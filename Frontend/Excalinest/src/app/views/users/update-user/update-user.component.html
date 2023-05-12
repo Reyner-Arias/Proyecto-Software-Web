@@ -5,7 +5,8 @@
 
 <div *ngIf="showSpinner == false">
     <h2>Actualizar usuario</h2>
-    <form [formGroup]="getPutUserForm()" (ngSubmit)="submitUser()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
+    <form [formGroup]="getPutUserForm()" (ngSubmit)="submitUser()" [validated]="validatedForm" 
+        cForm class="row g-3 needs-validation">
         <c-row>
             <c-col md="6">
                 <label cLabel for="username">Nombre de usuario</label>
@@ -30,22 +31,22 @@
         </c-row>
         <c-row class="row">
             <c-col md="4">
-              <label cLabel for="facebook">Facebook</label>
-              <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" required type="file" >
-              <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
-              <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+                <label cLabel for="facebook">Facebook</label>
+                <input cFormControl id="facebook" formControlName="facebook" type="file" >
+                <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
             </c-col>
             <c-col md="4">
-              <label cLabel for="instagram">Instagram</label>
-              <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" required type="file" >
-              <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
-              <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+                <label cLabel for="instagram">Instagram</label>
+                <input cFormControl id="instagram" formControlName="instagram" type="file" >
+                <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
             </c-col>
             <c-col md="4">
-              <label cLabel for="twitter">Twitter</label>
-              <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" required type="file" >
-              <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
-              <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+                <label cLabel for="twitter">Twitter</label>
+                <input cFormControl id="twitter" formControlName="twitter" type="file" >
+                <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
             </c-col>
         </c-row>
         <c-row class="row">
