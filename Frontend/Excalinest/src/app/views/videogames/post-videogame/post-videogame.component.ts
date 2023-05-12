@@ -150,9 +150,11 @@ export class PostVideogameComponent implements OnInit{
 
   openCloseInfoModal(cleanForm: boolean) {
     this.visible = !this.visible;
-    if(this.visible && cleanForm) {
+    if(!cleanForm) {
+      this.completeForm();
+    } else if(this.visible && cleanForm) {
       this.resetForm();
-    } 
+    }
     if(!this.visible && !this.error) {
       this.router.navigate(['/videogames']);
     }
@@ -170,6 +172,20 @@ export class PostVideogameComponent implements OnInit{
       title: ['', Validators.required],
       developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
+      cover: ['', Validators.required],
+      zip: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
+    });
+  }
+
+  completeForm() {
+    this.validatedForm = false;
+    this.postVideogameForm = this.formBuilder.group({
+      title: [this.newVideogame.titulo, Validators.required],
+      developer: [this.newVideogame.usuario, Validators.required],
+      sinopsis: [this.newVideogame.sinopsis, Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
       facebook: ['', Validators.required],

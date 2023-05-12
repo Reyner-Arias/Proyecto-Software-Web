@@ -153,9 +153,9 @@ export class UpdateVideogameComponent implements OnInit {
   }
 
   isValidForm() {
-    return this.putVideogameForm.value.title != "" &&
-      this.putVideogameForm.value.sinopsis != "" &&
-      this.putVideogameForm.value.developer != "" &&
+    return this.putVideogameForm.value.title != "" ||
+      this.putVideogameForm.value.sinopsis != "" ||
+      this.putVideogameForm.value.developer != "" ||
       (this.tags.length != 1 || this.tags[0].id != -1);
   }
 
@@ -179,7 +179,9 @@ export class UpdateVideogameComponent implements OnInit {
 
   openCloseInfoModal(cleanForm: boolean) {
     this.visible = !this.visible;
-    if(this.visible && cleanForm) {
+    if(!cleanForm) {
+      this.completeForm();
+    } else if(this.visible && cleanForm) {
       this.resetForm();
     }
     if(!this.visible && !this.error) {
@@ -199,6 +201,20 @@ export class UpdateVideogameComponent implements OnInit {
       title: ['', Validators.required],
       developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
+      cover: ['', Validators.required],
+      zip: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
+    });
+  }
+
+  completeForm() {
+    this.validatedForm = false;
+    this.putVideogameForm = this.formBuilder.group({
+      title: [this.newVideogame.titulo, Validators.required],
+      developer: [this.newVideogame.usuario, Validators.required],
+      sinopsis: [this.newVideogame.sinopsis, Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
       facebook: ['', Validators.required],
