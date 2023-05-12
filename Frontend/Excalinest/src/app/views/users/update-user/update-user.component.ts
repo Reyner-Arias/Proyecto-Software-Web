@@ -14,11 +14,22 @@ export class UpdateUserComponent implements OnInit {
   private _id = "645879201d6d96be185338f0"
   private putUserForm: any;
   public validatedForm = false;
+  private excalinestImgPath = "C:\\Excalinest\\img\\";
+  private fakePath = "C:\\fakepath\\";
 
   newUser: User = {
     username: "",
     email: "",
-    name: ""
+    name: "",
+    facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenFacebook: '',
+    facepath: '',
+    instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenInstagram: '',
+    instapath: '',
+    twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenTwitter: '',
+    twitterpath: '',
   }
 
   ngOnInit() {
@@ -43,16 +54,18 @@ export class UpdateUserComponent implements OnInit {
     if(this.putUserForm.value.username != "") { this.newUser.username = this.putUserForm.value.username; }
     if(this.putUserForm.value.email != "") { this.newUser.email = this.putUserForm.value.email; }
     if(this.putUserForm.value.name != "") { this.newUser.name = this.putUserForm.value.name; }
+    if(this.putUserForm.value.facebook != "") { this.newUser.facepath = this.putUserForm.value.facebook.replace(this.fakePath, this.excalinestImgPath); }
+    if(this.putUserForm.value.instagram != "") { this.newUser.instapath = this.putUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
+    if(this.putUserForm.value.twitter != "") { this.newUser.twitterpath = this.putUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
     this.showSpinner = true;
 
     this.usersService.putUser(this._id, this.newUser).subscribe({
       error: (err: any) => { 
+        this.showSpinner = false;
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal(false);
-        this.showSpinner = false;
-        this.resetForm();
       },
       next: (res: any) => {
         this.showSpinner = false;

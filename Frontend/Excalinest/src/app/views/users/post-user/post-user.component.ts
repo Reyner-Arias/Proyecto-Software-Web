@@ -13,11 +13,22 @@ export class PostUserComponent implements OnInit {
 
   private postUserForm: any;
   public validatedForm = false;
+  private excalinestImgPath = "C:\\Excalinest\\img\\";
+  private fakePath = "C:\\fakepath\\";
 
   newUser: User = {
     username: "",
     email: "",
-    name: ""
+    name: "",
+    facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenFacebook: '',
+    facepath: '',
+    instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenInstagram: '',
+    instapath: '',
+    twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
+    imagenTwitter: '',
+    twitterpath: '',
   }
 
   ngOnInit() {
@@ -42,16 +53,18 @@ export class PostUserComponent implements OnInit {
     this.newUser.username = this.postUserForm.value.username;
     this.newUser.email = this.postUserForm.value.email;
     this.newUser.name = this.postUserForm.value.name;
-
+    this.newUser.facepath = this.postUserForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
+    this.newUser.instapath = this.postUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
+    this.newUser.twitterpath = this.postUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
+    
     this.showSpinner = true;
 
     this.usersService.postUser(this.newUser).subscribe({
-      error: (err: any) => { 
+      error: (err: any) => {
+        this.showSpinner = false;
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal(false);
-        this.showSpinner = false;
-        this.resetForm();
       },
       next: (res: any) => {
         this.showSpinner = false;
@@ -82,9 +95,11 @@ export class PostUserComponent implements OnInit {
 
   openCloseInfoModal(cleanForm: boolean) {
     this.visible = !this.visible;
-    if(this.visible && cleanForm) {
+    if(!cleanForm) {
+      this.completeForm();
+    } else if(this.visible && cleanForm) {
       this.resetForm();
-    } 
+    }
     if(!this.visible && !this.error) {
       this.router.navigate(['/users']);
     }
@@ -102,6 +117,18 @@ export class PostUserComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', Validators.required],
       name: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
+    });
+  }
+
+  completeForm() {
+    this.validatedForm = false;
+    this.postUserForm = this.formBuilder.group({
+      username: [this.postUserForm.value.username, Validators.required],
+      email: [this.postUserForm.value.email, Validators.required],
+      name: [this.postUserForm.value.name, Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required]

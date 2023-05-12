@@ -4,7 +4,10 @@ const userSchema = new Schema(
   {
     username: { type: String, required: false, unique: true },
     email: { type: String, required: false, unique: true },
-    name: { type: String, required: false }
+    name: { type: String, required: false },
+    facebook: { tipoImagen: String, data: Buffer, required: false },
+    instagram: { tipoImagen: String, data: Buffer, required: false },
+    twitter: { tipoImagen: String, data: Buffer, required: false },
   },
   {
     timestamps: true,

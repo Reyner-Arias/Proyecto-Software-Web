@@ -114,11 +114,10 @@ export class PostVideogameComponent implements OnInit{
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
+        this.showSpinner = false;
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal(false);
-        this.showSpinner = false;
-        this.resetForm();
       },
       next: (res: any) => {
         this.playAudio();

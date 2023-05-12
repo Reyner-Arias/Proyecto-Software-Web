@@ -139,10 +139,9 @@ export class UpdateVideogameComponent implements OnInit {
     this.videogamesService.putVideogame(this.newVideogame).subscribe({
       error: (err: any) => { 
         this.error = true;
+        this.showSpinner = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal(false);
-        this.showSpinner = false;
-        this.resetForm();
       },
       next: (res: any) => {
         this.error = false;
