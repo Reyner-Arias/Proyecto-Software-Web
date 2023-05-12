@@ -25,6 +25,9 @@ export class PostUserComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', Validators.required],
       name: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required],
     });
   }
 
@@ -98,7 +101,10 @@ export class PostUserComponent implements OnInit {
     this.postUserForm = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', Validators.required],
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      twitter: ['', Validators.required]
     });
   }
   

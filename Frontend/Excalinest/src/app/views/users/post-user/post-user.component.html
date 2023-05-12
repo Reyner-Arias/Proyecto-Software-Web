@@ -13,8 +13,6 @@
                 <c-form-feedback [valid]="true">Nombre de usuario válido</c-form-feedback>
                 <c-form-feedback [valid]="false">Ingrese el nombre de usuario</c-form-feedback>
             </c-col>
-        </c-row>
-        <c-row>
             <c-col md="6">
                 <label cLabel for="email">Correo electrónico</label>
                 <input cFormControl id="email" formControlName="email" required type="text" />
@@ -23,11 +21,31 @@
             </c-col>
         </c-row>
         <c-row>
-            <c-col md="6">
+            <c-col md="12">
                 <label cLabel for="name">Nombre</label>
                 <input cFormControl id="name" formControlName="name" required type="text" />
                 <c-form-feedback [valid]="true">Nombre válido</c-form-feedback>
                 <c-form-feedback [valid]="false">Ingrese el nombre del usuario</c-form-feedback>
+            </c-col>
+        </c-row>
+        <c-row class="row">
+            <c-col md="4">
+              <label cLabel for="facebook">Facebook</label>
+              <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" required type="file" >
+              <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+              <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="instagram">Instagram</label>
+              <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" required type="file" >
+              <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+              <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+              <label cLabel for="twitter">Twitter</label>
+              <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" required type="file" >
+              <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+              <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
             </c-col>
         </c-row>
         <c-row class="row">
