@@ -83,6 +83,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/tags/tags.module').then((m) => m.TagsModule)
       },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./views/users/users.module').then((m) => m.UsersModule)
+      },
     ]
   },
   {

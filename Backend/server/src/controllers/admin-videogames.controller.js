@@ -348,7 +348,11 @@ adminVideogameController.putVideogame = async (req, res) => {
 
   Videogame.findOneAndUpdate({ _id: videogame._id }, updatedFieldsSet, async (err, videogame) => {
     if (err) {
-      return res.status(500).json(err.message);
+      if (err.code === 11000) {
+        res.status(422).json('Error: El videojuego ya existe, cambiar el título.');
+      } else {
+        res.status(500).json(err.message)
+      }
     } else if (!videogame) {
       return res.status(404).json('Error: No se encontró el videojuego.');
     } else {

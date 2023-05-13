@@ -135,3 +135,33 @@ content-type: application/json
 # Verificar si la relación existe
 
 GET http://localhost:3000/videogame-tag/exists/64410725936d3f29dde3e666/9
+
+
+#######
+
+
+POST http://localhost:3000/admin-users/post
+content-type: application/json
+
+{
+    "username": "nanahs",
+    "email": "nanahs0708@gmail.com",
+    "name": "Marianna Hidalgo S"
+}
+
+
+#####
+
+GET http://localhost:3000/admin-users/get-all
+
+
+#####
+
+PUT http://localhost:3000/admin-users/put/64575fdb1973228f341039ed
+content-type: application/json
+
+{
+    "username": "nanahs0708",
+    "email": "mhidalgos0708@estudiantec.cr",
+    "name": "Marianna Hidalgo Sandoval"
+}

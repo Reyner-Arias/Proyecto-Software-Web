@@ -1,16 +1,21 @@
 <h2>Actualizar etiqueta</h2>
-<form [formGroup]="getUpdateTagForm()" (ngSubmit)="updateTag()" novalidate class="row g-3 needs-validation">
-  <div class="col-md-4">
-    <label for="name">Nombre</label>
-    <input id="name" formControlName="name" required type="text" class="form-control" />
-    <div *ngIf="getUpdateTagForm().get('name')?.valid" class="valid-feedback">Nombre válido</div>
-    <div *ngIf="getUpdateTagForm().get('name')?.invalid" class="invalid-feedback">Ingrese el nombre de la etiqueta</div>
-  </div>
-  <div class="col-xs-12">
-    <button type="button" class="btn btn-primary" (click)="updateTag()">
-        Guardar
-    </button>
-  </div>
+
+<form [formGroup]="getUpdateTagForm()" (ngSubmit)="updateTag()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
+  <c-row>
+    <c-col md="4">
+        <label cLabel for="name">Nombre de la etiqueta</label>
+        <input cFormControl id="name" formControlName="name" required type="text" />
+        <c-form-feedback [valid]="true">Nombre de etiqueta válido</c-form-feedback>
+        <c-form-feedback [valid]="false">Ingrese el nombre de etiqueta</c-form-feedback>
+    </c-col>
+  </c-row>
+  <c-row class="row">
+    <c-col md="4">
+      <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
+        Actualizar
+      </button>
+    </c-col>
+  </c-row>
 </form>
 
 <c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">

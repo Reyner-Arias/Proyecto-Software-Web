@@ -62,6 +62,7 @@ export class UpdateTagComponent implements OnInit {
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
+        this.resetForm();
       },
       next: (res: any) => {
         this.error = false;
