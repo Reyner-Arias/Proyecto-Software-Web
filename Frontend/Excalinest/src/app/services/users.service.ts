@@ -23,4 +23,8 @@ export class UsersService {
   getUsers() {
     return this.http.get<any>(`${this.apiUrl}/get-all`);
   }
+
+  deleteUser(email: String) {
+    return this.http.delete<any>(`${this.apiUrl}/delete`+`/${email}`);
+  }
 }

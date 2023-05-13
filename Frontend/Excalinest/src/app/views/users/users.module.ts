@@ -20,6 +20,7 @@ import {
 import { UsersRoutingModule } from './users-routing.module';
 import { PostUserComponent } from './post-user/post-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { GetUsersComponent } from './get-users/get-users.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { UpdateUserComponent } from './update-user/update-user.component';
   ],
   declarations: [
     PostUserComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    GetUsersComponent
   ]
 })
 export class UsersModule {

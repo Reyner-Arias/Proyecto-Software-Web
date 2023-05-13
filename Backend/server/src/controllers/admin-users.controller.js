@@ -165,4 +165,25 @@ adminUserController.putUser = async (req, res) => {
   })
 }
 
+// Eliminar un usuario
+adminUserController.deleteUser = async (req, res) => {
+  const { email } = req.params;
+
+  try{  
+    // Eliminar el usuario
+    const deletedUser = await User.findOneAndDelete({ email });
+
+    if (!deletedUser) {
+      return res.status(404).json('Error: No se ha encontrado el usuario solicitado.')
+    }
+
+    await axios.delete("http://localhost:3000/admin-users/delete/"+`${email}`)
+
+    res.status(200).json('El usuario se ha eliminado correctamente.')
+  }
+  catch(err) {
+    return res.status(500).json(err.message);
+  }
+};
+
 module.exports = adminUserController;

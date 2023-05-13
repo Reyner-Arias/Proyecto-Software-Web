@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { PostUserComponent } from './post-user/post-user.component';
+import { GetUsersComponent } from './get-users/get-users.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,14 @@ const routes: Routes = [
         data: {
           title: 'Registrar usuario'
         }
-      }
+      },
+      {
+        path: 'get',
+        component: GetUsersComponent,
+        data: {
+          title: 'Obtener y eliminar usuario',
+        }
+      },
     ]
   },
 ];
