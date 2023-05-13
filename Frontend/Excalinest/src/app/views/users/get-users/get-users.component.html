@@ -4,14 +4,14 @@
 </div>
 
 <c-row>
-    <c-col [sm]="3" *ngFor="let tag of tags">
+    <c-col [sm]="3" *ngFor="let user of users">
         <c-card class="mb-4">
             <c-card-body>
-            <h5 cCardTitle>{{tag.name}}</h5>
+            <h5 cCardTitle>{{user.username}}</h5>
             <c-row>
                 <c-col class="text-end mb-12">
-                    <a cButton color="info" class="update-button" [routerLink]="['/tags/update']" [queryParams]="{tag: tag.id}" size="sm">Editar</a>
-                    <button cButton color="danger" (click)="deleteTag(tag.id)" size="sm">Eliminar</button>
+                    <a cButton color="info" class="update-button" [routerLink]="['/users/update']" [queryParams]="{user: user.email}" size="sm">Editar</a>
+                    <button cButton color="danger" (click)="deleteUser(user.email)" size="sm">Eliminar</button>
                 </c-col>
             </c-row>
             </c-card-body>
