@@ -40,7 +40,7 @@ const routes: Routes = [
         path: 'get',
         component: GetUsersComponent,
         data: {
-          title: 'Obtener y eliminar usuario',
+          title: 'Usuarios',
         }
       },
     ]

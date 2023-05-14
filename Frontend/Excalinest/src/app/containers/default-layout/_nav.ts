@@ -39,13 +39,13 @@ export const navItems: INavData[] = [
     title: true
   },
   {
-    name: 'Registrar usuario',
-    url: '/users/post',
+    name: 'Lista de usuarios',
+    url: '/users/get',
     iconComponent: { name: 'cil-people'}
   },
   {
-    name: 'Actualizar usuario',
-    url: '/users/update',
+    name: 'Registrar usuario',
+    url: '/users/post',
     iconComponent: { name: 'cil-pen'}
-  },
+  }
 ];

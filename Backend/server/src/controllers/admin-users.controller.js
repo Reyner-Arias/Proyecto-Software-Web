@@ -3,6 +3,7 @@ const adminUserController = {};
 const User = require('../models/user')
 const path = require("path");
 const fs = require("fs");
+const axios = require('axios');
 
 function isValidImageExtension(imagepath) {
   switch (path.extname(imagepath).toLowerCase()) {
@@ -169,21 +170,15 @@ adminUserController.putUser = async (req, res) => {
 adminUserController.deleteUser = async (req, res) => {
   const { email } = req.params;
 
-  try{  
-    // Eliminar el usuario
-    const deletedUser = await User.findOneAndDelete({ email });
-
-    if (!deletedUser) {
-      return res.status(404).json('Error: No se ha encontrado el usuario solicitado.')
+  User.findOneAndDelete({ email: email }, async (err, user) => {
+    if (err) {
+      return res.status(500).json(err.message)
+    } else if (!user) {
+      return res.status(404).json('Error: No se ha encontrado el usuario.')
+    } else {  
+      return res.status(200).json('El usuario se ha eliminado correctamente.')
     }
-
-    await axios.delete("http://localhost:3000/admin-users/delete/"+`${email}`)
-
-    res.status(200).json('El usuario se ha eliminado correctamente.')
-  }
-  catch(err) {
-    return res.status(500).json(err.message);
-  }
-};
+  });
+}
 
 module.exports = adminUserController;
