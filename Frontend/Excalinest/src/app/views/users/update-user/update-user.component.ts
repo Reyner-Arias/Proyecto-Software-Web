@@ -33,10 +33,14 @@ export class UpdateUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.newUser.username = history.state.username;
+    this.newUser.email = history.state.email;
+    this.newUser.name = history.state.name;
+
     this.putUserForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      name: ['', Validators.required],
+      username: [this.newUser.username, Validators.required],
+      email: [this.newUser.email, Validators.required],
+      name: [this.newUser.name, Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required],
