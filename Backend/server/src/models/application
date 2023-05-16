@@ -1,0 +1,14 @@
+const { Schema, model } = require("mongoose");
+
+const appSchema = new Schema(
+  {
+    title: { type: String, required: false, unique: true },
+    bucketId: { type: String, required: false }
+  },
+  {
+    timestamps: true,
+    versionKey: false
+  }
+);
+
+module.exports = model("application", appSchema)
