@@ -4,8 +4,8 @@ mongoose.set("strictQuery", false);
 
 mongoose
   .connect(
-    "mongodb://hacketech:A83E9VyVMDyZQ38@140.84.184.137:27017/ExcalinestDB",
-    //"mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority",
+    //"mongodb://hacketech:A83E9VyVMDyZQ38@140.84.184.137:27017/ExcalinestDB",
+    "mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority",
     { useUnifiedTopology: true, useNewUrlParser: true }
   )
   .then((db) => console.log("Connected to MongoDB"))

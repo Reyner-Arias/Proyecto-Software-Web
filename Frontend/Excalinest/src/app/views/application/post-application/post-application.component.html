@@ -1,1 +1,40 @@
-<p>post-application works!</p>
+<h2>Publicar Excalinest</h2>
+
+<form [formGroup]="getPostApplicationForm()" (ngSubmit)="submitApplication()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
+  <c-row>
+    <c-col md="4">
+        <label cLabel for="title">Nombre de la nueva versión</label>
+        <input cFormControl id="title" formControlName="title" required type="text" />
+        <c-form-feedback [valid]="true">Nombre de la versión válido</c-form-feedback>
+        <c-form-feedback [valid]="false">Ingrese el nombre de la nueva versión</c-form-feedback>
+    </c-col>
+  </c-row>
+  <c-row>
+    <c-col md="4">
+        <label cLabel for="zip">Archivo zip de la aplicación</label>
+        <input cFormControl id="zip" formControlName="zip" accept="application/zip" required type="file" >
+        <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+        <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+      </c-col>
+  </c-row>
+  <c-row class="row">
+    <c-col md="4">
+      <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
+        Publicar
+      </button>
+    </c-col>
+  </c-row>
+</form>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+  <c-modal-header>
+      <h5 cModalTitle>{{modalTitle}}</h5>
+      <button (click)="openCloseInfoModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>{{modalMessage}}</c-modal-body>
+  <c-modal-footer>
+      <button (click)="openCloseInfoModal()" cButton color="secondary">
+        Cerrar
+      </button>
+  </c-modal-footer>
+</c-modal>
