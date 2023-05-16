@@ -94,7 +94,7 @@ adminUserController.postUser = async (req, res) => {
 
 // Obtener todos los usuarios
 adminUserController.getAllUsers = async (req, res) => {
-  User.find({}, (err, Users) => {
+  User.find({}, {_id:1, username:1, email:1, name:1, type:1}, (err, Users) => {
     if (err) {
       return res.status(500).json(err.message)
     } else {

@@ -32,12 +32,15 @@ export class GetUsersComponent implements OnInit {
   }
 
   deleteUser(email: String) {
+    this.showSpinner = true;
     this.usersService.deleteUser(email).subscribe({
       error: (err: any) =>{
+        this.showSpinner = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
       },
       next: () => {
+        this.showSpinner = false;
         this.toastr.success('El usuario se eliminó correctamente', 'Éxito');
         setTimeout(() => {
           location.reload();

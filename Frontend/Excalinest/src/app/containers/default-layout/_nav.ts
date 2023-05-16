@@ -46,6 +46,6 @@ export const navItems: INavData[] = [
   {
     name: 'Registrar usuario',
     url: '/users/post',
-    iconComponent: { name: 'cil-pen'}
+    iconComponent: { name: 'cil-user-follow'}
   }
 ];

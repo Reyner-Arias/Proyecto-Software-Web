@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class UpdateUserComponent implements OnInit {
 
-  private _id = "646301b5b91b55a5e10d6ff6"
+  private _id = "";
   private putUserForm: any;
   public validatedForm = false;
   private excalinestImgPath = "C:\\Excalinest\\img\\";
@@ -34,6 +34,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._id = history.state._id;
     this.newUser.username = history.state.username;
     this.newUser.email = history.state.email;
     this.newUser.name = history.state.name;

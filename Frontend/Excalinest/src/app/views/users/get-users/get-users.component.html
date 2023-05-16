@@ -3,21 +3,23 @@
     <span class="m-1">Cargando usuarios...</span>
 </div>
 
-<c-row>
-    <c-col [sm]="3" *ngFor="let user of users">
-        <c-card class="mb-4">
-            <c-card-body>
-            <h5 cCardTitle>{{user.username}}</h5>
-            <c-row>
-                <c-col class="text-end mb-12">
-                    <a cButton color="info" class="update-button" [routerLink]="['/users/update']" [state]="user" size="sm">Editar</a>
-                    <button cButton color="danger" (click)="deleteUser(user.email)" size="sm">Eliminar</button>
-                </c-col>
-            </c-row>
-            </c-card-body>
-        </c-card>
-    </c-col>
-</c-row>
+<div *ngIf="showSpinner == false">
+    <c-row>
+        <c-col [sm]="3" *ngFor="let user of users">
+            <c-card class="mb-4">
+                <c-card-body>
+                <h5 cCardTitle>{{user.username}}</h5>
+                <c-row>
+                    <c-col class="text-end mb-12">
+                        <a cButton color="info" class="update-button" [routerLink]="['/users/update']" [state]="user" size="sm">Editar</a>
+                        <button cButton color="danger" (click)="deleteUser(user.email)" size="sm">Eliminar</button>
+                    </c-col>
+                </c-row>
+                </c-card-body>
+            </c-card>
+        </c-col>
+    </c-row>
+</div>
 
 <c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
     <c-modal-header>
