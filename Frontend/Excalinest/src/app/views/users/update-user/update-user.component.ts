@@ -103,7 +103,7 @@ export class UpdateUserComponent implements OnInit {
 
   validateEmailFormat() {
     var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return this.putUserForm.value.email.match(emailFormat);
+    return this.putUserForm.value.email == '' || this.putUserForm.value.email.match(emailFormat);
   }
 
   /* --------------------- Spinner --------------------- */
