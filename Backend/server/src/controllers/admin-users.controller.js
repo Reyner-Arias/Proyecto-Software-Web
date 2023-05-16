@@ -23,13 +23,23 @@ function getImageExtension(imagepath) {
   }
 }
 
+function isValidTypeOfUser(type) {
+  return type == "desarrollador" || 
+  type == "administrador" ||
+  type == "soporte";
+}
+
 // Crear un nuevo usuario
 adminUserController.postUser = async (req, res) => {
   const newUser = new User();
 
-  if(!req.body.username || !req.body.email || !req.body.name ||
+  if(!req.body.username || !req.body.email || !req.body.name || !req.body.type ||
     !req.body.facepath || !req.body.instapath || !req.body.twitterpath) {
     return res.status(500).json('Error: No se encontraron todos los datos del usuario.');
+  }
+
+  if(!isValidTypeOfUser(req.body.type)) {
+    return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
   if (isValidImageExtension(req.body.facepath) && isValidImageExtension(req.body.instapath) && 
@@ -65,6 +75,7 @@ adminUserController.postUser = async (req, res) => {
   newUser.username = req.body.username;
   newUser.email = req.body.email;
   newUser.name = req.body.name;
+  newUser.type = req.body.type;
 
   newUser.save((err) => {
     if (err) {
@@ -97,6 +108,10 @@ adminUserController.putUser = async (req, res) => {
   var updatedFields = {};
   const { _id } = req.params
   var user = req.body;
+
+  if(user.type && !isValidTypeOfUser(user.type)) {
+    return res.status(500).json('Error: Tipo de usuario no válido.');
+  }
 
   if(user.facepath) {
     if (isValidImageExtension(user.facepath)) {
@@ -147,6 +162,10 @@ adminUserController.putUser = async (req, res) => {
 
   if(user.name) {
     Object.assign(updatedFields, {name: user.name})
+  }
+
+  if(user.type) {
+    Object.assign(updatedFields, {type: user.type})
   }
 
   var updatedFieldsSet =  { $set: updatedFields };

@@ -20,6 +20,7 @@ export class PostUserComponent implements OnInit {
     username: "",
     email: "",
     name: "",
+    type: "",
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
     facepath: '',
@@ -36,6 +37,7 @@ export class PostUserComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', Validators.required],
       name: ['', Validators.required],
+      type: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required],
@@ -53,6 +55,7 @@ export class PostUserComponent implements OnInit {
     this.newUser.username = this.postUserForm.value.username;
     this.newUser.email = this.postUserForm.value.email;
     this.newUser.name = this.postUserForm.value.name;
+    this.newUser.type = this.postUserForm.value.type;
     this.newUser.facepath = this.postUserForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
     this.newUser.instapath = this.postUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
     this.newUser.twitterpath = this.postUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
@@ -76,10 +79,21 @@ export class PostUserComponent implements OnInit {
   }
 
   submitUser() {
-    this.validatedForm = true;
-    if (this.postUserForm.dirty && this.postUserForm.valid) {
-      this.onPostUser();
+    if(this.validateEmailFormat()) {
+      this.validatedForm = true;
+      if (this.postUserForm.dirty && this.postUserForm.valid) {
+        this.onPostUser();
+      }
+    } else {
+      this.error = true;
+      this.modalMessage = "Error: Formato de correo electrónico no válido";
+      this.openCloseInfoModal(false);
     }
+  }
+
+  validateEmailFormat() {
+    var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return this.postUserForm.value.email.match(emailFormat);
   }
 
   /* --------------------- Spinner --------------------- */
@@ -117,6 +131,7 @@ export class PostUserComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', Validators.required],
       name: ['', Validators.required],
+      type: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required]
@@ -129,6 +144,7 @@ export class PostUserComponent implements OnInit {
       username: [this.postUserForm.value.username, Validators.required],
       email: [this.postUserForm.value.email, Validators.required],
       name: [this.postUserForm.value.name, Validators.required],
+      type: [this.postUserForm.value.type, Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required]
