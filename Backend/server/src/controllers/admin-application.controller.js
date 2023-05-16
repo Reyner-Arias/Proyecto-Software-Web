@@ -8,8 +8,8 @@ const mongoose = require("../database");
 
 const MongoClient = require('mongodb').MongoClient;
 const GridFSBucket = require('mongodb').GridFSBucket;
-const uri = "mongodb://hacketech:A83E9VyVMDyZQ38@140.84.184.137:27017/ExcalinestDB";
-//const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
+//const uri = "mongodb://hacketech:A83E9VyVMDyZQ38@140.84.184.137:27017/ExcalinestDB";
+const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   if (err) throw err;
@@ -30,7 +30,7 @@ process.on('SIGINT', () => {
 adminApplicationController.postApplication = async function (req, res) {
   const newApplication = new Application();
 
-  if(!req.body.titulo || !req.body.filepath) {
+  if(!req.body.title || !req.body.filepath) {
     return res.status(500).json('Error: No se encontraron todos los datos de la aplicación.');
   }
 
@@ -44,7 +44,7 @@ adminApplicationController.postApplication = async function (req, res) {
     }
 
     const readStream = fs.createReadStream(req.body.filepath);
-    const uploadStream = bucket.openUploadStream(req.body.titulo + '.zip', {
+    const uploadStream = bucket.openUploadStream(req.body.title + '.zip', {
       contentType: req.body.tipoArchivo
     });
     readStream.pipe(uploadStream);
@@ -56,7 +56,7 @@ adminApplicationController.postApplication = async function (req, res) {
       .on('finish', async () => {
 
         newApplication.bucketId = uploadStream.id;
-        newApplication.title = req.body.titulo;
+        newApplication.title = req.body.title;
 
         await newApplication.save(async (err, newApplication) => {
           if (err) {

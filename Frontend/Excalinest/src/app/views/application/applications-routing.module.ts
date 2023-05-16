@@ -6,7 +6,7 @@ import { PostApplicationComponent } from './post-application/post-application.co
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'get',
+    redirectTo: 'get-all',
     pathMatch: 'full'
   },
   {
