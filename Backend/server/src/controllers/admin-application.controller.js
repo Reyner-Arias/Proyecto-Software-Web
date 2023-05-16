@@ -30,7 +30,7 @@ process.on('SIGINT', () => {
 adminApplicationController.postApplication = async function (req, res) {
   const newApplication = new Application();
 
-  if(!req.body.title || !req.body.filepath) {
+  if(!req.body.title || !req.body.filepath || !req.body.description) {
     return res.status(500).json('Error: No se encontraron todos los datos de la aplicación.');
   }
 
@@ -57,6 +57,7 @@ adminApplicationController.postApplication = async function (req, res) {
 
         newApplication.bucketId = uploadStream.id;
         newApplication.title = req.body.title;
+        newApplication.description = req.body.description;
 
         await newApplication.save(async (err, newApplication) => {
           if (err) {
@@ -76,14 +77,14 @@ adminApplicationController.postApplication = async function (req, res) {
 }
 
 // Obtener todas las versiones de la aplicación
-adminApplicationController.getAllTitles = async function (req, res) {
-  Application.find({}, {_id:1, title:1}, (err, applications) => {
+adminApplicationController.getAll = async function (req, res) {
+  Application.find({}, {_id:1, title:1, description:1}, (err, applications) => {
     if (err) {
       res.status(500).json(err.message)
     } else {
       res.status(200).json(applications)
     }
-  })
+  }).sort({_id: -1, title: -1, bucketId: -1, description:-1, createdAt:-1, updatedAt:-1 })
 }
 
 // Eliminar una versión de la aplicación

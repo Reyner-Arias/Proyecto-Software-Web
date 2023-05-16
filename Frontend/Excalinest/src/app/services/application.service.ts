@@ -21,8 +21,8 @@ export class ApplicationService {
       { headers: new HttpHeaders({ 'Content-Type': 'application/json', }), body: body, });
   }
 
-  getAllTitles() {
-    return this.http.get<any>(`${this.apiUrl}/get-all-titles`);
+  getAll() {
+    return this.http.get<any>(`${this.apiUrl}/get-all`);
   }
 
   getZipFile(body: any) {

@@ -19,6 +19,7 @@ export class PostApplicationComponent implements OnInit {
 
   newApplication: Application = {
     title: '',
+    description: '',
     filepath: '',
     bucketId: ''
   }
@@ -33,15 +34,15 @@ export class PostApplicationComponent implements OnInit {
   ngOnInit(){
     this.postApplicationForm = this.formBuilder.group({
       title: ['', Validators.required],
+      description: ['', Validators.required],
       zip: ['', Validators.required]
     });
   }
 
   onPostApplication() {
     this.newApplication.title = this.postApplicationForm.value.title;
+    this.newApplication.description = this.postApplicationForm.value.description;
     this.newApplication.filepath = this.postApplicationForm.value.zip.replace(this.fakePath, this.excalinestAppPath);
-
-    console.log(this.newApplication)
 
     this.showSpinner = true;
 
@@ -101,6 +102,7 @@ export class PostApplicationComponent implements OnInit {
     this.validatedForm = false;
     this.postApplicationForm = this.formBuilder.group({
       title: ['', Validators.required],
+      description: ['', Validators.required],
       zip: ['', Validators.required],
     });
   }
@@ -109,6 +111,7 @@ export class PostApplicationComponent implements OnInit {
     this.validatedForm = false;
     this.postApplicationForm = this.formBuilder.group({
       title: [this.newApplication.title, Validators.required],
+      description: [this.newApplication.description, Validators.required],
       zip: ['', Validators.required],
     });
   }

@@ -3,6 +3,7 @@ const { Schema, model } = require("mongoose");
 const appSchema = new Schema(
   {
     title: { type: String, required: false, unique: true },
+    description: { type: String, required: false },
     bucketId: { type: String, required: false }
   },
   {

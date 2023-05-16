@@ -11,7 +11,7 @@ const token = require("../controllers/token");
 */ 
 
 router.post("/post", adminApplicationController.postApplication);
-router.get("/get-all-titles", adminApplicationController.getAllTitles);
+router.get("/get-all", adminApplicationController.getAll);
 router.delete("/delete", adminApplicationController.deleteApplication);
 router.post("/get-zip-file", adminApplicationController.getZipFile);
 

@@ -1,1 +1,38 @@
-<p>get-applications works!</p>
+<div *ngIf="showSpinner" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Cargando aplicaciones...</span>
+</div>
+
+<div *ngIf="showSpinner == false">
+    <div class="table-responsive">
+        <table class="table table-striped versions-table">
+            <thead>
+              <tr>
+                <th scope="col">Versión</th>
+                <th scope="col">Descripción</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr  *ngFor="let version of versions">
+                    <td>{{version.title}}</td>
+                    <td>{{version.description}}</td>
+                    <td class="center-content"><button cButton color="dark" size="sm" (click)="downloadFile(version)"><svg cIcon name="cilCloudDownload" class="me-2 icon"></svg>Descargar</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+    <c-modal-header>
+        <h5 cModalTitle>{{this.modalTitle}}</h5>
+        <button (click)="openCloseInfoModal()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body> {{this.modalMessage}} </c-modal-body>
+    <c-modal-footer>
+        <button (click)="openCloseInfoModal()" cButton color="secondary">
+          Cerrar
+        </button>
+    </c-modal-footer>
+</c-modal>
