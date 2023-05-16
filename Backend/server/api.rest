@@ -144,9 +144,13 @@ POST http://localhost:3000/admin-users/post
 content-type: application/json
 
 {
-    "username": "nanahs",
-    "email": "nanahs0708@gmail.com",
-    "name": "Marianna Hidalgo S"
+    "username": "nanahs123312",
+    "email": "nanahs0708123312@gmail.com",
+    "name": "Marianna Hidalgo S",
+    "type": "hola",
+    "facepath": "C:\\Excalinest\\img\\Crumb.png",
+    "instapath": "C:\\Excalinest\\img\\Crumb.png",
+    "twitterpath": "C:\\Excalinest\\img\\Crumb.png"
 }
 
 
@@ -157,11 +161,14 @@ GET http://localhost:3000/admin-users/get-all
 
 #####
 
-PUT http://localhost:3000/admin-users/put/64575fdb1973228f341039ed
+PUT http://localhost:3000/admin-users/put/646301b5b91b55a5e10d6ff6
 content-type: application/json
 
 {
-    "username": "nanahs0708",
-    "email": "mhidalgos0708@estudiantec.cr",
-    "name": "Marianna Hidalgo Sandoval"
+    "username": "nanahs123312",
+    "email": "nanahs0708123312@gmail.com",
+    "name": "Marianna Hidalgo S",
+    "facepath": "C:\\Excalinest\\img\\Crumb.png",
+    "instapath": "C:\\Excalinest\\img\\Crumb.png",
+    "twitterpath": "C:\\Excalinest\\img\\Crumb.png"
 }
