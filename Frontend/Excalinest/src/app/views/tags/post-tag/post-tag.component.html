@@ -1,16 +1,21 @@
 <h2>Crear etiqueta</h2>
-<form [formGroup]="getPostTagForm()" (ngSubmit)="submitTag()" novalidate class="row g-3 needs-validation">
-  <div class="col-md-4">
-    <label for="name">Nombre</label>
-    <input id="name" formControlName="name" required type="text" class="form-control" />
-    <div *ngIf="getPostTagForm().get('name')?.valid" class="valid-feedback">Nombre válido</div>
-    <div *ngIf="getPostTagForm().get('name')?.invalid" class="invalid-feedback">Ingrese el nombre de la etiqueta</div>
-  </div>
-  <div class="col-xs-12">
-    <button type="button" class="btn btn-primary" (click)="submitTag()">
+
+<form [formGroup]="getPostTagForm()" (ngSubmit)="submitTag()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
+  <c-row>
+    <c-col md="4">
+        <label cLabel for="name">Nombre de la etiqueta</label>
+        <input cFormControl id="name" formControlName="name" required type="text" />
+        <c-form-feedback [valid]="true">Nombre de etiqueta válido</c-form-feedback>
+        <c-form-feedback [valid]="false">Ingrese el nombre de etiqueta</c-form-feedback>
+    </c-col>
+  </c-row>
+  <c-row class="row">
+    <c-col md="4">
+      <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
         Guardar
-    </button>
-  </div>
+      </button>
+    </c-col>
+  </c-row>
 </form>
 
 <c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">

@@ -40,6 +40,7 @@ export class PostTagComponent implements OnInit {
         error: (err: any) => { 
           this.modalMessage = err.error.replace(/['"]+/g, '');
           this.openCloseInfoModal();
+          this.resetForm();
         },
         next: (res: any) => {
           this.modalMessage = res;

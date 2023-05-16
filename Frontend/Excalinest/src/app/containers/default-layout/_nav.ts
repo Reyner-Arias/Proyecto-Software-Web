@@ -34,4 +34,18 @@ export const navItems: INavData[] = [
     url: '/tags/post',
     iconComponent: { name: 'cil-pencil'}
   },
+  {
+    name: 'Usuarios',
+    title: true
+  },
+  {
+    name: 'Lista de usuarios',
+    url: '/users/get',
+    iconComponent: { name: 'cil-people'}
+  },
+  {
+    name: 'Registrar usuario',
+    url: '/users/post',
+    iconComponent: { name: 'cil-pen'}
+  }
 ];

@@ -23,7 +23,7 @@ adminTagController.postTag = async (req, res) => {
   })
 };
 
-// Obtener todas las etiquetas
+// Obtener todas las etiquetas del sistema
 adminTagController.getTags = async (req, res) => {
   Tag.find({}, (err, tags) => {
     if (err) {
