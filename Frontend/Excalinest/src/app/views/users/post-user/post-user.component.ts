@@ -76,10 +76,21 @@ export class PostUserComponent implements OnInit {
   }
 
   submitUser() {
-    this.validatedForm = true;
-    if (this.postUserForm.dirty && this.postUserForm.valid) {
-      this.onPostUser();
+    if(this.validateEmailFormat()) {
+      this.validatedForm = true;
+      if (this.postUserForm.dirty && this.postUserForm.valid) {
+        this.onPostUser();
+      }
+    } else {
+      this.error = true;
+      this.modalMessage = "Error: Formato de correo electrónico no válido";
+      this.openCloseInfoModal(false);
     }
+  }
+
+  validateEmailFormat() {
+    var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return this.postUserForm.value.email.match(emailFormat);
   }
 
   /* --------------------- Spinner --------------------- */

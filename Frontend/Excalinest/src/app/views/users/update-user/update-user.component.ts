@@ -88,10 +88,21 @@ export class UpdateUserComponent implements OnInit {
   }
 
   submitUser() {
-    this.validatedForm = true;
-    if (this.isValidForm()) {
-      this.onPutUser();
+    if(this.validateEmailFormat()) {
+      this.validatedForm = true;
+      if (this.isValidForm()) {
+        this.onPutUser();
+      }
+    } else {
+      this.error = true;
+      this.modalMessage = "Error: Formato de correo electrónico no válido";
+      this.openCloseInfoModal(false);
     }
+  }
+
+  validateEmailFormat() {
+    var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return this.putUserForm.value.email.match(emailFormat);
   }
 
   /* --------------------- Spinner --------------------- */
