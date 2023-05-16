@@ -4,6 +4,7 @@ export interface User {
     username: String;
     email: String;
     name: String;
+    type: String;
     facebook: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenFacebook: SafeResourceUrl | undefined;
     facepath: string;

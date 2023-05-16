@@ -21,6 +21,7 @@ export class UpdateUserComponent implements OnInit {
     username: "",
     email: "",
     name: "",
+    type:"",
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
     facepath: '',
@@ -37,6 +38,7 @@ export class UpdateUserComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', Validators.required],
       name: ['', Validators.required],
+      type: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required],
@@ -51,15 +53,14 @@ export class UpdateUserComponent implements OnInit {
   }
 
   onPutUser() {
-    console.log("Hola")
     if(this.putUserForm.value.username != "") { this.newUser.username = this.putUserForm.value.username; }
     if(this.putUserForm.value.email != "") { this.newUser.email = this.putUserForm.value.email; }
     if(this.putUserForm.value.name != "") { this.newUser.name = this.putUserForm.value.name; }
+    if(this.putUserForm.value.type != "") { this.newUser.type = this.putUserForm.value.type; }
     if(this.putUserForm.value.facebook != "") { this.newUser.facepath = this.putUserForm.value.facebook.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putUserForm.value.instagram != "") { this.newUser.instapath = this.putUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putUserForm.value.twitter != "") { this.newUser.twitterpath = this.putUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
-    console.log(this.newUser)
     this.showSpinner = true;
 
     this.usersService.putUser(this._id, this.newUser).subscribe({
@@ -140,6 +141,7 @@ export class UpdateUserComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', Validators.required],
       name: ['', Validators.required],
+      type: ['', Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required],
@@ -152,6 +154,7 @@ export class UpdateUserComponent implements OnInit {
       username: [this.putUserForm.value.username, Validators.required],
       email: [this.putUserForm.value.email, Validators.required],
       name: [this.putUserForm.value.name, Validators.required],
+      type: [this.putUserForm.value.type, Validators.required],
       facebook: ['', Validators.required],
       instagram: ['', Validators.required],
       twitter: ['', Validators.required]

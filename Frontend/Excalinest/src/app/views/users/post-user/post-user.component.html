@@ -21,11 +21,19 @@
             </c-col>
         </c-row>
         <c-row>
-            <c-col md="12">
+            <c-col md="6">
                 <label cLabel for="name">Nombre</label>
                 <input cFormControl id="name" formControlName="name" required type="text" />
                 <c-form-feedback [valid]="true">Nombre válido</c-form-feedback>
                 <c-form-feedback [valid]="false">Ingrese el nombre del usuario</c-form-feedback>
+            </c-col>
+            <c-col md="6">
+                <label cLabel for="type">Tipo de usuario</label>
+                <select class="form-select">
+                    <option value="desarrollador" selected>Desarrollador</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="soporte">Soporte</option>
+                </select>
             </c-col>
         </c-row>
         <c-row class="row">
