@@ -88,6 +88,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/users/users.module').then((m) => m.UsersModule)
       },
+      {
+        path: 'applications',
+        loadChildren: () =>
+          import('./views/application/applications.module').then((m) => m.ExcalinestModule)
+      },
     ]
   },
   {

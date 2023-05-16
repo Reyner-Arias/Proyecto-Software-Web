@@ -47,5 +47,19 @@ export const navItems: INavData[] = [
     name: 'Registrar usuario',
     url: '/users/post',
     iconComponent: { name: 'cil-user-follow'}
+  },
+  {
+    name: 'Aplicación Excalinest',
+    title: true
+  },
+  {
+    name: 'Lista de aplicaciones',
+    url: '/applications/get-all',
+    iconComponent: { name: 'cil-list'}
+  },
+  {
+    name: 'Registrar aplicación',
+    url: '/applications/post',
+    iconComponent: { name: 'cil-task'}
   }
 ];
