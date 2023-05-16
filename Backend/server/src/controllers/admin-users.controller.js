@@ -37,7 +37,7 @@ adminUserController.postUser = async (req, res) => {
     return res.status(500).json('Error: No se encontraron todos los datos del usuario.');
   }
 
-  if(!isValidTypeOfUser()) {
+  if(!isValidTypeOfUser(req.body.type)) {
     return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
@@ -108,7 +108,7 @@ adminUserController.putUser = async (req, res) => {
   const { _id } = req.params
   var user = req.body;
 
-  if(!isValidTypeOfUser()) {
+  if(user.type && !isValidTypeOfUser(user.type)) {
     return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
