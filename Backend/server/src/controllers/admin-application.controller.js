@@ -8,8 +8,8 @@ const mongoose = require("../database");
 
 const MongoClient = require('mongodb').MongoClient;
 const GridFSBucket = require('mongodb').GridFSBucket;
-//const uri = "mongodb://hacketech:A83E9VyVMDyZQ38@140.84.184.137:27017/ExcalinestDB";
-const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
+const uri = "mongodb://hacketech:A83E9VyVMDyZQ38@140.84.184.137:27017/ExcalinestDB";
+//const uri = 'mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/ExcalinestDB?retryWrites=true&w=majority';
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   if (err) throw err;
@@ -84,7 +84,7 @@ adminApplicationController.getAll = async function (req, res) {
     } else {
       res.status(200).json(applications)
     }
-  }).sort({_id: -1, title: -1, bucketId: -1, description:-1, createdAt:-1, updatedAt:-1 })
+  }).sort({_id: -1, title: -1, description:-1, createdAt:-1, updatedAt:-1 })
 }
 
 // Eliminar una versión de la aplicación
