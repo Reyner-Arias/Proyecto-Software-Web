@@ -12,7 +12,7 @@ router.get('/get-all', adminUserController.getAllUsers);
 // Editar un usuario
 router.put('/put/:_id', adminUserController.putUser);
 
-// Eliminar un usuario
+// Eliminar un usuario por email
 router.delete('/delete/:email', adminUserController.deleteUser);
 
 module.exports = router
