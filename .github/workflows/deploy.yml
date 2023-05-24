@@ -31,7 +31,7 @@ jobs:
           chmod 700 ~/.ssh
           cat authorized_keys >> ~/.ssh/authorized_keys
         
-      - name: Deploy frontend and backend to Oracle Cloud CentOS Stream 8 Instance
+      - name: Deploy frontend to Oracle Cloud CentOS Stream 8 Instance
         run: |
           echo "$ORACLE_SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
