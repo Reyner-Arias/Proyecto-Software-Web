@@ -35,6 +35,9 @@ jobs:
         run: |
           echo "$ORACLE_SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
-          ssh -i private_key opc@140.84.163.10 "sudo systemctl stop httpd"
+          echo "$SSH_CREDENTIALS" > ssh_credentials
+          chmod 600 ssh_credentials
+          ssh -i private_key ssh_credentials "sudo systemctl stop httpd"
         env:
           ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
+          SSH_CREDENTIALS: ${{ secrets.SSH_CREDENTIALS }}
