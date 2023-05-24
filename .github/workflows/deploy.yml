@@ -19,15 +19,12 @@ jobs:
           key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
           known_hosts: 'just-a-placeholder-to-test-if-this-info-works'
 
-      - name: Adding Known Hosts  
+      - name: Adding Known Hosts and authorized keys
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.IP_PUBLICA }} >> ~/.ssh/known_hosts
+          cat ${{ secrets.ORACLE_SSH_PUBLIC_KEY }} >> ~/.ssh/authorized_keys
 
-      - name: Deploy frontend and backend to Oracle Cloud Canonical Ubuntu 22.04 Instance
+      - name: Deploy frontend and backend to Oracle Cloud CentOS Stream 8 Instance
         run: |
-          echo "${{ secrets.ORACLE_SSH_PRIVATE_KEY }}" > private_key
-          echo "${{ secrets.SSH_CREDENTIALS }}" > ssh_credentials
-          chmod 600 private_key
-          chmod 600 ssh_credentials
-          ssh -i private_key ssh_credentials "sudo systemctl stop apache2"
+          ssh -i ${{ secrets.ORACLE_SSH_PRIVATE_KEY }} ${{ secrets.SSH_CREDENTIALS }} "sudo systemctl stop apache2"
