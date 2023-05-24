@@ -30,7 +30,11 @@ jobs:
           chmod 600 authorized_keys
           chmod 700 ~/.ssh
           cat authorized_keys >> ~/.ssh/authorized_keys
-
+        
       - name: Deploy frontend and backend to Oracle Cloud CentOS Stream 8 Instance
         run: |
-          ssh -i ${{ secrets.ORACLE_SSH_PRIVATE_KEY }} ${{ secrets.SSH_CREDENTIALS }} "sudo systemctl stop apache2"
+          echo "$ORACLE_SSH_PRIVATE_KEY" > private_key
+          chmod 600 private_key
+          ssh -i private_key ${{ secrets.SSH_CREDENTIALS }} "sudo systemctl stop apache2"
+        env:
+          ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
