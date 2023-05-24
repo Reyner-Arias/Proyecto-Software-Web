@@ -23,7 +23,13 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.IP_PUBLICA }} >> ~/.ssh/known_hosts
-          cat ${{ secrets.ORACLE_SSH_PUBLIC_KEY }} >> ~/.ssh/authorized_keys
+
+      - name: Adding public key to authorized_keys
+        run: |
+          echo "$ORACLE_SSH_PUBLIC_KEY" >> authorized_keys
+          chmod 600 authorized_keys
+          chmod 700 ~/.ssh
+          cat authorized_keys >> ~/.ssh/authorized_keys
 
       - name: Deploy frontend and backend to Oracle Cloud CentOS Stream 8 Instance
         run: |
