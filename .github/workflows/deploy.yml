@@ -39,5 +39,5 @@ jobs:
           chmod 600 ssh_credentials
           ssh -i private_key ssh_credentials "sudo systemctl stop httpd"
         env:
-          ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
+          ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }},
           SSH_CREDENTIALS: ${{ secrets.SSH_CREDENTIALS }}
