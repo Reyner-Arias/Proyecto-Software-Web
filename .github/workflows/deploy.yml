@@ -19,7 +19,7 @@ jobs:
           key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
           known_hosts: 'just-a-placeholder-to-test-if-this-info-works'
 
-      - name: Adding Known Hosts and authorized keys
+      - name: Adding Known Hosts
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.IP_PUBLICA }} >> ~/.ssh/known_hosts
