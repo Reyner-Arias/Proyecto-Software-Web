@@ -37,6 +37,7 @@ jobs:
           chmod 600 private_key
           echo "$SSH_CREDENTIALS" > ssh_credentials
           chmod 600 ssh_credentials
+          chmod 0 ./Frontend/Excalinest/dist/coreui-free-angular-admin-template/
           sudo rsync -e "ssh -i private_key" -r --delete-after ./Frontend/Excalinest/dist/coreui-free-angular-admin-template/ $(cat ssh_credentials):/var/www/html/
         env:
           ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
