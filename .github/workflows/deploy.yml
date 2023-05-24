@@ -51,7 +51,7 @@ jobs:
           rsync -e "ssh -i private_key" -r --delete-after ./Backend/ $(cat ssh_credentials):/home/opc/Backend/
           ssh -i private_key $(cat ssh_credentials) "cd ./Backend/server/ && \
                                                     sudo npm install && \
-                                                    sudo npm run dev"
+                                                    sudo npm run dev &"
         env:
           ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
           SSH_CREDENTIALS: ${{ secrets.SSH_CREDENTIALS }}
