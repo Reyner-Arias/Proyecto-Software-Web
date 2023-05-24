@@ -27,10 +27,10 @@ jobs:
       - name: Deploy frontend and backend to Oracle Cloud Canonical Ubuntu 22.04 Instance
         run: |
           echo "$ORACLE_SSH_PRIVATE_KEY" > private_key
-          echo "$IP_PUBLICA" > ip_publica
+          echo "$SSH_CREDENTIALS" > ssh_credentials
           chmod 600 private_key
-          chmod 600 ip_publica
-          ssh -i private_key ubuntu@ip_publica "sudo systemctl stop apache2"
+          chmod 600 ssh_credentials
+          ssh -i private_key ssh_credentials "sudo systemctl stop apache2"
         env:
           ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
-          IP_PUBLICA: ${{ secrets.IP_PUBLICA }}
+          SSH_CREDENTIALS: ${{ secrets.SSH_CREDENTIALS }}
