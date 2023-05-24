@@ -35,6 +35,7 @@ jobs:
         run: |
           echo "$ORACLE_SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
-          ssh -i private_key ${{ secrets.SSH_CREDENTIALS }} "sudo systemctl stop apache2"
+          cat private_key
+          ssh -i private_key opc@140.84.163.10 "sudo systemctl stop apache2"
         env:
           ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
