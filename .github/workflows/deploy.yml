@@ -49,7 +49,8 @@ jobs:
           echo "$SSH_CREDENTIALS" > ssh_credentials
           chmod 600 ssh_credentials
           rsync -e "ssh -i private_key" -r --delete-after ./Backend/ $(cat ssh_credentials):/home/opc/Backend/
-          ssh -i private_key $(cat ssh_credentials) "cd ./Backend/server/ && \
+          ssh -i private_key $(cat ssh_credentials) "lsof -t -i :3000 | xargs -r kill && \
+                                                    cd ./Backend/server/ && \
                                                     sudo npm install && \
                                                     sudo npm run dev &"
         env:
