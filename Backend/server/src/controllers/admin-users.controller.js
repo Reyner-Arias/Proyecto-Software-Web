@@ -4,6 +4,8 @@ const User = require('../models/user')
 const path = require("path");
 const fs = require("fs");
 const axios = require('axios');
+const nodeMailer = require('nodemailer');
+const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 function isValidImageExtension(imagepath) {
   switch (path.extname(imagepath).toLowerCase()) {
@@ -87,10 +89,49 @@ adminUserController.postUser = async (req, res) => {
       }
       
     } else {
-      return res.status(201).json('El usuario se ha creado correctamente.')
+      return res.status(201).json('El usuario se ha creado correctamente. Se ha enviado un código de verificación al correo ingresado.')
     }
   })
+
+  let result = ' ';
+  const charactersLength = characters.length;
+  for ( let i = 0; i < 6; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  mail(newUser.email, result);
 };
+
+async function mail(email, code){
+  const transporter = nodeMailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'excalinest@gmail.com',
+      pass: 'gcgihwvlpixocgqy'
+    }
+  });
+  
+
+
+  const info = await transporter.sendMail({
+    from: 'Excalinest <excalinest@gmail.com>',
+    to: email,
+    subject: 'Excalinest verification code',
+    html: '<h1>Your verification code is:</h1><p>'+code+'</p>',
+  })
+}
+
+/*async function generateString(length) {
+  let result = ' ';
+  const charactersLength = characters.length;
+  for ( let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+}*/
 
 // Obtener todos los usuarios
 adminUserController.getAllUsers = async (req, res) => {
