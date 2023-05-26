@@ -42,7 +42,7 @@ jobs:
           ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
           SSH_CREDENTIALS: ${{ secrets.SSH_CREDENTIALS }}
           
-      - name: Deploy backend to Oracle Cloud CentOS Stream 8 Instance
+      - name: Updating Backend files 
         run: |
           echo "$ORACLE_SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
@@ -56,7 +56,7 @@ jobs:
           SSH_CREDENTIALS: ${{ secrets.SSH_CREDENTIALS }}
           SSS_CREDENTIALS_USERNAME: ${{ secrets.SSH_CREDENTIALS_USERNAME }}
     
-      - name: SSH Remote Commands
+      - name: Deploy backend to Oracle Cloud CentOS Stream 8 Instance
         uses: appleboy/ssh-action@v0.1.2
         with:
           key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
