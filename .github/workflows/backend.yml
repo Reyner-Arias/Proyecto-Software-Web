@@ -1,0 +1,58 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm run test:staging
+    - name: Deploy frontend to Oracle Cloud CentOS Stream 8 Instance
+      run: |
+        echo "$ORACLE_SSH_PRIVATE_KEY" > private_key
+        chmod 600 private_key
+        echo "$SSH_CREDENTIALS" > ssh_credentials
+        chmod 600 ssh_credentials
+        echo "$SSS_CREDENTIALS_USERNAME" > ssh_credentials_username
+        chmod 600 ssh_credentials_username
+        rsync -e "ssh -i private_key" -r --delete-after ./Backend/ $(cat ssh_credentials):/home/$(cat ssh_credentials_username)/Backend/
+      env:
+        ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
+        SSH_CREDENTIALS: ${{ secrets.SSH_CREDENTIALS }}
+        SSS_CREDENTIALS_USERNAME: ${{ secrets.SSH_CREDENTIALS_USERNAME }}
+    
+    - name: SSH Remote Commands
+      uses: appleboy/ssh-action@v0.1.2
+      with:
+        key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
+        host: ${{ secrets.IP_PUBLICA }}
+        username: ${{ secrets.SSH_CREDENTIALS_USERNAME }}
+        script: |
+          pm2 delete all
+          cd Backend/server/
+          npm install
+          pm2 start npm -- start
+          
+        
