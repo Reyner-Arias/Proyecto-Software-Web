@@ -26,8 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        working-directory: /home/runner/work/Proyecto-Software-Web/Proyecto-Software-Web/Backend/server/
-    - run: npm ci
+        run: |
+          cd ./Backend/server/
+          npm ci
     - run: npm run build --if-present
     - run: npm run test:staging
     - name: Deploy backend to Oracle Cloud CentOS Stream 8 Instance
