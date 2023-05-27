@@ -66,4 +66,4 @@ jobs:
             pm2 delete all
             cd /home/${{ secrets.SSH_CREDENTIALS_USERNAME }}/Backend/server/
             npm install
-            pm2 start npm --name "server" -- run dev
+            pm2 start npm --name "server" -- start
