@@ -1,0 +1,78 @@
+<div *ngIf="showSpinner" class="fade show spinner" >
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Cargando información del perfil...</span>
+</div>
+
+<div *ngIf="showSpinner == false">
+    <c-row class="row-title">
+        <c-row>    
+            <c-col md="8">
+                <h1>{{user.username}}</h1>
+            </c-col>
+        </c-row>
+        <br>
+        <br>
+        <br>
+        <c-row>
+            <c-col [sm]="3">
+                <button cButton color="info" class="crud-button right-margin" size="sm" style="margin-right: 7%;" [routerLink]="['/users/update']" [state]="user"><svg cIcon name="cilPencil" class="me-2 icon"></svg>Editar mi perfil</button> 
+            </c-col>
+        </c-row>
+        <br>
+        <br>
+        <br>
+        <br>
+        <c-row>
+            <c-col md="6">
+                <h4>Nombre</h4>
+                <p>{{user.name}}</p>
+            </c-col>
+        </c-row>
+        <br>
+        <br>
+        <br>
+        <c-row>    
+            <c-col md="6">
+                <h4>Correo electrónico</h4>
+                <p>{{user.email}}</p>
+            </c-col>
+            <c-col md="6">
+                <h4>Tipo de usuario</h4>
+                <p>{{user.type}}</p>
+            </c-col>
+        </c-row>
+        <br>
+        <br>
+        <br>
+    </c-row>
+    <br>
+    <c-row class="row-title">
+        <h5>Redes sociales de {{user.username}}</h5>
+    </c-row>
+    <c-row class="row-social-net">
+        <c-col [sm]="4">
+            <c-row class="text-center">
+                <h6>Facebook</h6>
+            </c-row>
+            <c-row>
+                <img cCardImg="top" [src]=user.imagenFacebook class="w-50 p-3 rounded mx-auto d-block">
+            </c-row>
+        </c-col>
+        <c-col [sm]="4">
+            <c-row class="text-center">
+                <h6>Instagram</h6>
+            </c-row>
+            <c-row>
+                <img cCardImg="top" [src]=user.imagenInstagram class="w-50 p-3 rounded mx-auto d-block">
+            </c-row>
+        </c-col>
+        <c-col [sm]="4">
+            <c-row class="text-center">
+                <h6>Twitter</h6>
+            </c-row>
+            <c-row>
+                <img cCardImg="top" [src]=user.imagenTwitter class="w-50 p-3 rounded mx-auto d-block">
+            </c-row>
+        </c-col>
+    </c-row>
+</div>

@@ -200,4 +200,19 @@ adminUserController.deleteUser = async (req, res) => {
   });
 }
 
+// Obtener un usuario
+adminUserController.getUser = async (req, res) => {
+  const { email } = req.params;
+
+  User.findOne({ email: email }, async (err, user) => {
+    if (err) {
+      return res.status(500).json(err.message)
+    } else if (!user) {
+      return res.status(404).json('Error: No se ha encontrado el usuario.')
+    } else {
+      return res.status(200).json(user)
+    }
+  });
+}
+
 module.exports = adminUserController;

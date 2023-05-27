@@ -17,6 +17,8 @@ export class UpdateUserComponent implements OnInit {
   private excalinestImgPath = "C:\\Excalinest\\img\\";
   private fakePath = "C:\\fakepath\\";
 
+  public isAdmin = false;
+
   newUser: User = {
     username: "",
     email: "",
@@ -49,6 +51,8 @@ export class UpdateUserComponent implements OnInit {
       instagram: ['', Validators.required],
       twitter: ['', Validators.required],
     });
+
+    this.isAdmin = false;
   }
 
   constructor(private usersService: UsersService,
@@ -62,7 +66,8 @@ export class UpdateUserComponent implements OnInit {
     if(this.putUserForm.value.username != "") { this.newUser.username = this.putUserForm.value.username; }
     if(this.putUserForm.value.email != "") { this.newUser.email = this.putUserForm.value.email; }
     if(this.putUserForm.value.name != "") { this.newUser.name = this.putUserForm.value.name; }
-    if(this.putUserForm.value.type != "") { this.newUser.type = this.putUserForm.value.type; }
+    if(this.putUserForm.value.type != "" && this.isAdmin) { this.newUser.type = this.putUserForm.value.type; }
+    if(this.putUserForm.value.type != "" && !this.isAdmin) { this.newUser.type = ''; }
     if(this.putUserForm.value.facebook != "") { this.newUser.facepath = this.putUserForm.value.facebook.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putUserForm.value.instagram != "") { this.newUser.instapath = this.putUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putUserForm.value.twitter != "") { this.newUser.twitterpath = this.putUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
