@@ -1,6 +1,6 @@
 <div *ngIf="showSpinner" class="fade show spinner">
     <i class="spinner-grow spinner-grow-sm"></i>
-    <span class="m-1">Actualizar usuario...</span>
+    <span class="m-1">Actualizando perfil...</span>
 </div>
 
 <div *ngIf="showSpinner == false">
@@ -28,15 +28,7 @@
                 <c-form-feedback [valid]="true">Nombre válido</c-form-feedback>
                 <c-form-feedback [valid]="false">Ingrese el nombre del usuario</c-form-feedback>
             </c-col>
-            <c-col md="6">
-                <label cLabel for="type">Tipo de usuario</label>
-                <select cFormControl id="type" formControlName="type" class="form-select">
-                    <option value="desarrollador" selected>Desarrollador</option>
-                    <option value="administrador">Administrador</option>
-                    <option value="soporte">Soporte</option>
-                </select>
-                <c-form-feedback [valid]="true">Tipo de usuario seleccionado</c-form-feedback>
-                <c-form-feedback [valid]="false">Ingrese el tipo de usuario</c-form-feedback>
+            <c-col md="6">  
             </c-col>
         </c-row>
         <c-row class="row">

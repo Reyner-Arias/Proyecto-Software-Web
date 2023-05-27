@@ -34,8 +34,6 @@ export class UserDetailComponent {
   ngOnInit() {
     this.user = history.state;
 
-    this.user.type = this.user.type.charAt(0).toUpperCase() + this.user.type.slice(1);
-
     var facebookBase64 = btoa(
       new Uint8Array(this.user.facebook.data.data)
         .reduce((data, byte) => data + String.fromCharCode(byte), '')
@@ -59,8 +57,7 @@ export class UserDetailComponent {
   }
 
   constructor(private usersService: UsersService,
-    private formBuilder: FormBuilder, public router: Router, 
-    private toastr: ToastrService, private domSanitizer: DomSanitizer) {}
+    public router: Router, private domSanitizer: DomSanitizer) {}
 
   showDeleteModal() {
     this.deleteButton = true;

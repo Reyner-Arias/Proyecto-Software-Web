@@ -38,7 +38,6 @@ export class MyProfileComponent {
       },
       next: (res:User) => {
         this.user = res;
-        this.user.type = this.user.type.charAt(0).toUpperCase() + this.user.type.slice(1);
 
         var facebookBase64 = btoa(
           new Uint8Array(this.user.facebook.data.data)
