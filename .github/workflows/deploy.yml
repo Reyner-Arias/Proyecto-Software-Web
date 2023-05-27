@@ -64,6 +64,6 @@ jobs:
           username: ${{ secrets.SSH_CREDENTIALS_USERNAME }}
           script: |
             pm2 delete all
-            cd /home/$(cat {{ secrets.SSH_CREDENTIALS_USERNAME }})/Backend/server/
+            cd /home/${{ secrets.SSH_CREDENTIALS_USERNAME }}/Backend/server/
             npm install
             pm2 start npm -- start
