@@ -1,4 +1,4 @@
-name: Deploying Excalinest Frontend
+name: Deploying Excalinest Frontend and Backend
 
 on:
   push:
