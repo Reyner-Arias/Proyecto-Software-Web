@@ -1,41 +1,70 @@
-<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
-  <c-container>
-    <c-row class="justify-content-center">
-      <c-col lg="7" md="9" xl="6">
-        <c-card class="mx-4">
-          <c-card-body class="p-4">
-            <form cForm>
-              <h1>Register</h1>
-              <p class="text-medium-emphasis">Create your account</p>
-              <c-input-group class="mb-3">
-                <span cInputGroupText>
-                  <svg cIcon name="cilUser"></svg>
-                </span>
-                <input autoComplete="name" cFormControl placeholder="Username" />
-              </c-input-group>
-              <c-input-group class="mb-3">
-                <span cInputGroupText>@</span>
-                <input autoComplete="email" cFormControl placeholder="Email" />
-              </c-input-group>
-              <c-input-group class="mb-3">
-                <span cInputGroupText>
-                  <svg cIcon name="cilLockLocked"></svg>
-                </span>
-                <input autoComplete="new-password" cFormControl placeholder="Password" type="password" />
-              </c-input-group>
-              <c-input-group class="mb-4">
-                <span cInputGroupText>
-                  <svg cIcon name="cilLockLocked"></svg>
-                </span>
-                <input autoComplete="new-password" cFormControl placeholder="Repeat password" type="password" />
-              </c-input-group>
-              <div class="d-grid">
-                <button cButton color="success">Create Account</button>
-              </div>
-            </form>
-          </c-card-body>
-        </c-card>
-      </c-col>
-    </c-row>
-  </c-container>
+<div *ngIf="showSpinner" class="fade show spinner">
+  <i class="spinner-grow spinner-grow-sm"></i>
+  <span class="m-1">Registrando usuario...</span>
 </div>
+
+<div *ngIf="showSpinner == false">
+  <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <c-container>
+      <c-row class="justify-content-center">
+        <c-col lg="8" md="8" xl="8">
+          <c-card class="mx-4 register-card">
+            <c-card-body class="p-4 register-card-body">
+              <form [formGroup]="getRegisterForm()" (ngSubmit)="submitUser()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
+                <h3 class="title">Registrar cuenta</h3>
+                <c-input-group class="mb-3">
+                  <span cInputGroupText><svg cIcon name="cilUser"></svg></span>
+                  <input id="username" formControlName="username" cFormControl placeholder="Nombre de usuario" required type="text"/>
+                  <c-form-feedback [valid]="true">Nombre de usuario válido</c-form-feedback>
+                  <c-form-feedback [valid]="false">Ingrese el nombre de usuario</c-form-feedback>
+                </c-input-group>
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>@</span>
+                  <input autoComplete="email" id="email" formControlName="email" cFormControl placeholder="Correo electrónico" required type="text"/>
+                  <c-form-feedback [valid]="true">Correo electrónico válido</c-form-feedback>
+                  <c-form-feedback [valid]="false">Ingrese el correo electrónico</c-form-feedback>
+                </c-input-group>
+                <c-input-group class="mb-3">
+                  <span cInputGroupText><svg cIcon name="cilPencil"></svg></span>
+                  <input id="fullname" formControlName="fullname" cFormControl placeholder="Nombre completo" required type="text"/>
+                  <c-form-feedback [valid]="true">Nombre completo válido</c-form-feedback>
+                  <c-form-feedback [valid]="false">Ingrese el nombre completo</c-form-feedback>
+                </c-input-group>
+                <c-input-group class="mb-4">
+                  <span cInputGroupText><svg cIcon name="cibFacebook"></svg></span>
+                  <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" required type="file">
+                  <c-form-feedback [valid]="true">Código QR de facebook válido</c-form-feedback>
+                  <c-form-feedback [valid]="false">Ingrese el código QR de facebook</c-form-feedback>
+                </c-input-group>
+                <c-input-group class="mb-4">
+                  <span cInputGroupText><svg cIcon name="cibInstagram"></svg></span>
+                  <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" required type="file">
+                  <c-form-feedback [valid]="true">Código QR de instagram válido</c-form-feedback>
+                  <c-form-feedback [valid]="false">Ingrese el código QR de instagram</c-form-feedback>
+                </c-input-group>
+                <c-input-group class="mb-4">
+                  <span cInputGroupText><svg cIcon name="cibTwitter"></svg></span>
+                  <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" required type="file">
+                  <c-form-feedback [valid]="true">Código QR de twitter válido</c-form-feedback>
+                  <c-form-feedback [valid]="false">Ingrese el código QR de twitter</c-form-feedback>
+                </c-input-group>
+                <div class="d-grid"><button cButton color="primary" type="submit">Registrarse</button></div>
+              </form>
+            </c-card-body>
+          </c-card>
+        </c-col>
+      </c-row>
+    </c-container>
+  </div>
+</div>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+  <c-modal-header>
+    <h5 cModalTitle>{{this.modalTitle}}</h5>
+    <button (click)="openCloseInfoModal(false)" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body> {{this.modalMessage}} </c-modal-body>
+  <c-modal-footer>
+    <button (click)="openCloseInfoModal(false)" cButton color="secondary">Cerrar</button>
+  </c-modal-footer>
+</c-modal>

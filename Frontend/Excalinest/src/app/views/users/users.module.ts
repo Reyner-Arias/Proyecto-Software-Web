@@ -21,6 +21,7 @@ import { UsersRoutingModule } from './users-routing.module';
 import { PostUserComponent } from './post-user/post-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { GetUsersComponent } from './get-users/get-users.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { GetUsersComponent } from './get-users/get-users.component';
   declarations: [
     PostUserComponent,
     UpdateUserComponent,
-    GetUsersComponent
+    GetUsersComponent,
+    UserDetailComponent
   ]
 })
 export class UsersModule {
