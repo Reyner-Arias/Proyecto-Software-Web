@@ -2,7 +2,6 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 const cors = require("cors");
-const helmet = require('helmet');
 
 const port = process.env.PORT || 3000;
 
@@ -13,7 +12,6 @@ app.use(morgan("dev"));
 app.use(express.json())
 app.use(express.urlencoded({extended: false }))
 
-app.use(helmet());
 app.use(cors())
 /* Enrutadores */
 app.use("/admin-videogames", require("./routes/admin-videogames.routes"));
