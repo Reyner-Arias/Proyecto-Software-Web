@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm, FormBuilder, Validators } from '@angular/forms';
-import { User } from '../../../models/User.model'
-import { UsersService } from '../../../services/users.service';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/User.model';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
-  selector: 'app-update-user',
-  templateUrl: './update-user.component.html',
-  styleUrls: ['./update-user.component.scss']
+  selector: 'app-update-my-profile',
+  templateUrl: './update-my-profile.component.html',
+  styleUrls: ['./update-my-profile.component.scss']
 })
-export class UpdateUserComponent implements OnInit {
-
+export class UpdateMyProfileComponent {
   private _id = "";
   private putUserForm: any;
   public validatedForm = false;
@@ -62,10 +61,11 @@ export class UpdateUserComponent implements OnInit {
     if(this.putUserForm.value.username != "") { this.newUser.username = this.putUserForm.value.username; }
     if(this.putUserForm.value.email != "") { this.newUser.email = this.putUserForm.value.email; }
     if(this.putUserForm.value.name != "") { this.newUser.name = this.putUserForm.value.name; }
-    if(this.putUserForm.value.type != "") { this.newUser.type = this.putUserForm.value.type; }
+    if(this.putUserForm.value.type != "") {this.newUser.type = '';}
     if(this.putUserForm.value.facebook != "") { this.newUser.facepath = this.putUserForm.value.facebook.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putUserForm.value.instagram != "") { this.newUser.instapath = this.putUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
     if(this.putUserForm.value.twitter != "") { this.newUser.twitterpath = this.putUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
+
     this.showSpinner = true;
 
     this.usersService.putUser(this._id, this.newUser).subscribe({
@@ -130,7 +130,7 @@ export class UpdateUserComponent implements OnInit {
       this.resetForm();
     }
     if(!this.visible && !this.error) {
-      this.router.navigate(['/users']);
+      this.router.navigate(['users/profile']);
     }
   }
 

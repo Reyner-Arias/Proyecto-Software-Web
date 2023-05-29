@@ -22,6 +22,8 @@ import { PostUserComponent } from './post-user/post-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { GetUsersComponent } from './get-users/get-users.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { UpdateMyProfileComponent } from './update-my-profile/update-my-profile.component';
 
 @NgModule({
   imports: [
@@ -47,7 +49,9 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     PostUserComponent,
     UpdateUserComponent,
     GetUsersComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    MyProfileComponent,
+    UpdateMyProfileComponent
   ]
 })
 export class UsersModule {

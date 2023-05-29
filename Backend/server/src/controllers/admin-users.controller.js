@@ -94,7 +94,7 @@ adminUserController.postUser = async (req, res) => {
 
 // Obtener todos los usuarios
 adminUserController.getAllUsers = async (req, res) => {
-  User.find({}, {_id:1, username:1, email:1, name:1, type:1}, (err, Users) => {
+  User.find({}, (err, Users) => {
     if (err) {
       return res.status(500).json(err.message)
     } else {
@@ -196,6 +196,21 @@ adminUserController.deleteUser = async (req, res) => {
       return res.status(404).json('Error: No se ha encontrado el usuario.')
     } else {  
       return res.status(200).json('El usuario se ha eliminado correctamente.')
+    }
+  });
+}
+
+// Obtener un usuario
+adminUserController.getUser = async (req, res) => {
+  const { email } = req.params;
+
+  User.findOne({ email: email }, async (err, user) => {
+    if (err) {
+      return res.status(500).json(err.message)
+    } else if (!user) {
+      return res.status(404).json('Error: No se ha encontrado el usuario.')
+    } else {
+      return res.status(200).json(user)
     }
   });
 }

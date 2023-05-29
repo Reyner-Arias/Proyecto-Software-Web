@@ -1,0 +1,75 @@
+<div *ngIf="showSpinner" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Actualizando perfil...</span>
+</div>
+
+<div *ngIf="showSpinner == false">
+    <h2>Actualizar usuario</h2>
+    <form [formGroup]="getPutUserForm()" (ngSubmit)="submitUser()" [validated]="validatedForm" 
+        cForm class="row g-3 needs-validation">
+        <c-row>
+            <c-col md="6">
+                <label cLabel for="username">Nombre de usuario</label>
+                <input cFormControl id="username" formControlName="username" type="text" />
+                <c-form-feedback [valid]="true">Nombre de usuario válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el nombre de usuario</c-form-feedback>
+            </c-col>
+            <c-col md="6">
+                <label cLabel for="email">Correo electrónico</label>
+                <input cFormControl id="email" formControlName="email" type="text" />
+                <c-form-feedback [valid]="true">Correo electrónico válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el correo electrónico</c-form-feedback>
+            </c-col>
+        </c-row>
+        <c-row>
+            <c-col md="6">
+                <label cLabel for="name">Nombre</label>
+                <input cFormControl id="name" formControlName="name" type="text" />
+                <c-form-feedback [valid]="true">Nombre válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el nombre del usuario</c-form-feedback>
+            </c-col>
+            <c-col md="6">  
+            </c-col>
+        </c-row>
+        <c-row class="row">
+            <c-col md="4">
+                <label cLabel for="facebook">Facebook</label>
+                <input cFormControl id="facebook" formControlName="facebook" type="file" >
+                <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+                <label cLabel for="instagram">Instagram</label>
+                <input cFormControl id="instagram" formControlName="instagram" type="file" >
+                <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+            </c-col>
+            <c-col md="4">
+                <label cLabel for="twitter">Twitter</label>
+                <input cFormControl id="twitter" formControlName="twitter" type="file" >
+                <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
+                <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
+            </c-col>
+        </c-row>
+        <c-row class="row">
+            <c-col md="4">
+            <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
+                Actualizar
+            </button>
+            </c-col>
+        </c-row>
+    </form>
+</div>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+    <c-modal-header>
+        <h5 cModalTitle>{{this.modalTitle}}</h5>
+        <button (click)="openCloseInfoModal(false)" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body> {{this.modalMessage}} </c-modal-body>
+    <c-modal-footer>
+        <button (click)="openCloseInfoModal(false)" cButton color="secondary">
+            Cerrar
+        </button>
+    </c-modal-footer>
+</c-modal>

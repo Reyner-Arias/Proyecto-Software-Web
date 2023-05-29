@@ -57,8 +57,7 @@ export class UserDetailComponent {
   }
 
   constructor(private usersService: UsersService,
-    private formBuilder: FormBuilder, public router: Router, 
-    private toastr: ToastrService, private domSanitizer: DomSanitizer) {}
+    public router: Router, private domSanitizer: DomSanitizer) {}
 
   showDeleteModal() {
     this.deleteButton = true;
