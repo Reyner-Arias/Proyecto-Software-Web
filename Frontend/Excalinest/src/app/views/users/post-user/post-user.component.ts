@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormBuilder, Validators } from '@angular/forms';
+import { NgForm, FormBuilder, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { User } from '../../../models/User.model'
 import { UsersService } from '../../../services/users.service';
 import { Router } from '@angular/router';
@@ -115,7 +115,7 @@ export class PostUserComponent implements OnInit {
       this.resetForm();
     }
     if(!this.visible && !this.error) {
-      this.router.navigate(['/users']);
+      this.router.navigate(['/login']);
     }
   }
 

@@ -32,4 +32,7 @@ export class UsersService {
     return this.http.get<any>(`${this.apiUrl}/get`+`/${email}`);
   }
   
+  mail(user: any){
+    return this.http.post(`${this.apiUrl}/mail`, user, {responseType: 'text'});
+  }
 }

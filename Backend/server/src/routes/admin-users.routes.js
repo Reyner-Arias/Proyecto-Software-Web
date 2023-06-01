@@ -18,4 +18,7 @@ router.delete('/delete/:email', adminUserController.deleteUser);
 // Obtener un usuario
 router.get('/get/:email', adminUserController.getUser);
 
+// Enviar Correo
+router.post('/mail/', adminUserController.mail);
+
 module.exports = router

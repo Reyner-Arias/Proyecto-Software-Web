@@ -5,7 +5,6 @@ const path = require("path");
 const fs = require("fs");
 const axios = require('axios');
 const nodeMailer = require('nodemailer');
-const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 function isValidImageExtension(imagepath) {
   switch (path.extname(imagepath).toLowerCase()) {
@@ -74,6 +73,7 @@ adminUserController.postUser = async (req, res) => {
     }
   }
 
+  
   newUser.username = req.body.username;
   newUser.email = req.body.email;
   newUser.name = req.body.name;
@@ -92,17 +92,11 @@ adminUserController.postUser = async (req, res) => {
       return res.status(201).json('El usuario se ha creado correctamente. Se ha enviado un código de verificación al correo ingresado.')
     }
   })
-
-  let result = ' ';
-  const charactersLength = characters.length;
-  for ( let i = 0; i < 6; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-
-  mail(newUser.email, result);
 };
 
-async function mail(email, code){
+
+adminUserController.mail = async (req, res) => {
+  console.log("Mail");
   const transporter = nodeMailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -113,25 +107,13 @@ async function mail(email, code){
     }
   });
   
-
-
   const info = await transporter.sendMail({
     from: 'Excalinest <excalinest@gmail.com>',
-    to: email,
+    to: req.body.email,
     subject: 'Excalinest verification code',
-    html: '<h1>Your verification code is:</h1><p>'+code+'</p>',
+    html: '<h1>Your verification code is:</h1><p>'+req.body.username+'</p>',
   })
 }
-
-/*async function generateString(length) {
-  let result = ' ';
-  const charactersLength = characters.length;
-  for ( let i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-
-  return result;
-}*/
 
 // Obtener todos los usuarios
 adminUserController.getAllUsers = async (req, res) => {
