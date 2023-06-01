@@ -4,6 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { PostUserComponent } from './post-user/post-user.component';
 import { GetUsersComponent } from './get-users/get-users.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { UpdateMyProfileComponent } from './update-my-profile/update-my-profile.component';
 
 const routes: Routes = [
   {
@@ -41,6 +44,27 @@ const routes: Routes = [
         component: GetUsersComponent,
         data: {
           title: 'Usuarios',
+        }
+      },
+      {
+        path: 'user',
+        component: UserDetailComponent,
+        data: {
+          title: 'Detalles del usuario',
+        }
+      },
+      {
+        path: 'profile',
+        component: MyProfileComponent,
+        data: {
+          title: 'Mi perfil',
+        }
+      },
+      {
+        path: 'update-my-profile',
+        component: UpdateMyProfileComponent,
+        data: {
+          title: 'Actualizar mi perfil',
         }
       },
     ]
