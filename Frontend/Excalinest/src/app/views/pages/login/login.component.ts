@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   private excalinestImgPath = "C:\\Excalinest\\img\\";
   private fakePath = "C:\\fakepath\\";
 
-  private code = ' ';
+  private code = '';
 
   newUser: User = {
     username: "",
@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
   }
 
   onMailUser() {
-    
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const charactersLength = characters.length;
     for ( let i = 0; i < 6; i++ ) {
@@ -80,18 +79,28 @@ export class LoginComponent implements OnInit {
       next: (res: any) => {
         this.showSpinner = false;
         this.error = false;
-        this.modalMessage = res.replace(/['"]+/g, '');
-        this.openCloseInfoModal(true);
+        this.modalMessage = "Se envió el código de verificación a su correo, si no le ha llegado recarge la página e inténtelo de nuevo.";
+        this.openCloseInfoModal(false);
       }
     });
   }
 
   mail() {
     if(this.validateEmailFormat()) {
-      this.validatedForm = true;
+      this.usersService.getUser(this.loginUserForm.value.email).subscribe({
+        error: (err: any) =>{
+          this.showSpinner = false;
+          this.modalMessage = err.error.replace(/['"]+/g, '');
+          this.openCloseInfoModal(false);
+        },
+        next: (res:User) => {
+          this.validatedForm = true;
       if (this.loginUserForm.dirty && this.loginUserForm.valid) {
         this.onMailUser();
       }
+        }
+      }); 
+      
     } else {
       this.error = true;
       this.modalMessage = "Error: Formato de correo electrónico no válido";
@@ -101,15 +110,16 @@ export class LoginComponent implements OnInit {
 
   checkCode(){
 
-    var input = " "+this.codeUserForm.value.code
+    var input = this.codeUserForm.value.code
     var realCode = this.code;
 
-    if (input === realCode){
+    if (input === realCode && realCode != ''){
       this.modalMessage = "Código Correcto";
       this.openCloseInfoModal(false);
+      this.router.navigate(['/videogames/get']);
     } else {
       this.error = true;
-      this.modalMessage = "Error: Código incorreco";
+      this.modalMessage = "Error: Código incorrecto";
       this.openCloseInfoModal(false);
     }
   }

@@ -89,7 +89,7 @@ adminUserController.postUser = async (req, res) => {
       }
       
     } else {
-      return res.status(201).json('El usuario se ha creado correctamente. Se ha enviado un código de verificación al correo ingresado.')
+      return res.status(201).json('El usuario se ha creado correctamente.')
     }
   })
 };
