@@ -96,7 +96,6 @@ adminUserController.postUser = async (req, res) => {
 
 
 adminUserController.mail = async (req, res) => {
-  console.log("Mail");
   const transporter = nodeMailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -113,6 +112,8 @@ adminUserController.mail = async (req, res) => {
     subject: 'Excalinest verification code',
     html: '<h1>Your verification code is:</h1><p>'+req.body.username+'</p>',
   })
+
+  return res.status(200).json('Código enviado exitosamente.');
 }
 
 // Obtener todos los usuarios

@@ -49,6 +49,11 @@
                   <c-form-feedback [valid]="false">Ingrese el código QR de twitter</c-form-feedback>
                 </c-input-group>
                 <div class="d-grid"><button cButton color="primary" type="submit">Registrarse</button></div>
+                <c-col class="text-center" xs="12">
+                  <button cButton class="px-0" color="link" [routerLink]="['/login']">
+                    Iniciar sesión
+                  </button>
+                </c-col>
               </form>
             </c-card-body>
           </c-card>

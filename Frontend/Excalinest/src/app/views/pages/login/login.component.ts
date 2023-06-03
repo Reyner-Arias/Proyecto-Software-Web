@@ -10,14 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 
-
 export class LoginComponent implements OnInit {
 
+  public emailEnteredByUser = false;
   private loginUserForm: any;
   private codeUserForm: any;
   public validatedForm = false;
-  private excalinestImgPath = "C:\\Excalinest\\img\\";
-  private fakePath = "C:\\fakepath\\";
 
   private code = '';
 
@@ -66,8 +64,6 @@ export class LoginComponent implements OnInit {
 
     this.newUser.email = this.loginUserForm.value.email;
     this.newUser.username = this.code;
-    
-    this.showSpinner = true;
 
     this.usersService.mail(this.newUser).subscribe({
       error: (err: any) => {
@@ -79,14 +75,17 @@ export class LoginComponent implements OnInit {
       next: (res: any) => {
         this.showSpinner = false;
         this.error = false;
-        this.modalMessage = "Se envió el código de verificación a su correo, si no le ha llegado recarge la página e inténtelo de nuevo.";
+        this.modalMessage = "Se envió el código de verificación a su correo, si no le ha llegado recargue la página e inténtelo de nuevo.";
         this.openCloseInfoModal(false);
+        this.emailEnteredByUser = true;
       }
     });
   }
 
   mail() {
     if(this.validateEmailFormat()) {
+      this.showSpinner = true;
+
       this.usersService.getUser(this.loginUserForm.value.email).subscribe({
         error: (err: any) =>{
           this.showSpinner = false;
@@ -95,26 +94,26 @@ export class LoginComponent implements OnInit {
         },
         next: (res:User) => {
           this.validatedForm = true;
-      if (this.loginUserForm.dirty && this.loginUserForm.valid) {
-        this.onMailUser();
-      }
+          if (this.loginUserForm.dirty && this.loginUserForm.valid) {
+            this.onMailUser();
+          }
         }
       }); 
       
     } else {
+      this.showSpinner = false;
       this.error = true;
       this.modalMessage = "Error: Formato de correo electrónico no válido";
       this.openCloseInfoModal(false);
     }
   }
 
-  checkCode(){
-
+  checkCode() {
     var input = this.codeUserForm.value.code
     var realCode = this.code;
 
     if (input === realCode && realCode != ''){
-      this.modalMessage = "Código Correcto";
+      this.modalMessage = "Código correcto";
       this.openCloseInfoModal(false);
       this.router.navigate(['/videogames/get']);
     } else {

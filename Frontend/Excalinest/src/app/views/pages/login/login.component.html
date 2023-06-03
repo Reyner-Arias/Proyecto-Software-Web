@@ -1,60 +1,65 @@
-<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
-  <c-container>
-    <c-row class="justify-content-center">
-      <c-col md="8">
-        <c-card-group>
-          <c-card class="p-4">
-            <c-card-body>
-              <form [formGroup]="getLoginUserForm()" (ngSubmit)="mail()" [validated]="validatedForm" cForm class="row g-3 needs-validation">  
-                <c-row>
-                  <h1 cLabel for="email">Correo electrónico</h1>
-                  <input cFormControl id="email" formControlName="email" required type="text" />
-                  <c-form-feedback [valid]="true">Se ha enviado el código de verificación a su correo</c-form-feedback>
-                  <c-form-feedback [valid]="false">Ingrese el correo electrónico</c-form-feedback>
-                </c-row>
-                <c-col xs="6">
-                  <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
-                    Enviar Código
+<div *ngIf="showSpinner" class="fade show spinner">
+  <i class="spinner-grow spinner-grow-sm"></i>
+  <span class="m-1">Enviando código de verificación...</span>
+</div>
+
+<div *ngIf="showSpinner == false">
+  <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <c-container>
+      <c-row class="justify-content-center">
+        <c-col md="8">
+          <c-card-group>
+            <c-card class="p-4">
+              <c-card-body>
+                <form *ngIf="!emailEnteredByUser" [formGroup]="getLoginUserForm()" (ngSubmit)="mail()" [validated]="validatedForm" cForm class="row g-3 needs-validation">  
+                  <h1>Iniciar sesión</h1>
+                  <p class="text-medium-emphasis email-group">Ingrese un correo registrado.</p>
+                  <c-row>
+                    <input cFormControl id="email" formControlName="email" required type="text" cFormControl placeholder="Correo electrónico" />
+                    <c-form-feedback [valid]="true">Se ha enviado el código de verificación a su correo</c-form-feedback>
+                    <c-form-feedback [valid]="false">Ingrese el correo electrónico</c-form-feedback>
+                  </c-row>
+                  <c-row>
+                    <button cButton color="primary" class="update-button row-margin-bottom send-code-class" type="submit">
+                      Enviar código
+                    </button>
+                  </c-row>
+                </form>
+                <form *ngIf="emailEnteredByUser" [formGroup]="getCodeUserForm()" (ngSubmit)="checkCode()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
+                  <h1>Iniciar sesión</h1>
+                  <c-row class="code-group">
+                    <input cFormControl id="code" formControlName="code" required type="text" cFormControl placeholder="Código de verificación"  />
+                    <c-form-feedback [valid]="false">Ingrese el código</c-form-feedback>
+                  </c-row>
+                  <c-row>
+                    <button cButton color="primary" class="update-button row-margin-bottom send-code-class" type="submit">
+                      Verificar código
+                    </button>
+                  </c-row>
+                </form>
+              </c-card-body>
+            </c-card>
+            <c-card [ngStyle]="{'width.%': 44}" class="text-white bg-primary py-5">
+              <c-card-body class="text-center">
+                 <div>
+                  <h2>Registrarse</h2>
+                  <p>
+                    ¿No tiene cuenta?
+                  </p>
+                  <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
+                    Registrarse ahora
                   </button>
-                </c-col>
-            </form>
-            <p>
+                </div>
+              </c-card-body>
+            </c-card>
+          </c-card-group>
+        </c-col>
+      </c-row>
+    </c-container>
+  </div>
+</div>
 
-            </p>
-            <form [formGroup]="getCodeUserForm()" (ngSubmit)="checkCode()" [validated]="validatedForm" cForm class="row g-3 needs-validation">
-              <c-row>
-                <h2>Introducir código</h2>
-                <input cFormControl id="code" formControlName="code" required type="text" />
-                <c-form-feedback [valid]="false">Ingrese el código</c-form-feedback>
-              </c-row>
-              <c-col xs="6">
-                <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
-                  Verificar
-                </button>
-              </c-col>
-          </form>
-            </c-card-body>
-          </c-card>
-
-          <c-card [ngStyle]="{'width.%': 44}" class="text-white bg-primary py-5">
-            <c-card-body class="text-center">
-               <div>
-                <h2>Registrarse ahora</h2>
-                <p>
-                  ¿No tienes cuenta?
-                </p>
-                <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
-                  Registrarse
-                </button>
-              </div>
-            </c-card-body>
-          </c-card>
-          
-        </c-card-group>
-      </c-col>
-    </c-row>
-  </c-container>
-  <c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
     <c-modal-header>
         <h5 cModalTitle>{{this.modalTitle}}</h5>
         <button (click)="openCloseInfoModal(false)" cButtonClose></button>
@@ -66,4 +71,3 @@
         </button>
     </c-modal-footer>
 </c-modal>
-</div>
