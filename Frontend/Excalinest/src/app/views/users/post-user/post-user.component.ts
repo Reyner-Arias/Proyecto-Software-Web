@@ -115,7 +115,7 @@ export class PostUserComponent implements OnInit {
       this.resetForm();
     }
     if(!this.visible && !this.error) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/users']);
     }
   }
 

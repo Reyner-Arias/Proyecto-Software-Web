@@ -13,7 +13,7 @@ import { UpdateTagComponent } from './views/tags/update-tag/update-tag.component
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
