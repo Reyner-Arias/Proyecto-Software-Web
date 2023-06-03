@@ -1,10 +1,10 @@
 <div *ngIf="showSpinner" class="fade show spinner">
     <i class="spinner-grow spinner-grow-sm"></i>
-    <span class="m-1">Actualizar usuario...</span>
+    <span class="m-1">Editando usuario...</span>
 </div>
 
 <div *ngIf="showSpinner == false">
-    <h2>Actualizar usuario</h2>
+    <h2>Editar usuario</h2>
     <form [formGroup]="getPutUserForm()" (ngSubmit)="submitUser()" [validated]="validatedForm" 
         cForm class="row g-3 needs-validation">
         <c-row>
@@ -62,7 +62,7 @@
         <c-row class="row">
             <c-col md="4">
             <button cButton color="primary" class="update-button row-margin-bottom" type="submit">
-                Actualizar
+                Editar
             </button>
             </c-col>
         </c-row>
