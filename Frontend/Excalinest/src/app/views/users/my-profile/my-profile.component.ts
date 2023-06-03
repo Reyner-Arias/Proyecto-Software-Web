@@ -29,7 +29,7 @@ export class MyProfileComponent {
   }
 
   ngOnInit() {
-    let email = "mhidalgos0708@gmail.com";
+    let email = "sirodriguez@gmail.com";
     this.usersService.getUser(email).subscribe({
       error: (err: any) =>{
         this.showSpinner = false;
