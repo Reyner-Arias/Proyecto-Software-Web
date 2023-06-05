@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/User.model';
+import { Videogame } from 'src/app/models/Videogame.model';
 import { UsersService } from 'src/app/services/users.service';
+import { VideogamesService } from 'src/app/services/videogames.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -11,7 +13,10 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class MyProfileComponent {
   public deleteButton = false;
+  videogames = new Array<Videogame>();
+  private videojuegosDownloadsPath = "C:\\Excalinest\\";
 
+  private videogameToDelete = "";
   user: User = {
     username: "",
     email: "",
@@ -60,6 +65,23 @@ export class MyProfileComponent {
         this.user.imagenTwitter = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
           this.user.twitter.tipoImagen +";base64, " + twitterBase64);
 
+        this.videogamesService.getVideogames(false, this.user.username).subscribe({
+          error: (err: any) =>{
+            this.error = true;
+            this.modalMessage = err.error.replace(/['"]+/g, '');
+            this.openCloseInfoModal();
+          },
+          next: (res: Array<Videogame>) => {
+            res.forEach(videogame => {
+              var portadaBase64 = btoa(
+                new Uint8Array(videogame.portada.data.data)
+                  .reduce((data, byte) => data + String.fromCharCode(byte), '')
+              );
+              videogame.imagen = this.domSanitizer.bypassSecurityTrustResourceUrl("data:" + videogame.portada.tipoImagen + ";base64, " + portadaBase64);
+            });
+            this.videogames = res;
+          }
+        });
         this.showSpinner = false;
       }
     });   
@@ -67,12 +89,60 @@ export class MyProfileComponent {
   }
 
   constructor(private usersService: UsersService,
-    public router: Router,  private domSanitizer: DomSanitizer) {}
+    public router: Router,  private domSanitizer: DomSanitizer,
+    private videogamesService: VideogamesService) {}
+
+  downloadFile(videojuego: Videogame) {
+    this.showSpinnerDownload = true;
+    let body = {
+      "destPath": this.videojuegosDownloadsPath,
+      "filename": videojuego.titulo+".zip"
+    }
+    this.videogamesService.getZipFile(body).subscribe({
+      error: (err: any) => {
+        this.showSpinnerDownload = false;
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.showSpinnerDownload = false;
+        this.modalMessage = res+" Excalinest coloca el archivo en C:\\Excalinest";
+        this.openCloseInfoModal();
+      }
+    });
+  }
+
+  deleteFile(videojuego: Videogame) {
+    this.videogameToDelete = videojuego._id;
+    this.deleteButton = true;
+    this.modalMessage = "¿Está seguro de eliminar "+ videojuego.titulo +"?"
+    this.openCloseInfoModal();
+  }
+
+  onDeleteVideogame() {
+    this.openCloseInfoModal();
+    this.showSpinnerDelete = true;
+    this.videogamesService.deleteVideogame({_id: this.videogameToDelete}).subscribe({
+      error: (err: any) => {
+        this.showSpinnerDelete = false;
+        this.deleteButton = false;
+        this.modalMessage = err.error.replace(/['"]+/g, '');
+        this.openCloseInfoModal();
+      },
+      next: (res: any) => {
+        this.showSpinnerDelete = false;
+        this.router.navigate(['/dashboard']);
+
+      }
+    });   
+  }
 
 
   /* --------------------- Spinner --------------------- */
 
   public showSpinner = true;
+  public showSpinnerDownload = false;
+  public showSpinnerDelete = false;
 
   /* ---------------------- Modal ---------------------- */
 

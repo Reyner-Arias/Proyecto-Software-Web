@@ -2,8 +2,16 @@
     <i class="spinner-grow spinner-grow-sm"></i>
     <span class="m-1">Cargando información del perfil...</span>
 </div>
+<div *ngIf="showSpinnerDownload" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Descargando videojuego...</span>
+</div>
+<div *ngIf="showSpinnerDelete" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Eliminando videojuego...</span>
+</div>
 
-<div *ngIf="showSpinner == false">
+<div *ngIf="showSpinner == false && showSpinnerDownload == false && showSpinnerDelete == false">
     <c-row class="row-title">
         <c-row>    
             <c-col md="8">
@@ -75,4 +83,56 @@
             </c-row>
         </c-col>
     </c-row>
+
+    <div>
+        <br>
+        <br>
+        <h4>Mis Videojuegos</h4>
+        <div class="table-responsive">
+            <table class="table table-striped videogames-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Portada</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Sinopsis</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr  *ngFor="let videogame of videogames">
+                        <td style="vertical-align: middle;">
+                            <img cCardImg="top" [src]=videogame.imagen width="100" style="object-fit: cover;">
+                        </td>
+                        <td>{{videogame.titulo}}</td>
+                        <td>{{videogame.sinopsis}}</td>
+                        <td class="center-content">
+                            <button cButton  color="dark" size="sm" (click)="downloadFile(videogame)">
+                                <svg cIcon name="cilCloudDownload" class="me-1 icon"></svg>
+                            </button>
+                        </td>
+                        <td class="center-content">
+                            <button cButton color="danger" size="sm" (click)="deleteFile(videogame)">
+                                <svg cIcon name="cilTrash" class="me-1 icon"></svg>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+<c-modal id="infoModal" [visible]="visible" (visibleChange)="handleInfoModalChange($event)" [alignment]="'center'">
+    <c-modal-header>
+        <h5 cModalTitle>{{this.modalTitle}}</h5>
+        <button (click)="openCloseInfoModal()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body> {{this.modalMessage}} </c-modal-body>
+    <c-modal-footer>
+        <button cButton color="danger" (click)="onDeleteVideogame()" *ngIf="deleteButton">Eliminar</button>
+        <button (click)="openCloseInfoModal()" cButton color="secondary">
+            Cerrar
+        </button>
+    </c-modal-footer>
+    </c-modal>

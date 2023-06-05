@@ -2,8 +2,12 @@
     <i class="spinner-grow spinner-grow-sm"></i>
     <span class="m-1">Eliminando usuario...</span>
 </div>
+<div *ngIf="showSpinnerDownload" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Descargando videojuego...</span>
+</div>
 
-<div *ngIf="showSpinner == false">
+<div *ngIf="showSpinner == false && showSpinnerDownload == false">
     <c-row class="row-title">
         <c-row>    
             <c-col md="8">
@@ -48,7 +52,7 @@
     </c-row>
     <br>
     <c-row class="row-title">
-        <h5>Redes sociales de {{user.username}}</h5>
+        <h4>Redes sociales de {{user.username}}</h4>
     </c-row>
     <c-row class="row-social-net">
         <c-col [sm]="4">
@@ -76,6 +80,34 @@
             </c-row>
         </c-col>
     </c-row>
+
+    <div>
+        <br>
+        <br>
+        <h4>Videojuegos publicados</h4>
+        <div class="table-responsive">
+            <table class="table table-striped videogames-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Portada</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Sinopsis</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr  *ngFor="let videogame of videogames">
+                        <td style="vertical-align: middle;">
+                            <img cCardImg="top" [src]=videogame.imagen width="100" style="object-fit: cover;">
+                        </td>
+                        <td>{{videogame.titulo}}</td>
+                        <td>{{videogame.sinopsis}}</td>
+                        <td class="center-content"><button cButton color="dark" size="sm" (click)="downloadFile(videogame)"><svg cIcon name="cilCloudDownload" class="me-1 icon"></svg></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 
