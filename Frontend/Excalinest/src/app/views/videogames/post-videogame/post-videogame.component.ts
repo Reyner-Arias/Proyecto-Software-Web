@@ -156,6 +156,8 @@ export class PostVideogameComponent implements OnInit{
     this.newVideogame.twitterpath = this.postVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.tags = this.tags.map(({ id }) => id);
 
+    console.log(this.newVideogame);
+
     this.showSpinner = true;
 
     this.videogamesService.postVideogame(this.newVideogame).subscribe({

@@ -20,15 +20,16 @@ const storage = multer.diskStorage({
       cb(null, name + '-' + Date.now() + '-' + Math.floor(Math.random() * 100000));  
     }  
   });   
-  
-const postVideogameImages = multer({ storage });
 
-router.post("/post", adminVideogameController.postVideogame, postVideogameImages.fields([
+const postVideogameImages = multer({ storage }).fields([
     { name: 'portada', maxCount: 1 },
     { name: 'archivo', maxCount: 1 },
     { name: 'facebook', maxCount: 1 },
     { name: 'instagram', maxCount: 1 },
-    { name: 'twitter', maxCount: 1 }]));
+    { name: 'twitter', maxCount: 1 }
+  ]);
+
+router.post("/post", postVideogameImages, adminVideogameController.postVideogame);
 router.get("/get", adminVideogameController.getVideogames);
 
 // Obtener la cantidad de videojuegos con solo una etiqueta específica

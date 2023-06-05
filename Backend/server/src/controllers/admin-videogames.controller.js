@@ -47,9 +47,14 @@ function getImageExtension(imagepath) {
 
 // Crear un nuevo videojuego
 adminVideogameController.postVideogame = async function (req, res, next) {
-  next();
   const newVideogame = new Videogame();
-  
+
+  const coverFile = req.files['portada'];
+  const zipFile = req.files['archivo'];
+  const facebookFile = req.files['facebook'];
+  const instaFile = req.files['instagram'];
+  const twitterFile = req.files['twitter'];
+
   console.log(JSON.stringify(req.body));
 
   if(!req.body.titulo || !req.body.sinopsis || !req.body.usuario || !req.body.imagepath ||
@@ -90,7 +95,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
         }*/
         console.log(req.body.portada)
         newVideogame.portada = {tipoImagen: req.body.portada.tipoImagen,
-          data: req.files[0].buffer}
+          data: Buffer.from(coverFile)}
       }
 
       if(req.body.filepath) {
@@ -107,7 +112,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           return res.status(500).json('Error: No se encontró la imagen del código QR de Facebook.');
         }*/
         newVideogame.facebook = {tipoImagen: req.body.facebook.tipoImagen,
-          data: req.files[1].buffer}
+          data: Buffer.from(facebookFile)}
       }
 
       if(req.body.instagram) {
@@ -118,7 +123,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           return res.status(500).json('Error: No se encontró la imagen del código QR de Instagram.');
         }*/
         newVideogame.instagram = {tipoImagen: req.body.instagram.tipoImagen,
-          data: req.files[2].buffer}
+          data: Buffer.from(instaFile)}
       }
       
       if(req.body.twitter) {
@@ -129,7 +134,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           return res.status(500).json('Error: No se encontró la imagen del código QR de Twitter.');
         }*/
         newVideogame.twitter = {tipoImagen: req.body.twitter.tipoImagen,
-          data: req.files[3].buffer}
+          data: Buffer.from(twitterFile)}
       }
       
       const readStream = fs.createReadStream(req.body.filepath);
