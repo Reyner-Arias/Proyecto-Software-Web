@@ -49,11 +49,11 @@ function getImageExtension(imagepath) {
 adminVideogameController.postVideogame = async function (req, res, next) {
   const newVideogame = new Videogame();
 
-  const coverFile = req.files['portada'];
-  const zipFile = req.files['archivo'];
-  const facebookFile = req.files['facebook'];
-  const instaFile = req.files['instagram'];
-  const twitterFile = req.files['twitter'];
+  const coverFile = req.files['portada'][0];
+  const zipFile = req.files['archivo'][0];
+  const facebookFile = req.files['facebook'][0];
+  const instaFile = req.files['instagram'][0];
+  const twitterFile = req.files['twitter'][0];
 
   console.log(JSON.stringify(req.body));
 
@@ -95,7 +95,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
         }*/
         console.log(req.body.portada)
         newVideogame.portada = {tipoImagen: req.body.portada.tipoImagen,
-          data: Buffer.from(coverFile)}
+          data: fs.readFile(coverFile.path)}
       }
 
       if(req.body.filepath) {
@@ -112,7 +112,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           return res.status(500).json('Error: No se encontró la imagen del código QR de Facebook.');
         }*/
         newVideogame.facebook = {tipoImagen: req.body.facebook.tipoImagen,
-          data: Buffer.from(facebookFile)}
+          data: fs.readFile(facebookFile.path)}
       }
 
       if(req.body.instagram) {
@@ -123,7 +123,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           return res.status(500).json('Error: No se encontró la imagen del código QR de Instagram.');
         }*/
         newVideogame.instagram = {tipoImagen: req.body.instagram.tipoImagen,
-          data: Buffer.from(instaFile)}
+          data: fs.readFile(instaFile.path) }
       }
       
       if(req.body.twitter) {
@@ -134,7 +134,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           return res.status(500).json('Error: No se encontró la imagen del código QR de Twitter.');
         }*/
         newVideogame.twitter = {tipoImagen: req.body.twitter.tipoImagen,
-          data: Buffer.from(twitterFile)}
+          data: fs.readFile(twitterFile)}
       }
       
       const readStream = fs.createReadStream(req.body.filepath);
