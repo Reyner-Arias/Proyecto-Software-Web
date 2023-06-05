@@ -15,8 +15,41 @@ export class VideogamesService {
   private adminAPI = environment.apiUrl + 'admin-videogames'
   private devAPI = environment.apiUrl + 'dev-videogames'
 
+  private headers = new HttpHeaders({
+    'enctype': 'multipart/form-data'
+  });
+
   postVideogame (videogame: any) {
-    return this.http.post(`${this.adminAPI}/post`, videogame, {responseType: 'text'});
+    const videogameFormData = new FormData();
+    videogameFormData.append('titulo', videogame.titulo);
+    videogameFormData.append('sinopsis', videogame.sinopsis);
+    videogameFormData.append('usuario', videogame.usuario);
+    videogameFormData.append('imagepath', videogame.imagepath);
+    videogameFormData.append('facepath', videogame.facepath);
+    videogameFormData.append('instapath', videogame.instapath);
+    videogameFormData.append('twitterpath', videogame.twitterpath);
+    videogameFormData.append('filepath', videogame.filepath);
+    videogameFormData.append('tags', videogame.tags);
+    videogameFormData.append('portada', videogame.coverFile);
+    videogameFormData.append('archivo', videogame.zipFile);
+    videogameFormData.append('facebook', videogame.facebookFile);
+    videogameFormData.append('instagram', videogame.instaFile);
+    videogameFormData.append('twitter', videogame.twitterFile);
+
+    const fieldNames: string[] = [];
+    videogameFormData.forEach((value, key) => {
+      fieldNames.push(key);
+    });
+    console.log(fieldNames); // ["nombre", "edad"]
+
+    // Obtener los valores de los campos
+    const fieldValues: string[] = [];
+    videogameFormData.forEach((value) => {
+      fieldValues.push(value.toString());
+    });
+    console.log(fieldValues); // ["John", "30"]
+
+    return this.http.post(`${this.adminAPI}/post`, videogameFormData, {headers: this.headers});
   }
 
   getVideogames(admin: boolean, developer: String) {

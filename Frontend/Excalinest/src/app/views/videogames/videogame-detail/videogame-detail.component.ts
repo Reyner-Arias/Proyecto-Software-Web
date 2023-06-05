@@ -27,6 +27,7 @@ export class VideogameDetailComponent implements OnInit {
     usuario: '',
     sinopsis: '',
     bucketId: '',
+    archivo: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
     filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
@@ -41,6 +42,11 @@ export class VideogameDetailComponent implements OnInit {
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
     twitterpath: '',
+    zipFile: new File([new Uint8Array([0])], ''),
+    coverFile: new File([new Uint8Array([0])], ''),
+    facebookFile: new File([new Uint8Array([0])], ''),
+    instaFile: new File([new Uint8Array([0])], ''),
+    twitterFile: new File([new Uint8Array([0])], '')
   }
 
   getTagInfo(listOfTags: any) {

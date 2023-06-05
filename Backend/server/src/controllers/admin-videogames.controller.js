@@ -46,8 +46,11 @@ function getImageExtension(imagepath) {
 }
 
 // Crear un nuevo videojuego
-adminVideogameController.postVideogame = async function (req, res) {
+adminVideogameController.postVideogame = async function (req, res, next) {
+  next();
   const newVideogame = new Videogame();
+  
+  console.log(JSON.stringify(req.body));
 
   if(!req.body.titulo || !req.body.sinopsis || !req.body.usuario || !req.body.imagepath ||
      !req.body.facepath || !req.body.instapath || !req.body.twitterpath || !req.body.filepath ||
@@ -78,13 +81,16 @@ adminVideogameController.postVideogame = async function (req, res) {
 
       delete req.body._id;
       
-      if(req.body.imagepath) {
-        if(fs.existsSync(req.body.imagepath)){
-          newVideogame.portada = {tipoImagen: getImageExtension(req.body.imagepath),
-            data: fs.readFileSync(req.body.imagepath)}
+      if(req.body.portada) {
+        /*if(fs.existsSync(req.body.imagepath)){
+          newVideogame.portada = {tipoImagen: req.body.portada.tipoImagen,
+            data: Buffer.from(req.body.portada.data.data)}
         }else{
           return res.status(500).json('Error: No se encontró la imagen de portada.');
-        }
+        }*/
+        console.log(req.body.portada)
+        newVideogame.portada = {tipoImagen: req.body.portada.tipoImagen,
+          data: req.files[0].buffer}
       }
 
       if(req.body.filepath) {
@@ -93,31 +99,37 @@ adminVideogameController.postVideogame = async function (req, res) {
         }
       }
 
-      if(req.body.facepath) {
-        if(fs.existsSync(req.body.facepath)){
+      if(req.body.facebook) {
+        /*if(fs.existsSync(req.body.facepath)){
           newVideogame.facebook = {tipoImagen: getImageExtension(req.body.facepath),
             data: fs.readFileSync(req.body.facepath)}
         }else{
           return res.status(500).json('Error: No se encontró la imagen del código QR de Facebook.');
-        }
+        }*/
+        newVideogame.facebook = {tipoImagen: req.body.facebook.tipoImagen,
+          data: req.files[1].buffer}
       }
 
-      if(req.body.instapath) {
-        if(fs.existsSync(req.body.instapath)){
+      if(req.body.instagram) {
+        /*if(fs.existsSync(req.body.instapath)){
           newVideogame.instagram = {tipoImagen: getImageExtension(req.body.instapath),
             data: fs.readFileSync(req.body.instapath)}
         }else{
           return res.status(500).json('Error: No se encontró la imagen del código QR de Instagram.');
-        }
+        }*/
+        newVideogame.instagram = {tipoImagen: req.body.instagram.tipoImagen,
+          data: req.files[2].buffer}
       }
       
-      if(req.body.twitterpath) {
-        if(fs.existsSync(req.body.twitterpath)){
+      if(req.body.twitter) {
+        /*if(fs.existsSync(req.body.twitterpath)){
           newVideogame.twitter = {tipoImagen: getImageExtension(req.body.twitterpath),
             data: fs.readFileSync(req.body.twitterpath)}
         }else{
           return res.status(500).json('Error: No se encontró la imagen del código QR de Twitter.');
-        }
+        }*/
+        newVideogame.twitter = {tipoImagen: req.body.twitter.tipoImagen,
+          data: req.files[3].buffer}
       }
       
       const readStream = fs.createReadStream(req.body.filepath);

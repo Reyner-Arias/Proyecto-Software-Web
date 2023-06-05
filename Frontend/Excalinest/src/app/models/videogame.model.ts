@@ -6,6 +6,7 @@ export interface Videogame {
     usuario: string;
     sinopsis: string;
     bucketId: string;
+    archivo: {data: {data: ArrayBuffer, type: string}, tipoArchivo: string};
     filepath: string;
     portada: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagen: SafeResourceUrl | undefined;
@@ -20,4 +21,9 @@ export interface Videogame {
     twitter: {data: {data: ArrayBuffer, type: string}, tipoImagen: string};
     imagenTwitter: SafeResourceUrl | undefined;
     twitterpath: string;
+    zipFile: File;
+    coverFile: File;
+    facebookFile: File;
+    instaFile: File;
+    twitterFile: File;
 }

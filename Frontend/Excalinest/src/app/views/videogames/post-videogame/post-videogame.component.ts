@@ -28,6 +28,7 @@ export class PostVideogameComponent implements OnInit{
     sinopsis: '',
     bucketId: '',
     filepath: '',
+    archivo: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
     imagepath: '',
@@ -41,6 +42,11 @@ export class PostVideogameComponent implements OnInit{
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
     twitterpath: '',
+    zipFile: new File([new Uint8Array([0])], ''),
+    coverFile: new File([new Uint8Array([0])], ''),
+    facebookFile: new File([new Uint8Array([0])], ''),
+    instaFile: new File([new Uint8Array([0])], ''),
+    twitterFile: new File([new Uint8Array([0])], '')
   }
 
   constructor(private videogamesService: VideogamesService,
@@ -97,6 +103,46 @@ export class PostVideogameComponent implements OnInit{
     audio.src = "../../../../assets/audio/success.mp3";
     audio.load();
     audio.play();
+  }
+
+  onZipFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const zipfile = inputElement.files?.[0];
+    if (zipfile) {
+      this.newVideogame.zipFile = zipfile;
+    }
+  }
+
+  onCoverFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const coverFile = inputElement.files?.[0];
+    if (coverFile) {
+      this.newVideogame.coverFile = coverFile;
+    }
+  }
+  
+  onFacebookFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const facebookFile = inputElement.files?.[0];
+    if (facebookFile) {
+      this.newVideogame.facebookFile = facebookFile;
+    }
+  }
+
+  onInstagramFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const instaFile = inputElement.files?.[0];
+    if (instaFile) {
+      this.newVideogame.instaFile = instaFile;
+    }
+  }
+
+  onTwitterFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const twitterFile = inputElement.files?.[0];
+    if (twitterFile) {
+      this.newVideogame.twitterFile = twitterFile;
+    }
   }
 
   onPostVideogame() {

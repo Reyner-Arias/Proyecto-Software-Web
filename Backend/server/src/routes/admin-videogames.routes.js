@@ -3,6 +3,7 @@ const { Router } = require("express");
 const router = Router();
 const adminVideogameController = require("../controllers/admin-videogames.controller");
 const token = require("../controllers/token");
+const multer = require('multer');
 
 /* 
 * Cuando se inserte el token
@@ -10,7 +11,24 @@ const token = require("../controllers/token");
 * router.post("/", token.verifyToken, adminVideogameController.postVideogame);
 */ 
 
-router.post("/post", adminVideogameController.postVideogame);
+const storage = multer.diskStorage({  
+    destination: (req, file, cb)=>{  
+      cb(null, "images");
+    },
+    filename: (req, file, cb)=>{  
+      const name = file.originalname;  
+      cb(null, name + '-' + Date.now() + '-' + Math.floor(Math.random() * 100000));  
+    }  
+  });   
+  
+const postVideogameImages = multer({ storage });
+
+router.post("/post", adminVideogameController.postVideogame, postVideogameImages.fields([
+    { name: 'portada', maxCount: 1 },
+    { name: 'archivo', maxCount: 1 },
+    { name: 'facebook', maxCount: 1 },
+    { name: 'instagram', maxCount: 1 },
+    { name: 'twitter', maxCount: 1 }]));
 router.get("/get", adminVideogameController.getVideogames);
 
 // Obtener la cantidad de videojuegos con solo una etiqueta específica
