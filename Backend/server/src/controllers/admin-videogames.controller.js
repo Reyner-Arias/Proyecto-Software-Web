@@ -136,9 +136,9 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           data: fs.readFileSync(twitterFile.path) }
       }
       
-      const readStream = fs.createReadStream(req.body.filepath);
+      const readStream = fs.createReadStream(zipFile.path);
       const uploadStream = bucket.openUploadStream(req.body.titulo + '.zip', {
-        contentType: req.body.tipoArchivo
+        contentType: zipFile.type
       });
       readStream.pipe(uploadStream);
 
@@ -152,6 +152,24 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           newVideogame.titulo = req.body.titulo;
           newVideogame.sinopsis = req.body.sinopsis;
           newVideogame.usuario = req.body.usuario;
+
+          // Acceder a los archivos subidos a través de req.files
+          const archivosSubidos = req.files;
+        
+          // Eliminar los archivos después agregarlos a ./files
+          if (archivosSubidos) {
+            for (const campo in archivosSubidos) {
+              if (Array.isArray(archivosSubidos[campo])) {
+                archivosSubidos[campo].forEach((archivo) => {
+                  fs.unlink(".\\" + archivo.path, (err) => {
+                    if (err) {
+                      console.error('Error al eliminar el archivo temporal:', err);
+                    }
+                  });
+                });
+              }
+            }
+          }
 
           await newVideogame.save(async (err, newVideogame) => {
             if (err) {
