@@ -23,7 +23,7 @@ GET http://localhost:3000/admin-tags/get
 
 ######
 # Obtener la etiqueta 1
-GET http://localhost:3000/admin-tags/get/1
+GET http://localhost:3000/admin-tags/get/3
 
 ######
 # Obtener el mayor id
@@ -172,3 +172,12 @@ content-type: application/json
     "instapath": "C:\\Excalinest\\img\\Crumb.png",
     "twitterpath": "C:\\Excalinest\\img\\Crumb.png"
 }
+
+####
+
+GET http://localhost:3000/admin-users/get/mhidalgos0708@gmail.com
+
+
+######
+# Obtener la etiqueta 1
+GET http://localhost:3000/admin-tags/get/3

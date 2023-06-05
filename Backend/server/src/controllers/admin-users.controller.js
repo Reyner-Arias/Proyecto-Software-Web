@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const axios = require('axios');
 const nodeMailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 function isValidImageExtension(imagepath) {
   switch (path.extname(imagepath).toLowerCase()) {
@@ -235,6 +236,21 @@ adminUserController.getUser = async (req, res) => {
       return res.status(404).json('Error: No se ha encontrado el usuario.')
     } else {
       return res.status(200).json(user)
+    }
+  });
+}
+
+adminUserController.login = async (req, res) => {
+  const { email } = req.params;
+
+  User.findOne({ email: email }, async (err, user) => {
+    if (err) {
+      return res.status(500).json(err.message)
+    } else if (!user) {
+      return res.status(404).json('Error: No se ha encontrado el usuario.')
+    } else {
+      const token = jwt.sign({email: user.email, type: user.type}, 'secretkey')
+      return res.status(200).json({token})
     }
   });
 }

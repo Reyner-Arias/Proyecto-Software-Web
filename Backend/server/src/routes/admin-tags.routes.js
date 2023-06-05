@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 const adminTagController = require("../controllers/admin-tags.controller");
+const token = require("../controllers/token");
 
 // Crear una nueva etiqueta
 router.post('/post', adminTagController.postTag);
@@ -10,7 +11,7 @@ router.post('/post', adminTagController.postTag);
 router.get('/get', adminTagController.getTags);
 
 // Obtener una etiqueta específica
-router.get('/get/:id', adminTagController.getTag);
+router.get('/get/:id', token.verifyToken, adminTagController.getTag);
 
 // Actualizar una etiqueta
 router.put('/put/:id', adminTagController.putTag);

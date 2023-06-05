@@ -86,13 +86,13 @@ export class LoginComponent implements OnInit {
     if(this.validateEmailFormat()) {
       this.showSpinner = true;
 
-      this.usersService.getUser(this.loginUserForm.value.email).subscribe({
+      this.usersService.login(this.loginUserForm.value.email).subscribe({
         error: (err: any) =>{
           this.showSpinner = false;
           this.modalMessage = err.error.replace(/['"]+/g, '');
           this.openCloseInfoModal(false);
         },
-        next: (res:User) => {
+        next: (token) => {
           this.validatedForm = true;
           if (this.loginUserForm.dirty && this.loginUserForm.valid) {
             this.onMailUser();

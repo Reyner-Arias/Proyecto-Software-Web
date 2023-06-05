@@ -31,6 +31,10 @@ export class UsersService {
   getUser(email: String) {
     return this.http.get<any>(`${this.apiUrl}/get`+`/${email}`);
   }
+
+  login(email: String) {
+    return this.http.get<any>(`${this.apiUrl}/login`+`/${email}`);
+  }
   
   mail(user: any){
     return this.http.post(`${this.apiUrl}/mail`, user, {responseType: 'text'});

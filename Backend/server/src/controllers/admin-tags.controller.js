@@ -1,7 +1,7 @@
 const adminTagController = {};
 
 const Tag = require('../models/Tag')
-const axios = require('axios');
+const axios = require('axios')
 
 // Crear una nueva etiqueta
 adminTagController.postTag = async (req, res) => {

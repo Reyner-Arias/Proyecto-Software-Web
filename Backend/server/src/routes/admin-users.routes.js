@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 const adminUserController = require("../controllers/admin-users.controller");
+const token = require("../controllers/token");
 
 // Crear un nuevo usuario
 router.post('/post', adminUserController.postUser);
@@ -17,6 +18,9 @@ router.delete('/delete/:email', adminUserController.deleteUser);
 
 // Obtener un usuario
 router.get('/get/:email', adminUserController.getUser);
+
+// Obtener un usuario
+router.get('/login/:email', adminUserController.login);
 
 // Enviar Correo
 router.post('/mail/', adminUserController.mail);
