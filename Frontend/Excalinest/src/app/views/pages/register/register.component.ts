@@ -23,13 +23,13 @@ export class RegisterComponent implements OnInit {
     type: "",
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    twitterpath: '',
+    facebookFile: new File([], ''),
+    instaFile: new File([], ''),
+    twitterFile: new File([], '')
   }
 
   constructor(private usersService: UsersService,
@@ -50,14 +50,35 @@ export class RegisterComponent implements OnInit {
     return this.registerForm;
   }
 
+  onFacebookFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const facebookFile = inputElement.files?.[0];
+    if (facebookFile) {
+      this.newUser.facebookFile = facebookFile;
+    }
+  }
+
+  onInstagramFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const instaFile = inputElement.files?.[0];
+    if (instaFile) {
+      this.newUser.instaFile = instaFile;
+    }
+  }
+
+  onTwitterFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const twitterFile = inputElement.files?.[0];
+    if (twitterFile) {
+      this.newUser.twitterFile = twitterFile;
+    }
+  }
+
   onRegisterUser() {
     this.newUser.username = this.registerForm.value.username;
     this.newUser.email = this.registerForm.value.email;
     this.newUser.name = this.registerForm.value.fullname;
     this.newUser.type = "desarrollador";
-    this.newUser.facepath = this.registerForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
-    this.newUser.instapath = this.registerForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
-    this.newUser.twitterpath = this.registerForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
     
     this.showSpinner = true;
 

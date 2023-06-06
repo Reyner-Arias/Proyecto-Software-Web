@@ -33,7 +33,7 @@ export class VideogamesService {
     videogameFormData.append('instagram', videogame.instaFile);
     videogameFormData.append('twitter', videogame.twitterFile);
 
-    return this.http.post(`${this.adminAPI}/post`, videogameFormData, {headers: this.headers});
+    return this.http.post(`${this.adminAPI}/post`, videogameFormData, {headers: this.headers, responseType: 'text'});
   }
 
   getVideogames(admin: boolean, developer: String) {
@@ -64,7 +64,7 @@ export class VideogamesService {
     videogameFormData.append('instagram', videogame.instaFile);
     videogameFormData.append('twitter', videogame.twitterFile);
 
-    return this.http.put(`${this.adminAPI}/put`, videogameFormData, {headers: this.headers});
+    return this.http.put(`${this.adminAPI}/put`, videogameFormData, {headers: this.headers, responseType: 'text'});
   }
 
   getZipFile(body: any) {
