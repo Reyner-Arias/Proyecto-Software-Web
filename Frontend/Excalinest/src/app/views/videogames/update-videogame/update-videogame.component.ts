@@ -15,9 +15,6 @@ export class UpdateVideogameComponent implements OnInit {
 
   private putVideogameForm: any;
   public validatedForm = false;
-  private excalinestImgPath = "C:\\Excalinest\\img\\";
-  private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
-  private fakePath = "C:\\fakepath\\";
   public listOfTags = [{id: -1, name: ""}];
   public tags = [{id: -1, name: ""}];
 
@@ -27,21 +24,15 @@ export class UpdateVideogameComponent implements OnInit {
     usuario: '',
     sinopsis: '',
     bucketId: '',
-    archivo: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
-    filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
-    imagepath: '',
     tags: [],
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    twitterpath: '',
     zipFile: new File([new Uint8Array([0])], ''),
     coverFile: new File([new Uint8Array([0])], ''),
     facebookFile: new File([new Uint8Array([0])], ''),
@@ -128,17 +119,51 @@ export class UpdateVideogameComponent implements OnInit {
     }
   }
 
+  onZipFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const zipfile = inputElement.files?.[0];
+    if (zipfile) {
+      this.newVideogame.zipFile = zipfile;
+    }
+  }
+
+  onCoverFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const coverFile = inputElement.files?.[0];
+    if (coverFile) {
+      this.newVideogame.coverFile = coverFile;
+    }
+  }
+  
+  onFacebookFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const facebookFile = inputElement.files?.[0];
+    if (facebookFile) {
+      this.newVideogame.facebookFile = facebookFile;
+    }
+  }
+
+  onInstagramFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const instaFile = inputElement.files?.[0];
+    if (instaFile) {
+      this.newVideogame.instaFile = instaFile;
+    }
+  }
+
+  onTwitterFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const twitterFile = inputElement.files?.[0];
+    if (twitterFile) {
+      this.newVideogame.twitterFile = twitterFile;
+    }
+  }
+
   onPutVideogame() {
     this.newVideogame.titulo = this.putVideogameForm.value.title;
     this.newVideogame.sinopsis = this.putVideogameForm.value.sinopsis;
     this.newVideogame.usuario = this.putVideogameForm.value.developer;
     this.newVideogame.tags = this.tags.map(({ id }) => id);
-
-    if(this.putVideogameForm.value.cover != "") { this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath); }
-    if(this.putVideogameForm.value.zip != "") { this.newVideogame.filepath = this.putVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath); }
-    if(this.putVideogameForm.value.facebook != "") { this.newVideogame.facepath = this.putVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath); }
-    if(this.putVideogameForm.value.instagram != "") { this.newVideogame.instapath = this.putVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
-    if(this.putVideogameForm.value.twitter != "") { this.newVideogame.twitterpath = this.putVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
     this.showSpinner = true;
 

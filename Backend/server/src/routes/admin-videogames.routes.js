@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
     }  
   });   
 
-const postVideogameImages = multer({ storage }).fields([
+const processVideogameImages = multer({ storage }).fields([
     { name: 'portada', maxCount: 1 },
     { name: 'archivo', maxCount: 1 },
     { name: 'facebook', maxCount: 1 },
@@ -29,7 +29,7 @@ const postVideogameImages = multer({ storage }).fields([
     { name: 'twitter', maxCount: 1 }
   ]);
 
-router.post("/post", postVideogameImages, adminVideogameController.postVideogame);
+router.post("/post", processVideogameImages, adminVideogameController.postVideogame);
 router.get("/get", adminVideogameController.getVideogames);
 
 // Obtener la cantidad de videojuegos con solo una etiqueta específica
@@ -37,7 +37,7 @@ router.get('/get-only-specific-tag-count/:tagId', adminVideogameController.count
 
 router.delete("/delete", adminVideogameController.deleteVideogame);
 router.post("/get-zip-file", adminVideogameController.getZipFile);
-router.put("/put", adminVideogameController.putVideogame);
+router.put("/put", processVideogameImages, adminVideogameController.putVideogame);
 router.delete("/delete-zip-file/:bucketId", adminVideogameController.deleteZipFile);
 
 module.exports = router;

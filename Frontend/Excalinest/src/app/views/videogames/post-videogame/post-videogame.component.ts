@@ -15,9 +15,6 @@ export class PostVideogameComponent implements OnInit{
 
   private postVideogameForm: any;
   public validatedForm = false;
-  private excalinestImgPath = "C:\\Excalinest\\img\\";
-  private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
-  private fakePath = "C:\\fakepath\\";
   public listOfTags = [{id: -1, name: ""}];
   public tags = [{id: -1, name: ""}];
 
@@ -27,21 +24,15 @@ export class PostVideogameComponent implements OnInit{
     usuario: '',
     sinopsis: '',
     bucketId: '',
-    filepath: '',
-    archivo: {data: {data: new ArrayBuffer(0), type: ''}, tipoArchivo: ''},
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
-    imagepath: '',
     tags: [],
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    twitterpath: '',
     zipFile: new File([new Uint8Array([0])], ''),
     coverFile: new File([new Uint8Array([0])], ''),
     facebookFile: new File([new Uint8Array([0])], ''),
@@ -149,14 +140,7 @@ export class PostVideogameComponent implements OnInit{
     this.newVideogame.titulo = this.postVideogameForm.value.title;
     this.newVideogame.usuario = this.postVideogameForm.value.developer;
     this.newVideogame.sinopsis = this.postVideogameForm.value.sinopsis;
-    this.newVideogame.imagepath = this.postVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.filepath = this.postVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);
-    this.newVideogame.facepath = this.postVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.instapath = this.postVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.twitterpath = this.postVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.tags = this.tags.map(({ id }) => id);
-
-    console.log(this.newVideogame);
 
     this.showSpinner = true;
 
