@@ -28,8 +28,8 @@ export class UsersService {
     return this.http.delete<any>(`${this.apiUrl}/delete`+`/${email}`);
   }
 
-  getUser(email: String) {
-    return this.http.get<any>(`${this.apiUrl}/get`+`/${email}`);
+  getUser() {
+    return this.http.get<any>(`${this.apiUrl}/get`);
   }
 
   login(email: String) {

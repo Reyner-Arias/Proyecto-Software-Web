@@ -34,8 +34,7 @@ export class MyProfileComponent {
   }
 
   ngOnInit() {
-    let email = "sirodriguez@gmail.com";
-    this.usersService.getUser(email).subscribe({
+    this.usersService.getUser().subscribe({
       error: (err: any) =>{
         this.showSpinner = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');

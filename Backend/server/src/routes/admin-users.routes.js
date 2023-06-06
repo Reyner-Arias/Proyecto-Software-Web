@@ -17,7 +17,7 @@ router.put('/put/:_id', adminUserController.putUser);
 router.delete('/delete/:email', adminUserController.deleteUser);
 
 // Obtener un usuario
-router.get('/get/:email', adminUserController.getUser);
+router.get('/get', token.verifyToken, adminUserController.getUser);
 
 // Obtener un usuario
 router.get('/login/:email', adminUserController.login);

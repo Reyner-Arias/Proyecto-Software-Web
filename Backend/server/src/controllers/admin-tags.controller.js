@@ -5,6 +5,10 @@ const axios = require('axios')
 
 // Crear una nueva etiqueta
 adminTagController.postTag = async (req, res) => {
+  if(req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para crear una etiqueta.');
+  }
+
   const { id, name } = req.body
   const newTag = new Tag({ id, name })
 

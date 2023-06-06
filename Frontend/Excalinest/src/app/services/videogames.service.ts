@@ -9,9 +9,7 @@ import { environment } from '../../environments/environment';
 export class VideogamesService {
 
   constructor(private http: HttpClient, private router: Router) { }
-
-  //private adminAPI = 'http://localhost:3000/admin-videogames'
-  //private devAPI = 'http://localhost:3000/dev-videogames'
+  
   private adminAPI = environment.apiUrl + 'admin-videogames'
   private devAPI = environment.apiUrl + 'dev-videogames'
 

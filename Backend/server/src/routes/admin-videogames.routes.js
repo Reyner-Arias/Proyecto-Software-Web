@@ -4,7 +4,7 @@ const router = Router();
 const adminVideogameController = require("../controllers/admin-videogames.controller");
 const token = require("../controllers/token");
 
-router.post("/post", adminVideogameController.postVideogame);
+router.post("/post", token.verifyToken, adminVideogameController.postVideogame);
 router.get("/get", token.verifyToken, adminVideogameController.getVideogames);
 
 // Obtener la cantidad de videojuegos con solo una etiqueta específica

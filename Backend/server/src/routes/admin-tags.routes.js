@@ -5,7 +5,7 @@ const adminTagController = require("../controllers/admin-tags.controller");
 const token = require("../controllers/token");
 
 // Crear una nueva etiqueta
-router.post('/post', adminTagController.postTag);
+router.post('/post', token.verifyToken, adminTagController.postTag);
 
 // Obtener todas las etiquetas
 router.get('/get', adminTagController.getTags);

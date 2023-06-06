@@ -3,7 +3,6 @@ const adminUserController = {};
 const User = require('../models/user')
 const path = require("path");
 const fs = require("fs");
-const axios = require('axios');
 const nodeMailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 
@@ -74,7 +73,6 @@ adminUserController.postUser = async (req, res) => {
     }
   }
 
-  
   newUser.username = req.body.username;
   newUser.email = req.body.email;
   newUser.name = req.body.name;
@@ -84,17 +82,14 @@ adminUserController.postUser = async (req, res) => {
     if (err) {
       if (err.code === 11000) {
         return res.status(422).json('Error: El usuario ya existe, verificar nombre de usuario y correo únicos.');
-      }
-      else{
+      } else{
         return res.status(500).json(err.message)
       }
-      
     } else {
       return res.status(201).json('El usuario se ha creado correctamente.')
     }
   })
 };
-
 
 adminUserController.mail = async (req, res) => {
   const transporter = nodeMailer.createTransport({
@@ -227,9 +222,7 @@ adminUserController.deleteUser = async (req, res) => {
 
 // Obtener un usuario
 adminUserController.getUser = async (req, res) => {
-  const { email } = req.params;
-
-  User.findOne({ email: email }, async (err, user) => {
+  User.findOne({ email: req.login_email }, async (err, user) => {
     if (err) {
       return res.status(500).json(err.message)
     } else if (!user) {

@@ -60,6 +60,10 @@ adminVideogameController.postVideogame = async function (req, res) {
   } else {
     for (const tag of req.body.tags) {
       try{
+        axios.interceptors.request.use(config => {
+          config.headers.Authorization = req.token;
+          return config;
+        });
         const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
       } catch(err) {

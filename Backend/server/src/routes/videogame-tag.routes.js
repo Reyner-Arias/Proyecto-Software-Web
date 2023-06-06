@@ -2,7 +2,6 @@ const { Router } = require("express");
 const router = Router();
 
 const videogameTagController = require("../controllers/videogame-tag.controller");
-const token = require("../controllers/token");
 
 // Crear una nueva relación videojuego-etiqueta
 router.post('/post', videogameTagController.postVideogameTag);
