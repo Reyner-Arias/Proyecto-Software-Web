@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
   onMailUser() {
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const charactersLength = characters.length;
-    for ( let i = 0; i < 6; i++ ) {
+    for ( let i = 0; i < 15; i++ ) {
       this.code += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 
