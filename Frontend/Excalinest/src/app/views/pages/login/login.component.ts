@@ -119,7 +119,7 @@ export class LoginComponent implements OnInit {
     if (input === realCode && realCode != ''){
       localStorage.setItem('token', this.token);
       localStorage.setItem('role', this.role);
-      this.router.navigate(['/videogames/get']);
+      this.router.navigate(['/dashboard']);
     } else {
       this.error = true;
       this.modalMessage = "Error: Código incorrecto";

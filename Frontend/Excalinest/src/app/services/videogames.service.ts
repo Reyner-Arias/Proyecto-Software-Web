@@ -17,8 +17,8 @@ export class VideogamesService {
     return this.http.post(`${this.adminAPI}/post`, videogame, {responseType: 'text'});
   }
 
-  getVideogames(admin: boolean, developer: String) {
-    if(admin) {
+  getVideogames(role: String, developer: String) {
+    if(role == "administrador") {
       return this.http.get<any>(`${this.adminAPI}/get`);
     } else {
       return this.http.get<any>(`${this.devAPI}/get/${developer}`);

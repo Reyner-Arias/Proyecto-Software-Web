@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Videogame } from '../../../models/Videogame.model'
 import { VideogamesService } from '../../../services/videogames.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TagsService } from '../../../services/tags.service';
 

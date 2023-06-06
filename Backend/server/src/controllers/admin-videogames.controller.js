@@ -59,7 +59,7 @@ adminVideogameController.postVideogame = async function (req, res) {
     return res.status(500).json('Error: No se encontraron etiquetas.');
   } else {
     for (const tag of req.body.tags) {
-      try{
+      try {
         axios.interceptors.request.use(config => {
           config.headers.Authorization = req.token;
           return config;
@@ -207,6 +207,10 @@ adminVideogameController.deleteVideogame = async function (req, res) {
       await bucket.delete(file[0]._id);
 
       try {
+        axios.interceptors.request.use(config => {
+          config.headers.Authorization = req.token;
+          return config;
+        });
         await axios.delete("http://localhost:3000/videogame-tag/delete-by-videogame/"+`${req.body._id}`)
       } catch(err) {
         return res.status(500).json(err.message);
@@ -323,7 +327,11 @@ adminVideogameController.putVideogame = async (req, res) => {
     return res.status(500).json('Error: No se encontraron etiquetas.');
   } else if(videogame.tags) {
     for (const tag of videogame.tags) {
-      try{
+      try {
+        axios.interceptors.request.use(config => {
+          config.headers.Authorization = req.token;
+          return config;
+        });
         const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
       } catch(err) {

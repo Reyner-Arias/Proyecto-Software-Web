@@ -16,8 +16,16 @@ export class UsersService {
     return this.http.post(`${this.apiUrl}/post`, user, {responseType: 'text'});
   }
 
+  register(user: any) {
+    return this.http.post(`${this.apiUrl}/register`, user, {responseType: 'text'});
+  }
+
   putUser(id: string, user: any) {
     return this.http.put(`${this.apiUrl}/put`+`/${id}`, user, {responseType: 'text'});
+  }
+
+  putProfile(id: string, user: any) {
+    return this.http.put(`${this.apiUrl}/put/profile`+`/${id}`, user, {responseType: 'text'});
   }
 
   getUsers() {
@@ -50,6 +58,7 @@ export class UsersService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     this.router.navigate(['/login']);
   }
 

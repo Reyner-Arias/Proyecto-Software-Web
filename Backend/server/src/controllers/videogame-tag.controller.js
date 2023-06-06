@@ -8,6 +8,10 @@ videogameTagController.postVideogameTag = async (req, res) => {
   const newVideogameTag = new VideogameTag({ videogame, tag })
 
   try {
+    axios.interceptors.request.use(config => {
+      config.headers.Authorization = req.token;
+      return config;
+    });
     let videogameTagExists = await axios.get("http://localhost:3000/videogame-tag/exists/"+videogame+"/"+tag);
     if(!videogameTagExists.data) {
       newVideogameTag.save((err) => {
@@ -57,6 +61,10 @@ videogameTagController.updateVideogameTag = async (req, res) => {
   let currentTags = [];
 
   try {
+    axios.interceptors.request.use(config => {
+      config.headers.Authorization = req.token;
+      return config;
+    });
     const options = {'method': 'GET','url': 'http://localhost:3000/videogame-tag/get/' +`${_id}`}
     currentTags = await axios(options);
   } catch(err) {

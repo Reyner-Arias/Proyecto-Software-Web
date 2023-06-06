@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
     
     this.showSpinner = true;
 
-    this.usersService.postUser(this.newUser).subscribe({
+    this.usersService.register(this.newUser).subscribe({
       error: (err: any) => {
         this.showSpinner = false;
         this.error = true;

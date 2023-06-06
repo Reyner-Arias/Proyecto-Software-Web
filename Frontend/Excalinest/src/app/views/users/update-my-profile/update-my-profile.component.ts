@@ -68,7 +68,7 @@ export class UpdateMyProfileComponent {
 
     this.showSpinner = true;
 
-    this.usersService.putUser(this._id, this.newUser).subscribe({
+    this.usersService.putProfile(this._id, this.newUser).subscribe({
       error: (err: any) => { 
         this.showSpinner = false;
         this.error = true;

@@ -6,7 +6,7 @@ const axios = require('axios')
 // Crear una nueva etiqueta
 adminTagController.postTag = async (req, res) => {
   if(req.login_type != "administrador") {
-    return res.status(401).json('Error: Usuario no autorizado para crear una etiqueta.');
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 
   const { id, name } = req.body
@@ -29,6 +29,10 @@ adminTagController.postTag = async (req, res) => {
 
 // Obtener todas las etiquetas del sistema
 adminTagController.getTags = async (req, res) => {
+  if(req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   Tag.find({}, (err, tags) => {
     if (err) {
       res.status(500).json(err.message)
@@ -40,6 +44,10 @@ adminTagController.getTags = async (req, res) => {
 
 // Obtener una etiqueta específica
 adminTagController.getTag = async (req, res) => {
+  if(req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   const { id } = req.params
   Tag.findOne({ id }, (err, tag) => {
     if (err) {
@@ -54,6 +62,10 @@ adminTagController.getTag = async (req, res) => {
 
 // Actualizar una etiqueta
 adminTagController.putTag = async (req, res) => {
+  if(req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   const { id } = req.params
   const { name } = req.body
 
@@ -78,14 +90,23 @@ adminTagController.putTag = async (req, res) => {
 
 // Eliminar una etiqueta
 adminTagController.deleteTag = async (req, res) => {
-  const { id } = req.params;
-
-  const options = {
-    'method': 'GET',
-    'url': 'http://localhost:3000/admin-videogames/get-only-specific-tag-count' +`/${id}`
+  if(req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 
-  try{  
+  const { id } = req.params;
+
+  try {
+    axios.interceptors.request.use(config => {
+      config.headers.Authorization = req.token;
+      return config;
+    });
+  
+    const options = {
+      'method': 'GET',
+      'url': 'http://localhost:3000/admin-videogames/get-only-specific-tag-count' +`/${id}`
+    }
+
     // Verificar si hay uno o más videojuegos que solo tengan la etiqueta a eliminar
     const result = await axios(options);
     const count = result.data;
@@ -110,6 +131,10 @@ adminTagController.deleteTag = async (req, res) => {
 };
 
 adminTagController.getMaxId = async (req, res) => {
+  if(req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   Tag.find({}, { _id: 0, id: 1 }, { sort: { id: -1 }, limit: 1 }, (err, result) => {
     if (err) {
       res.status(500).json( err.message )
