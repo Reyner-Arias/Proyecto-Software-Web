@@ -4,6 +4,8 @@ import { GetTagsComponent } from './get-tags/get-tags.component';
 import { PostTagComponent } from './post-tag/post-tag.component';
 import { UpdateTagComponent } from './update-tag/update-tag.component';
 
+import { AuthGuard } from 'src/app/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -26,21 +28,24 @@ const routes: Routes = [
         component: PostTagComponent,
         data: {
           title: 'Crear etiqueta',
-        }
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'update',
         component: UpdateTagComponent,
         data: {
           title: 'Actualizar etiqueta',
-        }
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'get',
         component: GetTagsComponent,
         data: {
           title: 'Etiquetas',
-        }
+        },
+        canActivate: [AuthGuard]
       },
     ]
   },

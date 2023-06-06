@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthGuard } from './auth.guard';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -101,7 +102,8 @@ const APP_CONTAINERS = [
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
     IconSetService,
-    Title
+    Title,
+    AuthGuard
   ],
   bootstrap: [AppComponent],
 })

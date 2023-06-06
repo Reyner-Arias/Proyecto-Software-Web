@@ -39,4 +39,8 @@ export class UsersService {
   mail(user: any){
     return this.http.post(`${this.apiUrl}/mail`, user, {responseType: 'text'});
   }
+
+  loggedIn() {
+    return !!localStorage.getItem('token');
+  }
 }

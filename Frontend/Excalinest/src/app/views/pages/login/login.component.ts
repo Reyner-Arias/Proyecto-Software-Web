@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   private loginUserForm: any;
   private codeUserForm: any;
   public validatedForm = false;
+  private token: any;
 
   private code = '';
 
@@ -92,10 +93,11 @@ export class LoginComponent implements OnInit {
           this.modalMessage = err.error.replace(/['"]+/g, '');
           this.openCloseInfoModal(false);
         },
-        next: (token) => {
+        next: (res) => {
           this.validatedForm = true;
           if (this.loginUserForm.dirty && this.loginUserForm.valid) {
             this.onMailUser();
+            this.token = res.token;
           }
         }
       }); 
@@ -115,6 +117,7 @@ export class LoginComponent implements OnInit {
     if (input === realCode && realCode != ''){
       this.modalMessage = "Código correcto";
       this.openCloseInfoModal(false);
+      localStorage.setItem('token', this.token);
       this.router.navigate(['/videogames/get']);
     } else {
       this.error = true;
