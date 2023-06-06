@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   private codeUserForm: any;
   public validatedForm = false;
   private token: any;
+  private role: any;
 
   private code = '';
 
@@ -98,6 +99,7 @@ export class LoginComponent implements OnInit {
           if (this.loginUserForm.dirty && this.loginUserForm.valid) {
             this.onMailUser();
             this.token = res.token;
+            this.role = res.user.type;
           }
         }
       }); 
@@ -118,6 +120,7 @@ export class LoginComponent implements OnInit {
       this.modalMessage = "Código correcto";
       this.openCloseInfoModal(false);
       localStorage.setItem('token', this.token);
+      localStorage.setItem('role', this.role);
       this.router.navigate(['/videogames/get']);
     } else {
       this.error = true;

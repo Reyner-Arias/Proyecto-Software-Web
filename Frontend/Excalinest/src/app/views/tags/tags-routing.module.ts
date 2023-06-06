@@ -28,6 +28,7 @@ const routes: Routes = [
         component: PostTagComponent,
         data: {
           title: 'Crear etiqueta',
+          usuario: 'administrador'
         },
         canActivate: [AuthGuard]
       },
@@ -36,6 +37,7 @@ const routes: Routes = [
         component: UpdateTagComponent,
         data: {
           title: 'Actualizar etiqueta',
+          usuario: 'administrador'
         },
         canActivate: [AuthGuard]
       },
@@ -44,6 +46,7 @@ const routes: Routes = [
         component: GetTagsComponent,
         data: {
           title: 'Etiquetas',
+          usuario: 'administrador'
         },
         canActivate: [AuthGuard]
       },

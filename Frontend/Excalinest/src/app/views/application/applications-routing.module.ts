@@ -27,6 +27,7 @@ const routes: Routes = [
         component: GetApplicationsComponent,
         data: {
           title: 'Lista de versiones de Excalinest',
+          usuario: 'admin-soporte'
         },
         canActivate: [AuthGuard]
       },
@@ -35,6 +36,7 @@ const routes: Routes = [
         component: PostApplicationComponent,
         data: {
           title: 'Publicar nueva versión de Excalinest',
+          usuario: 'soporte'
         },
         canActivate: [AuthGuard]
       }

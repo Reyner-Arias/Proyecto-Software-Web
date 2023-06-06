@@ -30,6 +30,7 @@ const routes: Routes = [
         component: UpdateVideogameComponent,
         data: {
           title: 'Editar videojuego',
+          usuario: 'desarrollador'
         },
         canActivate: [AuthGuard]
       },
@@ -38,6 +39,7 @@ const routes: Routes = [
         component: GetVideogamesComponent,
         data: {
           title: 'Mis videojuegos',
+          usuario: 'desarrollador'
         },
         canActivate: [AuthGuard]
       },
@@ -45,7 +47,8 @@ const routes: Routes = [
         path: 'post',
         component: PostVideogameComponent,
         data: {
-          title: 'Publicar videojuego'
+          title: 'Publicar videojuego',
+          usuario: 'desarrollador'
         },
         canActivate: [AuthGuard]
       },
@@ -53,7 +56,8 @@ const routes: Routes = [
         path: 'videogame',
         component: VideogameDetailComponent,
         data: {
-          title: 'Detalles del videojuego'
+          title: 'Detalles del videojuego',
+          usuario: 'desarrollador'
         },
         canActivate: [AuthGuard]
       }

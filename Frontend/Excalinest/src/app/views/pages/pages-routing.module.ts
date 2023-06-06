@@ -24,14 +24,14 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     data: {
-      title: 'Login Page'
+      title: 'Login page'
     }
   },
   {
     path: 'register',
     component: RegisterComponent,
     data: {
-      title: 'Register Page'
+      title: 'Register page'
     }
   }
 ];

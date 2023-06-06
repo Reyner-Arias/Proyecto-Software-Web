@@ -3,9 +3,10 @@ import { HashLocationStrategy, LocationStrategy, CommonModule } from '@angular/c
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthGuard } from './auth.guard';
+import { TokenInterceptorService } from './services/token-interceptor.service'
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -103,7 +104,12 @@ const APP_CONTAINERS = [
     },
     IconSetService,
     Title,
-    AuthGuard
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })

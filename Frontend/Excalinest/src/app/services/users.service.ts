@@ -43,4 +43,17 @@ export class UsersService {
   loggedIn() {
     return !!localStorage.getItem('token');
   }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+
+  getCurrentRole() {
+    return localStorage.getItem('role');
+  }
 }

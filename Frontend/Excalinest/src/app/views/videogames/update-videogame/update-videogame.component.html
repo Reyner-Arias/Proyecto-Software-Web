@@ -65,7 +65,7 @@
     </c-row>
     <c-row class="row">
       <c-col [sm]="2" class="columns-tags">
-        <label cLabel for="tags">Tags</label>
+        <label cLabel>Tags</label>
       </c-col>
       <c-col [sm]="10" class="columns-tags">
         <select #selectTags cSelect size="3" sizing="md" (change)="addTag(selectTags.value)" class="tag-picker" *ngIf="validatedForm == false">

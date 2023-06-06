@@ -32,6 +32,7 @@ const routes: Routes = [
         component: UpdateUserComponent,
         data: {
           title: 'Actualizar usuario',
+          usuario: 'administrador'
         },
         canActivate: [AuthGuard]
       },
@@ -39,7 +40,8 @@ const routes: Routes = [
         path: 'post',
         component: PostUserComponent,
         data: {
-          title: 'Registrar usuario'
+          title: 'Registrar usuario',
+          usuario: 'administrador'
         },
         canActivate: [AuthGuard]
       },
@@ -48,6 +50,7 @@ const routes: Routes = [
         component: GetUsersComponent,
         data: {
           title: 'Usuarios',
+          usuario: 'administrador'
         },
         canActivate: [AuthGuard]
       },
@@ -56,6 +59,7 @@ const routes: Routes = [
         component: UserDetailComponent,
         data: {
           title: 'Detalles del usuario',
+          usuario: 'administrador'
         },
         canActivate: [AuthGuard]
       },
@@ -64,6 +68,7 @@ const routes: Routes = [
         component: MyProfileComponent,
         data: {
           title: 'Mi perfil',
+          usuario: 'desarrollador'
         },
         canActivate: [AuthGuard]
       },
@@ -72,6 +77,7 @@ const routes: Routes = [
         component: UpdateMyProfileComponent,
         data: {
           title: 'Actualizar mi perfil',
+          usuario: 'desarrollador'
         },
         canActivate: [AuthGuard]
       },
