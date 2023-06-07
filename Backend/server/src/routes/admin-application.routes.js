@@ -22,11 +22,7 @@ const storage = multer.diskStorage({
   });   
 
 const processAppImages = multer({ storage }).fields([
-    { name: 'portada', maxCount: 1 },
-    { name: 'archivo', maxCount: 1 },
-    { name: 'facebook', maxCount: 1 },
-    { name: 'instagram', maxCount: 1 },
-    { name: 'twitter', maxCount: 1 }
+    { name: 'archivoApp', maxCount: 1 }
   ]);
 
 router.post("/post", processAppImages, adminApplicationController.postApplication);

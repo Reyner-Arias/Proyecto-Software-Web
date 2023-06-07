@@ -58,7 +58,7 @@ adminApplicationController.postApplication = async function (req, res) {
 
     const readStream = fs.createReadStream(appFile.path);
     const uploadStream = bucket.openUploadStream(req.body.title + '.zip', {
-      contentType: appFile.type
+      contentType: req.body.tipoArchivo
     });
     readStream.pipe(uploadStream);
 
