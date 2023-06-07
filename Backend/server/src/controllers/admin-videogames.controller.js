@@ -36,15 +36,6 @@ function isValidImageExtension(imagepath) {
   }
 }
 
-function getImageExtension(imagepath) {
-  switch (path.extname(imagepath)) {
-    case '.png': return 'image/png';
-    case '.jpg': return 'image/jpg';
-    case '.jpeg': return 'image/jpeg';
-    default: return '';
-  }
-}
-
 function clearFilesDirectory(archivosSubidos){
   // Eliminar los archivos después agregarlos a ./files
   if (archivosSubidos) {
