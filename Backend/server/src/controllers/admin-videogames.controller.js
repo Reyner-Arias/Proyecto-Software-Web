@@ -45,6 +45,23 @@ function getImageExtension(imagepath) {
   }
 }
 
+function clearFilesDirectory(archivosSubidos){
+  // Eliminar los archivos después agregarlos a ./files
+  if (archivosSubidos) {
+    for (const campo in archivosSubidos) {
+      if (Array.isArray(archivosSubidos[campo])) {
+        archivosSubidos[campo].forEach((archivo) => {
+          fs.unlink(".\\" + archivo.path, (err) => {
+            if (err) {
+              console.error('Error al eliminar el archivo temporal:', err);
+            }
+          });
+        });
+      }
+    }
+  }
+}
+
 // Crear un nuevo videojuego
 adminVideogameController.postVideogame = async function (req, res, next) {
   const newVideogame = new Videogame();
@@ -120,24 +137,8 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           newVideogame.titulo = req.body.titulo;
           newVideogame.sinopsis = req.body.sinopsis;
           newVideogame.usuario = req.body.usuario;
-
-          // Acceder a los archivos subidos a través de req.files
-          const archivosSubidos = req.files;
         
-          // Eliminar los archivos después agregarlos a ./files
-          if (archivosSubidos) {
-            for (const campo in archivosSubidos) {
-              if (Array.isArray(archivosSubidos[campo])) {
-                archivosSubidos[campo].forEach((archivo) => {
-                  fs.unlink(".\\" + archivo.path, (err) => {
-                    if (err) {
-                      console.error('Error al eliminar el archivo temporal:', err);
-                    }
-                  });
-                });
-              }
-            }
-          }
+          clearFilesDirectory(req.files);
 
           await newVideogame.save(async (err, newVideogame) => {
             if (err) {
@@ -352,23 +353,7 @@ adminVideogameController.putVideogame = async (req, res) => {
     Object.assign(updatedFields, {usuario: videogame.usuario})
   }
 
-  // Acceder a los archivos subidos a través de req.files
-  const archivosSubidos = req.files;
-        
-  // Eliminar los archivos después agregarlos a ./files
-  if (archivosSubidos) {
-    for (const campo in archivosSubidos) {
-      if (Array.isArray(archivosSubidos[campo])) {
-        archivosSubidos[campo].forEach((archivo) => {
-          fs.unlink(".\\" + archivo.path, (err) => {
-            if (err) {
-              console.error('Error al eliminar el archivo temporal:', err);
-            }
-          });
-        });
-      }
-    }
-  }
+  clearFilesDirectory(req.files);
 
   var updatedFieldsSet =  { $set: updatedFields };
 
