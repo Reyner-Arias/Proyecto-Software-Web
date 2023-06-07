@@ -15,7 +15,7 @@
             </c-col>
             <c-col md="6">
                 <label cLabel for="zip">Archivo zip de la aplicación</label>
-                <input cFormControl id="zip" formControlName="zip" accept="application/zip" required type="file" >
+                <input cFormControl id="zip" formControlName="zip" accept="application/zip" required type="file" (change)="onAppFileChange($event)">
                 <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
                 <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
             </c-col>

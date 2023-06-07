@@ -23,13 +23,13 @@ export class PostUserComponent implements OnInit {
     type: "",
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    twitterpath: '',
+    facebookFile: new File([], ''),
+    instaFile: new File([], ''),
+    twitterFile: new File([], '')
   }
 
   ngOnInit() {
@@ -51,14 +51,35 @@ export class PostUserComponent implements OnInit {
     return this.postUserForm;
   }
 
+  onFacebookFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const facebookFile = inputElement.files?.[0];
+    if (facebookFile) {
+      this.newUser.facebookFile = facebookFile;
+    }
+  }
+
+  onInstagramFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const instaFile = inputElement.files?.[0];
+    if (instaFile) {
+      this.newUser.instaFile = instaFile;
+    }
+  }
+
+  onTwitterFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const twitterFile = inputElement.files?.[0];
+    if (twitterFile) {
+      this.newUser.twitterFile = twitterFile;
+    }
+  }
+
   onPostUser() {
     this.newUser.username = this.postUserForm.value.username;
     this.newUser.email = this.postUserForm.value.email;
     this.newUser.name = this.postUserForm.value.name;
     this.newUser.type = this.postUserForm.value.type;
-    this.newUser.facepath = this.postUserForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
-    this.newUser.instapath = this.postUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
-    this.newUser.twitterpath = this.postUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
     
     this.showSpinner = true;
 

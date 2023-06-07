@@ -15,9 +15,6 @@ export class PostVideogameComponent implements OnInit{
 
   private postVideogameForm: any;
   public validatedForm = false;
-  private excalinestImgPath = "C:\\Excalinest\\img\\";
-  private excalinestBuildsPath = "C:\\Excalinest\\builds\\";
-  private fakePath = "C:\\fakepath\\";
   public listOfTags = [{id: -1, name: ""}];
   public tags = [{id: -1, name: ""}];
 
@@ -27,20 +24,20 @@ export class PostVideogameComponent implements OnInit{
     usuario: '',
     sinopsis: '',
     bucketId: '',
-    filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
-    imagepath: '',
     tags: [],
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    twitterpath: '',
+    zipFile: new File([], ''),
+    coverFile: new File([], ''),
+    facebookFile: new File([], ''),
+    instaFile: new File([], ''),
+    twitterFile: new File([], '')
   }
 
   constructor(private videogamesService: VideogamesService,
@@ -99,15 +96,50 @@ export class PostVideogameComponent implements OnInit{
     audio.play();
   }
 
+  onZipFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const zipfile = inputElement.files?.[0];
+    if (zipfile) {
+      this.newVideogame.zipFile = zipfile;
+    }
+  }
+
+  onCoverFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const coverFile = inputElement.files?.[0];
+    if (coverFile) {
+      this.newVideogame.coverFile = coverFile;
+    }
+  }
+  
+  onFacebookFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const facebookFile = inputElement.files?.[0];
+    if (facebookFile) {
+      this.newVideogame.facebookFile = facebookFile;
+    }
+  }
+
+  onInstagramFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const instaFile = inputElement.files?.[0];
+    if (instaFile) {
+      this.newVideogame.instaFile = instaFile;
+    }
+  }
+
+  onTwitterFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const twitterFile = inputElement.files?.[0];
+    if (twitterFile) {
+      this.newVideogame.twitterFile = twitterFile;
+    }
+  }
+
   onPostVideogame() {
     this.newVideogame.titulo = this.postVideogameForm.value.title;
     this.newVideogame.usuario = this.postVideogameForm.value.developer;
     this.newVideogame.sinopsis = this.postVideogameForm.value.sinopsis;
-    this.newVideogame.imagepath = this.postVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.filepath = this.postVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);
-    this.newVideogame.facepath = this.postVideogameForm.value.facebook.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.instapath = this.postVideogameForm.value.instagram.replace(this.fakePath, this.excalinestImgPath);
-    this.newVideogame.twitterpath = this.postVideogameForm.value.twitter.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.tags = this.tags.map(({ id }) => id);
 
     this.showSpinner = true;

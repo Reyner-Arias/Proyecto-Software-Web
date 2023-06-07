@@ -27,20 +27,20 @@ export class VideogameDetailComponent implements OnInit {
     usuario: '',
     sinopsis: '',
     bucketId: '',
-    filepath: '',
     portada: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagen: '',
-    imagepath: '',
     tags: [],
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    twitterpath: '',
+    zipFile: new File([], ''),
+    coverFile: new File([], ''),
+    facebookFile: new File([], ''),
+    instaFile: new File([], ''),
+    twitterFile: new File([], '')
   }
 
   getTagInfo(listOfTags: any) {

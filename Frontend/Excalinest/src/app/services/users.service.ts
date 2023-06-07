@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
@@ -12,12 +12,36 @@ export class UsersService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  private headers = new HttpHeaders({
+    'enctype': 'multipart/form-data'
+  });
+
   postUser(user: any) {
-    return this.http.post(`${this.apiUrl}/post`, user, {responseType: 'text'});
+    //Pasar los datos del usuario a un Form Data
+    const userFormData = new FormData();
+    userFormData.append('username', user.username);
+    userFormData.append('email', user.email);
+    userFormData.append('name', user.name);
+    userFormData.append('type', user.type);
+    userFormData.append('facebook', user.facebookFile);
+    userFormData.append('instagram', user.instaFile);
+    userFormData.append('twitter', user.twitterFile);
+
+    return this.http.post(`${this.apiUrl}/post`, userFormData, {headers: this.headers, responseType: 'text'});
   }
 
   putUser(id: string, user: any) {
-    return this.http.put(`${this.apiUrl}/put`+`/${id}`, user, {responseType: 'text'});
+    //Pasar los datos del usuario a un Form Data
+    const userFormData = new FormData();
+    userFormData.append('username', user.username);
+    userFormData.append('email', user.email);
+    userFormData.append('name', user.name);
+    userFormData.append('type', user.type);
+    userFormData.append('facebook', user.facebookFile);
+    userFormData.append('instagram', user.instaFile);
+    userFormData.append('twitter', user.twitterFile);
+
+    return this.http.put(`${this.apiUrl}/put`+`/${id}`, userFormData, {headers: this.headers, responseType: 'text'});
   }
 
   getUsers() {

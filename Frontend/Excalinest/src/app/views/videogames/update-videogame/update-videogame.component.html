@@ -16,7 +16,7 @@
       </c-col>
       <c-col md="4">
         <label cLabel for="cover">Portada</label>
-        <input cFormControl id="cover" formControlName="cover" type="file" >
+        <input cFormControl id="cover" formControlName="cover" accept="image/png, image/jpeg" type="file" (change)="onCoverFileChange($event)">
         <c-form-feedback [valid]="true">Portada válida</c-form-feedback>
         <c-form-feedback [valid]="false">Ingrese la portada</c-form-feedback>
       </c-col>
@@ -38,7 +38,7 @@
     <c-row class="row">
       <c-col md="12">
         <label cLabel for="zip">Archivo</label>
-        <input cFormControl id="zip" formControlName="zip" type="file" value="" >
+        <input cFormControl id="zip" formControlName="zip" type="file" value="" accept="application/zip" (change)="onZipFileChange($event)">
         <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
         <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
       </c-col>
@@ -46,19 +46,19 @@
     <c-row class="row">
       <c-col md="4">
         <label cLabel for="facebook">Facebook</label>
-        <input cFormControl id="facebook" formControlName="facebook" type="file" >
+        <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" type="file" (change)="onFacebookFileChange($event)">
         <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
         <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
       </c-col>
       <c-col md="4">
         <label cLabel for="instagram">Instagram</label>
-        <input cFormControl id="instagram" formControlName="instagram" type="file" >
+        <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" type="file" (change)="onInstagramFileChange($event)">
         <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
         <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
       </c-col>
       <c-col md="4">
         <label cLabel for="twitter">Twitter</label>
-        <input cFormControl id="twitter" formControlName="twitter" type="file" >
+        <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" type="file" (change)="onTwitterFileChange($event)">
         <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
         <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
       </c-col>

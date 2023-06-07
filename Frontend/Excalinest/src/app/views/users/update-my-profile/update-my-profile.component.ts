@@ -23,13 +23,13 @@ export class UpdateMyProfileComponent {
     type:"",
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    twitterpath: '',
+    facebookFile: new File([], ''),
+    instaFile: new File([], ''),
+    twitterFile: new File([], '')
   }
 
   ngOnInit() {
@@ -57,14 +57,35 @@ export class UpdateMyProfileComponent {
     return this.putUserForm;
   }
 
+  onFacebookFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const facebookFile = inputElement.files?.[0];
+    if (facebookFile) {
+      this.newUser.facebookFile = facebookFile;
+    }
+  }
+
+  onInstagramFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const instaFile = inputElement.files?.[0];
+    if (instaFile) {
+      this.newUser.instaFile = instaFile;
+    }
+  }
+
+  onTwitterFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const twitterFile = inputElement.files?.[0];
+    if (twitterFile) {
+      this.newUser.twitterFile = twitterFile;
+    }
+  }
+
   onPutUser() {
     if(this.putUserForm.value.username != "") { this.newUser.username = this.putUserForm.value.username; }
     if(this.putUserForm.value.email != "") { this.newUser.email = this.putUserForm.value.email; }
     if(this.putUserForm.value.name != "") { this.newUser.name = this.putUserForm.value.name; }
     if(this.putUserForm.value.type != "") {this.newUser.type = '';}
-    if(this.putUserForm.value.facebook != "") { this.newUser.facepath = this.putUserForm.value.facebook.replace(this.fakePath, this.excalinestImgPath); }
-    if(this.putUserForm.value.instagram != "") { this.newUser.instapath = this.putUserForm.value.instagram.replace(this.fakePath, this.excalinestImgPath); }
-    if(this.putUserForm.value.twitter != "") { this.newUser.twitterpath = this.putUserForm.value.twitter.replace(this.fakePath, this.excalinestImgPath); }
 
     this.showSpinner = true;
 

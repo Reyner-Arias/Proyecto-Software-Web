@@ -24,13 +24,13 @@ export class MyProfileComponent {
     type:"",
     facebook: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenFacebook: '',
-    facepath: '',
     instagram: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenInstagram: '',
-    instapath: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    twitterpath: '',
+    facebookFile: new File([], ''),
+    instaFile: new File([], ''),
+    twitterFile: new File([], '')
   }
 
   ngOnInit() {

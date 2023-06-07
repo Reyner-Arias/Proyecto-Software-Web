@@ -32,19 +32,19 @@
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText><svg cIcon name="cibFacebook"></svg></span>
-                  <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" required type="file">
+                  <input cFormControl id="facebook" formControlName="facebook" accept="image/png, image/jpeg" required type="file" (change)="onFacebookFileChange($event)">
                   <c-form-feedback [valid]="true">Código QR de facebook válido</c-form-feedback>
                   <c-form-feedback [valid]="false">Ingrese el código QR de facebook</c-form-feedback>
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText><svg cIcon name="cibInstagram"></svg></span>
-                  <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" required type="file">
+                  <input cFormControl id="instagram" formControlName="instagram" accept="image/png, image/jpeg" required type="file" (change)="onInstagramFileChange($event)">
                   <c-form-feedback [valid]="true">Código QR de instagram válido</c-form-feedback>
                   <c-form-feedback [valid]="false">Ingrese el código QR de instagram</c-form-feedback>
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText><svg cIcon name="cibTwitter"></svg></span>
-                  <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" required type="file">
+                  <input cFormControl id="twitter" formControlName="twitter" accept="image/png, image/jpeg" required type="file" (change)="onTwitterFileChange($event)">
                   <c-form-feedback [valid]="true">Código QR de twitter válido</c-form-feedback>
                   <c-form-feedback [valid]="false">Ingrese el código QR de twitter</c-form-feedback>
                 </c-input-group>

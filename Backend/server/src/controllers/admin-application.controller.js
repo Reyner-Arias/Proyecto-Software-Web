@@ -26,24 +26,37 @@ process.on('SIGINT', () => {
   })
 });
 
+function clearFilesDirectory(archivosSubidos){
+  // Eliminar los archivos después agregarlos a ./files
+  if (archivosSubidos) {
+    for (const campo in archivosSubidos) {
+      if (Array.isArray(archivosSubidos[campo])) {
+        archivosSubidos[campo].forEach((archivo) => {
+          fs.unlink(".\\" + archivo.path, (err) => {
+            if (err) {
+              console.error('Error al eliminar el archivo temporal:', err);
+            }
+          });
+        });
+      }
+    }
+  }
+}
+
 // Publicar una nueva versión de la aplicación de escritorio
 adminApplicationController.postApplication = async function (req, res) {
   const newApplication = new Application();
 
-  if(!req.body.title || !req.body.filepath || !req.body.description) {
+  const appFile = req.files['archivoApp'][0];
+
+  if(!req.body.title || !appFile || !req.body.description) {
     return res.status(500).json('Error: No se encontraron todos los datos de la aplicación.');
   }
 
-  if (path.extname(req.body.filepath) == ".zip") {
+  if (path.extname(appFile.path) == ".zip") {
     delete req.body._id;
 
-    if(req.body.filepath) {
-      if(!fs.existsSync(req.body.filepath)){
-        return res.status(500).json('Error: No se encontró el archivo zip.');
-      }
-    }
-
-    const readStream = fs.createReadStream(req.body.filepath);
+    const readStream = fs.createReadStream(appFile.path);
     const uploadStream = bucket.openUploadStream(req.body.title + '.zip', {
       contentType: req.body.tipoArchivo
     });
@@ -58,6 +71,8 @@ adminApplicationController.postApplication = async function (req, res) {
         newApplication.bucketId = uploadStream.id;
         newApplication.title = req.body.title;
         newApplication.description = req.body.description;
+
+        clearFilesDirectory(req.files);
 
         await newApplication.save(async (err, newApplication) => {
           if (err) {

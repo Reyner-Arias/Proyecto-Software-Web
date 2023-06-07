@@ -42,19 +42,19 @@
         <c-row class="row">
             <c-col md="4">
                 <label cLabel for="facebook">Facebook</label>
-                <input cFormControl id="facebook" formControlName="facebook" type="file" >
+                <input cFormControl id="facebook" formControlName="facebook" type="file" accept="image/png, image/jpeg" (change)="onFacebookFileChange($event)">
                 <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
                 <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
             </c-col>
             <c-col md="4">
                 <label cLabel for="instagram">Instagram</label>
-                <input cFormControl id="instagram" formControlName="instagram" type="file" >
+                <input cFormControl id="instagram" formControlName="instagram" type="file" accept="image/png, image/jpeg" (change)="onInstagramFileChange($event)">
                 <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
                 <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
             </c-col>
             <c-col md="4">
                 <label cLabel for="twitter">Twitter</label>
-                <input cFormControl id="twitter" formControlName="twitter" type="file" >
+                <input cFormControl id="twitter" formControlName="twitter" type="file" accept="image/png, image/jpeg" (change)="onTwitterFileChange($event)">
                 <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>
                 <c-form-feedback [valid]="false">Ingrese el archivo</c-form-feedback>
             </c-col>
