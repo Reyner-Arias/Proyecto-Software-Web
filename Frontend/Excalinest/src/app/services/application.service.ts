@@ -12,8 +12,18 @@ export class ApplicationService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  private headers = new HttpHeaders({
+    'enctype': 'multipart/form-data'
+  });
+  
   postApplication(application: any) {
-    return this.http.post<any>(`${this.apiUrl}/post`, application);
+    //Pasar los datos de la aplicación a un Form Data
+    const applicationFormData = new FormData();
+    applicationFormData.append('title', application.title);
+    applicationFormData.append('description', application.description);
+    applicationFormData.append('archivoApp', application.appFile);
+
+    return this.http.post<any>(`${this.apiUrl}/post`, applicationFormData, {headers: this.headers});
   }
 
   deleteApplication(body: any) {

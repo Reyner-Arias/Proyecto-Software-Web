@@ -14,15 +14,6 @@ function isValidImageExtension(imagepath) {
   }
 }
 
-function getImageExtension(imagepath) {
-  switch (path.extname(imagepath)) {
-    case '.png': return 'image/png';
-    case '.jpg': return 'image/jpg';
-    case '.jpeg': return 'image/jpeg';
-    default: return '';
-  }
-}
-
 function isValidTypeOfUser(type) {
   return type == "desarrollador" || 
   type == "administrador" ||

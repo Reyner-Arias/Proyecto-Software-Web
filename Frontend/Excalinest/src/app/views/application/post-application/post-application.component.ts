@@ -14,14 +14,11 @@ export class PostApplicationComponent implements OnInit {
   private postApplicationForm: FormGroup = new FormGroup({});
   public validatedForm = false;
 
-  private excalinestAppPath = "C:\\Excalinest\\app\\";
-  private fakePath = "C:\\fakepath\\";
-
   newApplication: Application = {
     title: '',
     description: '',
-    filepath: '',
-    bucketId: ''
+    bucketId: '',
+    appFile: new File([], '')
   }
 
   constructor(private applicationService: ApplicationService, 
@@ -39,10 +36,17 @@ export class PostApplicationComponent implements OnInit {
     });
   }
 
+  onAppFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const appfile = inputElement.files?.[0];
+    if (appfile) {
+      this.newApplication.appFile = appfile;
+    }
+  }
+
   onPostApplication() {
     this.newApplication.title = this.postApplicationForm.value.title;
     this.newApplication.description = this.postApplicationForm.value.description;
-    this.newApplication.filepath = this.postApplicationForm.value.zip.replace(this.fakePath, this.excalinestAppPath);
 
     this.showSpinner = true;
 

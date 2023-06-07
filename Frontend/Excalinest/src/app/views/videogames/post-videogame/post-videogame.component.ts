@@ -33,11 +33,11 @@ export class PostVideogameComponent implements OnInit{
     imagenInstagram: '',
     twitter: {data: {data: new ArrayBuffer(0), type: ''}, tipoImagen: ''},
     imagenTwitter: '',
-    zipFile: new File([new Uint8Array([0])], ''),
-    coverFile: new File([new Uint8Array([0])], ''),
-    facebookFile: new File([new Uint8Array([0])], ''),
-    instaFile: new File([new Uint8Array([0])], ''),
-    twitterFile: new File([new Uint8Array([0])], '')
+    zipFile: new File([], ''),
+    coverFile: new File([], ''),
+    facebookFile: new File([], ''),
+    instaFile: new File([], ''),
+    twitterFile: new File([], '')
   }
 
   constructor(private videogamesService: VideogamesService,
