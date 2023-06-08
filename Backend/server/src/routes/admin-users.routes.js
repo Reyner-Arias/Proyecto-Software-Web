@@ -21,6 +21,7 @@ const processUserImages = multer({ storage }).fields([
     { name: 'twitter', maxCount: 1 }
   ]);
 
+router.post('/mail', adminUserController.mail);
 router.post('/post', token.verifyToken, adminUserController.postUser);
 router.post('/register', adminUserController.register);
 router.get('/get-all', token.verifyToken, adminUserController.getAllUsers);
