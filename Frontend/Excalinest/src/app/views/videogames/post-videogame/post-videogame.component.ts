@@ -53,7 +53,6 @@ export class PostVideogameComponent implements OnInit{
   ngOnInit(){
     this.postVideogameForm = this.formBuilder.group({
       title: ['', Validators.required],
-      developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
@@ -100,7 +99,6 @@ export class PostVideogameComponent implements OnInit{
 
   onPostVideogame() {
     this.newVideogame.titulo = this.postVideogameForm.value.title;
-    this.newVideogame.usuario = this.postVideogameForm.value.developer;
     this.newVideogame.sinopsis = this.postVideogameForm.value.sinopsis;
     this.newVideogame.imagepath = this.postVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath);
     this.newVideogame.filepath = this.postVideogameForm.value.zip.replace(this.fakePath, this.excalinestBuildsPath);
@@ -169,7 +167,6 @@ export class PostVideogameComponent implements OnInit{
     this.validatedForm = false;
     this.postVideogameForm = this.formBuilder.group({
       title: ['', Validators.required],
-      developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
@@ -183,7 +180,6 @@ export class PostVideogameComponent implements OnInit{
     this.validatedForm = false;
     this.postVideogameForm = this.formBuilder.group({
       title: [this.newVideogame.titulo, Validators.required],
-      developer: [this.newVideogame.usuario, Validators.required],
       sinopsis: [this.newVideogame.sinopsis, Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],

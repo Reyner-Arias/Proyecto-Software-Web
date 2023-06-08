@@ -78,12 +78,10 @@ export class UpdateVideogameComponent implements OnInit {
     this.newVideogame._id = history.state._id;
     this.newVideogame.titulo = history.state.titulo;
     this.newVideogame.sinopsis = history.state.sinopsis;
-    this.newVideogame.usuario = history.state.usuario;
     this.newVideogame.bucketId = history.state.bucketId;
 
     this.putVideogameForm = this.formBuilder.group({
       title: [this.newVideogame.titulo, Validators.required],
-      developer: [this.newVideogame.usuario, Validators.required],
       sinopsis: [this.newVideogame.sinopsis, Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
@@ -125,7 +123,6 @@ export class UpdateVideogameComponent implements OnInit {
   onPutVideogame() {
     this.newVideogame.titulo = this.putVideogameForm.value.title;
     this.newVideogame.sinopsis = this.putVideogameForm.value.sinopsis;
-    this.newVideogame.usuario = this.putVideogameForm.value.developer;
     this.newVideogame.tags = this.tags.map(({ id }) => id);
 
     if(this.putVideogameForm.value.cover != "") { this.newVideogame.imagepath = this.putVideogameForm.value.cover.replace(this.fakePath, this.excalinestImgPath); }
@@ -199,7 +196,6 @@ export class UpdateVideogameComponent implements OnInit {
     this.validatedForm = false;
     this.putVideogameForm = this.formBuilder.group({
       title: ['', Validators.required],
-      developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
@@ -213,7 +209,6 @@ export class UpdateVideogameComponent implements OnInit {
     this.validatedForm = false;
     this.putVideogameForm = this.formBuilder.group({
       title: [this.newVideogame.titulo, Validators.required],
-      developer: [this.newVideogame.usuario, Validators.required],
       sinopsis: [this.newVideogame.sinopsis, Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],

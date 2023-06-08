@@ -47,15 +47,14 @@ function getImageExtension(imagepath) {
 
 // Crear un nuevo videojuego
 adminVideogameController.postVideogame = async function (req, res) {
-  if(req.login_type != "desarrollador") {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
     return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 
   const newVideogame = new Videogame();
 
-  if(!req.body.titulo || !req.body.sinopsis || !req.body.usuario || !req.body.imagepath ||
-     !req.body.facepath || !req.body.instapath || !req.body.twitterpath || !req.body.filepath ||
-     !req.body.tags) {
+  if(!req.body.titulo || !req.body.sinopsis || !req.body.imagepath || !req.body.facepath ||
+     !req.body.instapath || !req.body.twitterpath || !req.body.filepath || !req.body.tags) {
     return res.status(500).json('Error: No se encontraron todos los datos del videojuego.');
   }
 
@@ -143,7 +142,7 @@ adminVideogameController.postVideogame = async function (req, res) {
           newVideogame.bucketId = uploadStream.id;
           newVideogame.titulo = req.body.titulo;
           newVideogame.sinopsis = req.body.sinopsis;
-          newVideogame.usuario = req.body.usuario;
+          newVideogame.usuario = req.login_username;
 
           await newVideogame.save(async (err, newVideogame) => {
             if (err) {
@@ -175,7 +174,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 
 // Obtener todos los videojuegos
 adminVideogameController.getVideogames = async function (req, res) {
-  if(req.login_type != "desarrollador") {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
     return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 
@@ -202,7 +201,7 @@ adminVideogameController.countVideogamesWithOnlySpecificTag = async function (re
 
 // Eliminar un videojuego
 adminVideogameController.deleteVideogame = async function (req, res) {
-  if(req.login_type != "desarrollador") {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
     return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 
@@ -235,7 +234,7 @@ adminVideogameController.deleteVideogame = async function (req, res) {
 
 // Actualizar un videojuego
 adminVideogameController.putVideogame = async (req, res) => {
-  if(req.login_type != "desarrollador") {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
     return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 
@@ -368,10 +367,6 @@ adminVideogameController.putVideogame = async (req, res) => {
     Object.assign(updatedFields, {sinopsis: videogame.sinopsis})
   }
 
-  if(videogame.usuario) {
-    Object.assign(updatedFields, {usuario: videogame.usuario})
-  }
-
   var updatedFieldsSet =  { $set: updatedFields };
 
   Videogame.findOneAndUpdate({ _id: videogame._id }, updatedFieldsSet, async (err, videogame) => {
@@ -396,10 +391,6 @@ adminVideogameController.putVideogame = async (req, res) => {
 
 // Descargar un videojuego archivo zip
 adminVideogameController.getZipFile = async function (req,res) {
-  if(req.login_type != "desarrollador") {
-    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
-  }
-
   const writeStream = fs.createWriteStream(req.body.destPath + req.body.filename);
   const downloadStream = bucket.openDownloadStreamByName(req.body.filename)
     .on('error', function (error) {
@@ -421,7 +412,7 @@ adminVideogameController.getZipFile = async function (req,res) {
 
 // Eliminar un videojuego archivo zip
 adminVideogameController.deleteZipFile = async function (req,res) {
-  if(req.login_type != "desarrollador") {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
     return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 

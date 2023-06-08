@@ -22,21 +22,13 @@
       </c-col>
     </c-row>
     <c-row class="row">
-      <c-col md="4">
-        <label cLabel for="developer">Desarrollador</label>
-        <input cFormControl id="developer" formControlName="developer" required type="text" />
-        <c-form-feedback [valid]="true">Desarrollador válido</c-form-feedback>
-        <c-form-feedback [valid]="false">Ingrese el nombre del desarrollador</c-form-feedback>
-      </c-col>
       <c-col md="8">
         <label cLabel for="sinopsis">Sinopsis</label>
         <textarea cFormControl id="sinopsis" formControlName="sinopsis" required type="text" ></textarea>
         <c-form-feedback [valid]="true">Sinopsis válida</c-form-feedback>
         <c-form-feedback [valid]="false">Ingrese la sinopsis</c-form-feedback>
       </c-col>
-    </c-row>
-    <c-row class="row">
-      <c-col md="12">
+      <c-col md="4">
         <label cLabel for="zip">Archivo</label>
         <input cFormControl id="zip" formControlName="zip" type="file" value="" >
         <c-form-feedback [valid]="true">Archivo válido</c-form-feedback>

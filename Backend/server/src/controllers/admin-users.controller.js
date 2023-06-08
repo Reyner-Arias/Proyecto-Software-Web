@@ -400,7 +400,7 @@ adminUserController.login = async (req, res) => {
     } else if (!user) {
       return res.status(404).json('Error: No se ha encontrado el usuario.')
     } else {
-      const token = jwt.sign({email: user.email, type: user.type}, 'secretkey')
+      const token = jwt.sign({email: user.email, type: user.type, username: user.username}, 'secretkey')
       return res.status(200).json({user: user, token: token})
     }
   });
