@@ -21,20 +21,22 @@ export class AuthGuard {
     if(this.authService.loggedIn()) {
       switch(this.authService.getCurrentRole()) {
         case "desarrollador":
-          if(route.data['usuario'] == 'desarrollador') {
+          if(route.data['usuario'] == 'general' ||
+            route.data['usuario'] == 'desarrollador') {
             return true;
           }
           break;
         case "administrador":
-          if(route.data['usuario'] == 'administrador' ||
+          if(route.data['usuario'] == 'general' ||
+            route.data['usuario'] == 'administrador' ||
             route.data['usuario'] == 'desarrollador' ||
             route.data['usuario'] == 'admin-soporte') {
             return true;
           }
           break;
         case "soporte":
-          if(route.data['usuario'] == 'soporte' ||
-            route.data['usuario'] == 'desarrollador' ||
+          if(route.data['usuario'] == 'general' ||
+            route.data['usuario'] == 'soporte' ||
             route.data['usuario'] == 'admin-soporte') {
             return true;
           }
@@ -42,7 +44,7 @@ export class AuthGuard {
         default:
           break;
       }
-      this.router.navigate(['/videogames/get']);
+      this.router.navigate(['/home']);
       return false;
     } else {
       this.router.navigate(['/login']);

@@ -47,6 +47,10 @@ function getImageExtension(imagepath) {
 
 // Crear un nuevo videojuego
 adminVideogameController.postVideogame = async function (req, res) {
+  if(req.login_type != "desarrollador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   const newVideogame = new Videogame();
 
   if(!req.body.titulo || !req.body.sinopsis || !req.body.usuario || !req.body.imagepath ||
@@ -171,6 +175,10 @@ adminVideogameController.postVideogame = async function (req, res) {
 
 // Obtener todos los videojuegos
 adminVideogameController.getVideogames = async function (req, res) {
+  if(req.login_type != "desarrollador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   Videogame.find({}, (err, videogames) => {
     if (err) {
       res.status(500).json(err.message)
@@ -194,6 +202,10 @@ adminVideogameController.countVideogamesWithOnlySpecificTag = async function (re
 
 // Eliminar un videojuego
 adminVideogameController.deleteVideogame = async function (req, res) {
+  if(req.login_type != "desarrollador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   Videogame.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, async (err, videogame) => {
     if (err) {
       return res.status(500).json(err.message)
@@ -223,6 +235,10 @@ adminVideogameController.deleteVideogame = async function (req, res) {
 
 // Actualizar un videojuego
 adminVideogameController.putVideogame = async (req, res) => {
+  if(req.login_type != "desarrollador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   var updatedFields = {};
   var videogame = req.body;
 
@@ -380,6 +396,10 @@ adminVideogameController.putVideogame = async (req, res) => {
 
 // Descargar un videojuego archivo zip
 adminVideogameController.getZipFile = async function (req,res) {
+  if(req.login_type != "desarrollador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   const writeStream = fs.createWriteStream(req.body.destPath + req.body.filename);
   const downloadStream = bucket.openDownloadStreamByName(req.body.filename)
     .on('error', function (error) {
@@ -401,6 +421,10 @@ adminVideogameController.getZipFile = async function (req,res) {
 
 // Eliminar un videojuego archivo zip
 adminVideogameController.deleteZipFile = async function (req,res) {
+  if(req.login_type != "desarrollador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   var bucketId = req.params.bucketId;
 
   const file = await bucket.find({ _id: new mongodb.ObjectId(bucketId) }).toArray();

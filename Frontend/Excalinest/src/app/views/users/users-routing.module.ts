@@ -68,7 +68,7 @@ const routes: Routes = [
         component: MyProfileComponent,
         data: {
           title: 'Mi perfil',
-          usuario: 'desarrollador'
+          usuario: 'general'
         },
         canActivate: [AuthGuard]
       },
@@ -77,7 +77,7 @@ const routes: Routes = [
         component: UpdateMyProfileComponent,
         data: {
           title: 'Actualizar mi perfil',
-          usuario: 'desarrollador'
+          usuario: 'general'
         },
         canActivate: [AuthGuard]
       },
