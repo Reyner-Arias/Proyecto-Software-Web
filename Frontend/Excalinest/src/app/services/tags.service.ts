@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
 })
 export class TagsService {
 
-  //private apiUrl = 'http://localhost:3000/admin-tags';
   private apiUrl = environment.apiUrl + 'admin-tags';
 
   constructor(private http: HttpClient, private router: Router) { }

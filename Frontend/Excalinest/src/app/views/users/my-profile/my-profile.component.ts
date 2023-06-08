@@ -34,8 +34,7 @@ export class MyProfileComponent {
   }
 
   ngOnInit() {
-    let email = "sirodriguez@gmail.com";
-    this.usersService.getUser(email).subscribe({
+    this.usersService.getUser().subscribe({
       error: (err: any) =>{
         this.showSpinner = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
@@ -65,7 +64,7 @@ export class MyProfileComponent {
         this.user.imagenTwitter = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
           this.user.twitter.tipoImagen +";base64, " + twitterBase64);
 
-        this.videogamesService.getVideogames(false, this.user.username).subscribe({
+        this.videogamesService.getVideogames("", this.user.username).subscribe({
           error: (err: any) =>{
             this.error = true;
             this.modalMessage = err.error.replace(/['"]+/g, '');

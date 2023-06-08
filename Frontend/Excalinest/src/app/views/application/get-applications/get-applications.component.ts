@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Application } from '../../../models/application.model'
 import { ApplicationService } from '../../../services/application.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-get-applications',

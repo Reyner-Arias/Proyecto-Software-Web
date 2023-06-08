@@ -54,7 +54,11 @@ function clearFilesDirectory(archivosSubidos){
 }
 
 // Crear un nuevo videojuego
-adminVideogameController.postVideogame = async function (req, res, next) {
+adminVideogameController.postVideogame = async function (req, res) {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   const newVideogame = new Videogame();
 
   const coverFile = req.files['portada'][0];
@@ -63,9 +67,8 @@ adminVideogameController.postVideogame = async function (req, res, next) {
   const instaFile = req.files['instagram'][0];
   const twitterFile = req.files['twitter'][0];
 
-  if(!req.body.titulo || !req.body.sinopsis || !req.body.usuario ||
-     !req.body.tags || !coverFile || !zipFile || !facebookFile ||
-     !instaFile || !twitterFile) {
+  if(!req.body.titulo || !req.body.sinopsis || !req.body.tags ||
+     !coverFile || !zipFile || !facebookFile || !instaFile || !twitterFile) {
     return res.status(500).json('Error: No se encontraron todos los datos del videojuego.');
   }
 
@@ -73,7 +76,11 @@ adminVideogameController.postVideogame = async function (req, res, next) {
     return res.status(500).json('Error: No se encontraron etiquetas.');
   } else {
     for (const tag of req.body.tags) {
-      try{
+      try {
+        axios.interceptors.request.use(config => {
+          config.headers.Authorization = req.token;
+          return config;
+        });
         const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
       } catch(err) {
@@ -127,7 +134,7 @@ adminVideogameController.postVideogame = async function (req, res, next) {
           newVideogame.bucketId = uploadStream.id;
           newVideogame.titulo = req.body.titulo;
           newVideogame.sinopsis = req.body.sinopsis;
-          newVideogame.usuario = req.body.usuario;
+          newVideogame.usuario = req.login_username;
         
           clearFilesDirectory(req.files);
 
@@ -161,6 +168,10 @@ adminVideogameController.postVideogame = async function (req, res, next) {
 
 // Obtener todos los videojuegos
 adminVideogameController.getVideogames = async function (req, res) {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   Videogame.find({}, (err, videogames) => {
     if (err) {
       res.status(500).json(err.message)
@@ -184,6 +195,10 @@ adminVideogameController.countVideogamesWithOnlySpecificTag = async function (re
 
 // Eliminar un videojuego
 adminVideogameController.deleteVideogame = async function (req, res) {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   Videogame.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, async (err, videogame) => {
     if (err) {
       return res.status(500).json(err.message)
@@ -197,6 +212,10 @@ adminVideogameController.deleteVideogame = async function (req, res) {
       await bucket.delete(file[0]._id);
 
       try {
+        axios.interceptors.request.use(config => {
+          config.headers.Authorization = req.token;
+          return config;
+        });
         await axios.delete("http://localhost:3000/videogame-tag/delete-by-videogame/"+`${req.body._id}`)
       } catch(err) {
         return res.status(500).json(err.message);
@@ -209,6 +228,10 @@ adminVideogameController.deleteVideogame = async function (req, res) {
 
 // Actualizar un videojuego
 adminVideogameController.putVideogame = async (req, res) => {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   var updatedFields = {};
   var videogame = req.body;
 
@@ -319,7 +342,11 @@ adminVideogameController.putVideogame = async (req, res) => {
     return res.status(500).json('Error: No se encontraron etiquetas.');
   } else if(videogame.tags) {
     for (const tag of videogame.tags) {
-      try{
+      try {
+        axios.interceptors.request.use(config => {
+          config.headers.Authorization = req.token;
+          return config;
+        });
         const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
       } catch(err) {
@@ -338,10 +365,6 @@ adminVideogameController.putVideogame = async (req, res) => {
 
   if(videogame.sinopsis) {
     Object.assign(updatedFields, {sinopsis: videogame.sinopsis})
-  }
-
-  if(videogame.usuario) {
-    Object.assign(updatedFields, {usuario: videogame.usuario})
   }
 
   clearFilesDirectory(req.files);
@@ -394,6 +417,10 @@ adminVideogameController.getZipFile = async function (req,res) {
 
 // Eliminar un videojuego archivo zip
 adminVideogameController.deleteZipFile = async function (req,res) {
+  if(req.login_type != "desarrollador" && req.login_type != "administrador") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   var bucketId = req.params.bucketId;
 
   const file = await bucket.find({ _id: new mongodb.ObjectId(bucketId) }).toArray();

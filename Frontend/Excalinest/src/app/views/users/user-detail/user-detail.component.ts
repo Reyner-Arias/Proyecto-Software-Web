@@ -3,9 +3,7 @@ import { User } from 'src/app/models/User.model';
 import { Videogame } from 'src/app/models/Videogame.model';
 import { UsersService } from '../../../services/users.service';
 import { VideogamesService } from 'src/app/services/videogames.service';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -59,7 +57,7 @@ export class UserDetailComponent {
     this.user.imagenTwitter = this.domSanitizer.bypassSecurityTrustResourceUrl("data:"+ 
       this.user.twitter.tipoImagen +";base64, " + twitterBase64);
 
-    this.videogamesService.getVideogames(false, this.user.username).subscribe({
+    this.videogamesService.getVideogames("", this.user.username).subscribe({
       error: (err: any) =>{
         this.error = true;
         this.modalMessage = err.error.replace(/['"]+/g, '');

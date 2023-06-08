@@ -3,6 +3,7 @@ const router = Router();
 const multer = require('multer');
 
 const adminUserController = require("../controllers/admin-users.controller");
+const token = require("../controllers/token");
 
 const storage = multer.diskStorage({  
     destination: (req, file, cb)=>{  
@@ -20,22 +21,13 @@ const processUserImages = multer({ storage }).fields([
     { name: 'twitter', maxCount: 1 }
   ]);
 
-// Crear un nuevo usuario
-router.post('/post', processUserImages, adminUserController.postUser);
-
-// Consultar todos los usuarios
-router.get('/get-all', adminUserController.getAllUsers);
-
-// Editar un usuario
-router.put('/put/:_id', processUserImages, adminUserController.putUser);
-
-// Eliminar un usuario
-router.delete('/delete/:email', adminUserController.deleteUser);
-
-// Obtener un usuario
-router.get('/get/:email', adminUserController.getUser);
-
-// Enviar Correo
-router.post('/mail/', adminUserController.mail);
+router.post('/post', token.verifyToken, adminUserController.postUser);
+router.post('/register', adminUserController.register);
+router.get('/get-all', token.verifyToken, adminUserController.getAllUsers);
+router.put('/put/:_id', token.verifyToken, adminUserController.putUser);
+router.put('/put/profile/:_id', token.verifyToken, adminUserController.putProfile);
+router.delete('/delete/:email', token.verifyToken, adminUserController.deleteUser);
+router.get('/get', token.verifyToken, adminUserController.getUser);
+router.get('/login/:email', adminUserController.login);
 
 module.exports = router

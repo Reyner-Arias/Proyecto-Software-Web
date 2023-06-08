@@ -14,8 +14,10 @@ tokenController.verifyToken = async (req, res, next) => {
 		if (!data) {
 			return res.status(401).send('Unauthorized Request');
 		}
-		req.id = data.identificacion;
-		req.admin = data.admin;
+		req.token = req.headers.authorization;
+		req.login_email = data.email;
+		req.login_type = data.type;
+		req.login_username = data.username;
 		next();
 	} catch(e) {
 		return res.status(401).send('Unauthorized Request');

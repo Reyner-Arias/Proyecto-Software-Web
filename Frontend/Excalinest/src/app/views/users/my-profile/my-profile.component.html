@@ -92,7 +92,7 @@
             <table class="table table-striped videogames-table">
                 <thead>
                   <tr>
-                    <th scope="col">Portada</th>
+                    <th scope="col" width="200px">Portada</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Sinopsis</th>
                     <th scope="col"></th>
@@ -102,7 +102,7 @@
                 <tbody>
                     <tr  *ngFor="let videogame of videogames">
                         <td style="vertical-align: middle;">
-                            <img cCardImg="top" [src]=videogame.imagen width="100" style="object-fit: cover;">
+                            <img cCardImg="top" [src]=videogame.imagen style="object-fit: cover;">
                         </td>
                         <td>{{videogame.titulo}}</td>
                         <td>{{videogame.sinopsis}}</td>

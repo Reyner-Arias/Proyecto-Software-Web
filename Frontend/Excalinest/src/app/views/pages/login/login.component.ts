@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   private loginUserForm: any;
   private codeUserForm: any;
   public validatedForm = false;
+  private token: any;
+  private role: any;
 
   private code = '';
 
@@ -58,7 +60,7 @@ export class LoginComponent implements OnInit {
   onMailUser() {
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const charactersLength = characters.length;
-    for ( let i = 0; i < 6; i++ ) {
+    for ( let i = 0; i < 15; i++ ) {
       this.code += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 
@@ -86,16 +88,18 @@ export class LoginComponent implements OnInit {
     if(this.validateEmailFormat()) {
       this.showSpinner = true;
 
-      this.usersService.getUser(this.loginUserForm.value.email).subscribe({
+      this.usersService.login(this.loginUserForm.value.email).subscribe({
         error: (err: any) =>{
           this.showSpinner = false;
           this.modalMessage = err.error.replace(/['"]+/g, '');
           this.openCloseInfoModal(false);
         },
-        next: (res:User) => {
+        next: (res) => {
           this.validatedForm = true;
           if (this.loginUserForm.dirty && this.loginUserForm.valid) {
             this.onMailUser();
+            this.token = res.token;
+            this.role = res.user.type;
           }
         }
       }); 
@@ -113,9 +117,9 @@ export class LoginComponent implements OnInit {
     var realCode = this.code;
 
     if (input === realCode && realCode != ''){
-      this.modalMessage = "Código correcto";
-      this.openCloseInfoModal(false);
-      this.router.navigate(['/videogames/get']);
+      localStorage.setItem('token', this.token);
+      localStorage.setItem('role', this.role);
+      this.router.navigate(['/home']);
     } else {
       this.error = true;
       this.modalMessage = "Error: Código incorrecto";

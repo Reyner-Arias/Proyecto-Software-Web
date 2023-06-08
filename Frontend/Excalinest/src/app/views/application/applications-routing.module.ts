@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { GetApplicationsComponent } from './get-applications/get-applications.component';
 import { PostApplicationComponent } from './post-application/post-application.component';
 
+import { AuthGuard } from 'src/app/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -25,14 +27,18 @@ const routes: Routes = [
         component: GetApplicationsComponent,
         data: {
           title: 'Lista de versiones de Excalinest',
-        }
+          usuario: 'admin-soporte'
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'post',
         component: PostApplicationComponent,
         data: {
           title: 'Publicar nueva versión de Excalinest',
-        }
+          usuario: 'soporte'
+        },
+        canActivate: [AuthGuard]
       }
     ]
   },

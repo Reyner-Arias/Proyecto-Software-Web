@@ -6,6 +6,8 @@ import { UpdateVideogameComponent } from './update-videogame/update-videogame.co
 import { VideogameDetailComponent } from './videogame-detail/videogame-detail.component';
 import { PostVideogameComponent } from './post-videogame/post-videogame.component';
 
+import { AuthGuard } from 'src/app/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -28,28 +30,36 @@ const routes: Routes = [
         component: UpdateVideogameComponent,
         data: {
           title: 'Editar videojuego',
-        }
+          usuario: 'desarrollador'
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'get',
         component: GetVideogamesComponent,
         data: {
           title: 'Mis videojuegos',
-        }
+          usuario: 'desarrollador'
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'post',
         component: PostVideogameComponent,
         data: {
-          title: 'Publicar videojuego'
-        }
+          title: 'Publicar videojuego',
+          usuario: 'desarrollador'
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'videogame',
         component: VideogameDetailComponent,
         data: {
-          title: 'Detalles del videojuego'
-        }
+          title: 'Detalles del videojuego',
+          usuario: 'desarrollador'
+        },
+        canActivate: [AuthGuard]
       }
     ]
   },

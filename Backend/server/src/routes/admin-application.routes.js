@@ -1,15 +1,8 @@
 const { Router } = require("express");
-
 const router = Router();
 const adminApplicationController = require("../controllers/admin-application.controller");
 const token = require("../controllers/token");
 const multer = require('multer');
-
-/* 
-* Cuando se inserte el token
-* --------------------------
-* router.post("/", token.verifyToken, adminVideogameController.postVideogame);
-*/ 
 
 const storage = multer.diskStorage({  
     destination: (req, file, cb)=>{  
@@ -25,9 +18,9 @@ const processAppImages = multer({ storage }).fields([
     { name: 'archivoApp', maxCount: 1 }
   ]);
 
-router.post("/post", processAppImages, adminApplicationController.postApplication);
-router.get("/get-all", adminApplicationController.getAll);
-router.delete("/delete", adminApplicationController.deleteApplication);
-router.post("/get-zip-file", adminApplicationController.getZipFile);
+router.post("/post", token.verifyToken, adminApplicationController.postApplication);
+router.get("/get-all", token.verifyToken, adminApplicationController.getAll);
+router.delete("/delete", token.verifyToken, adminApplicationController.deleteApplication);
+router.post("/get-zip-file", token.verifyToken, adminApplicationController.getZipFile);
 
 module.exports = router;

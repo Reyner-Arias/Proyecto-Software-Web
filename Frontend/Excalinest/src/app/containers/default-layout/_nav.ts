@@ -1,6 +1,6 @@
 import { INavData } from '@coreui/angular';
 
-export const navItems: INavData[] = [
+export const navItemsAdmin: INavData[] = [
   {
     name: 'Home',
     url: '/home',
@@ -47,6 +47,45 @@ export const navItems: INavData[] = [
     name: 'Registrar usuario',
     url: '/users/post',
     iconComponent: { name: 'cil-user-follow'}
+  },
+  {
+    name: 'Aplicación Excalinest',
+    title: true
+  },
+  {
+    name: 'Lista de aplicaciones',
+    url: '/applications/get-all',
+    iconComponent: { name: 'cil-list'}
+  }
+];
+
+export const navItemsDev: INavData[] = [
+  {
+    name: 'Home',
+    url: '/home',
+    iconComponent: { name: 'cil-home' }
+  },
+  {
+    name: 'Videojuegos',
+    title: true
+  },
+  {
+    name: 'Mis videojuegos',
+    url: '/videogames/get',
+    iconComponent: { name: 'cilPuzzle' }
+  },
+  {
+    name: 'Publicar videojuego',
+    url: '/videogames/post',
+    iconComponent: { name: 'cil-paper-plane' }
+  }
+];
+
+export const navItemsSupport: INavData[] = [
+  {
+    name: 'Home',
+    url: '/home',
+    iconComponent: { name: 'cil-home' }
   },
   {
     name: 'Aplicación Excalinest',

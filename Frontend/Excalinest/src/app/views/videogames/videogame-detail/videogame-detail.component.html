@@ -1,6 +1,6 @@
 <div *ngIf="showSpinner" class="fade show spinner">
     <i class="spinner-grow spinner-grow-sm"></i>
-    <span class="m-1">Eliminando videojuego...</span>
+    <span class="m-1">{{spinnerMessage}}</span>
 </div>
 
 <div *ngIf="showSpinner == false">

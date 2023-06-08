@@ -30,6 +30,10 @@ export class UsersService {
     return this.http.post(`${this.apiUrl}/post`, userFormData, {headers: this.headers, responseType: 'text'});
   }
 
+  register(user: any) {
+    return this.http.post(`${this.apiUrl}/register`, user, {responseType: 'text'});
+  }
+
   putUser(id: string, user: any) {
     //Pasar los datos del usuario a un Form Data
     const userFormData = new FormData();
@@ -44,6 +48,10 @@ export class UsersService {
     return this.http.put(`${this.apiUrl}/put`+`/${id}`, userFormData, {headers: this.headers, responseType: 'text'});
   }
 
+  putProfile(id: string, user: any) {
+    return this.http.put(`${this.apiUrl}/put/profile`+`/${id}`, user, {responseType: 'text'});
+  }
+
   getUsers() {
     return this.http.get<any>(`${this.apiUrl}/get-all`);
   }
@@ -52,11 +60,33 @@ export class UsersService {
     return this.http.delete<any>(`${this.apiUrl}/delete`+`/${email}`);
   }
 
-  getUser(email: String) {
-    return this.http.get<any>(`${this.apiUrl}/get`+`/${email}`);
+  getUser() {
+    return this.http.get<any>(`${this.apiUrl}/get`);
+  }
+
+  login(email: String) {
+    return this.http.get<any>(`${this.apiUrl}/login`+`/${email}`);
   }
   
   mail(user: any){
     return this.http.post(`${this.apiUrl}/mail`, user, {responseType: 'text'});
+  }
+
+  loggedIn() {
+    return !!localStorage.getItem('token');
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    this.router.navigate(['/login']);
+  }
+
+  getCurrentRole() {
+    return localStorage.getItem('role');
   }
 }

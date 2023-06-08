@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Videogame } from '../../../models/Videogame.model'
 import { VideogamesService } from '../../../services/videogames.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TagsService } from '../../../services/tags.service';
 
@@ -51,7 +50,6 @@ export class PostVideogameComponent implements OnInit{
   ngOnInit(){
     this.postVideogameForm = this.formBuilder.group({
       title: ['', Validators.required],
-      developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
@@ -138,7 +136,6 @@ export class PostVideogameComponent implements OnInit{
 
   onPostVideogame() {
     this.newVideogame.titulo = this.postVideogameForm.value.title;
-    this.newVideogame.usuario = this.postVideogameForm.value.developer;
     this.newVideogame.sinopsis = this.postVideogameForm.value.sinopsis;
     this.newVideogame.tags = this.tags.map(({ id }) => id);
 
@@ -202,7 +199,6 @@ export class PostVideogameComponent implements OnInit{
     this.validatedForm = false;
     this.postVideogameForm = this.formBuilder.group({
       title: ['', Validators.required],
-      developer: ['', Validators.required],
       sinopsis: ['', Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],
@@ -216,7 +212,6 @@ export class PostVideogameComponent implements OnInit{
     this.validatedForm = false;
     this.postVideogameForm = this.formBuilder.group({
       title: [this.newVideogame.titulo, Validators.required],
-      developer: [this.newVideogame.usuario, Validators.required],
       sinopsis: [this.newVideogame.sinopsis, Validators.required],
       cover: ['', Validators.required],
       zip: ['', Validators.required],

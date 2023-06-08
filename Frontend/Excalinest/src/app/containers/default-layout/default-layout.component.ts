@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
-import { navItems } from './_nav';
+import { UsersService } from 'src/app/services/users.service';
+import { navItemsAdmin, navItemsDev, navItemsSupport } from './_nav';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,11 +8,24 @@ import { navItems } from './_nav';
 })
 export class DefaultLayoutComponent {
 
-  public navItems = navItems;
+  public navItems: any;
 
   public perfectScrollbarConfig = {
     suppressScrollX: true,
   };
 
-  constructor() {}
+  constructor(private usersService: UsersService) {}
+
+  public getNavItems() {
+    switch(this.usersService.getCurrentRole()) {
+      case "desarrollador":
+        return navItemsDev;
+      case "administrador":
+        return navItemsAdmin;
+      case "soporte":
+        return navItemsSupport;
+      default:
+        return navItemsDev;
+    }
+  }
 }

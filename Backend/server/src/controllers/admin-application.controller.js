@@ -45,6 +45,10 @@ function clearFilesDirectory(archivosSubidos){
 
 // Publicar una nueva versión de la aplicación de escritorio
 adminApplicationController.postApplication = async function (req, res) {
+  if(req.login_type != "soporte") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   const newApplication = new Application();
 
   const appFile = req.files['archivoApp'][0];
@@ -93,6 +97,10 @@ adminApplicationController.postApplication = async function (req, res) {
 
 // Obtener todas las versiones de la aplicación
 adminApplicationController.getAll = async function (req, res) {
+  if(req.login_type != "administrador" && req.login_type != "soporte") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   Application.find({}, {_id:1, title:1, description:1}, (err, applications) => {
     if (err) {
       res.status(500).json(err.message)
@@ -104,6 +112,10 @@ adminApplicationController.getAll = async function (req, res) {
 
 // Eliminar una versión de la aplicación
 adminApplicationController.deleteApplication = async function (req, res) {
+  if(req.login_type != "soporte") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   Application.findByIdAndDelete({ _id: new mongodb.ObjectId(req.body._id) }, async (err, application) => {
     if (err) {
       return res.status(500).json(err.message)
@@ -122,6 +134,10 @@ adminApplicationController.deleteApplication = async function (req, res) {
 
 // Descargar una versión de la aplicación en archivo zip
 adminApplicationController.getZipFile = async function (req,res) {
+  if(req.login_type != "administrador" && req.login_type != "soporte") {
+    return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
+  }
+
   const downloadStream = bucket.openDownloadStreamByName(req.body.filename)
     .on('error', function (error) {
       if (error.name === 'MongoRuntimeError' && error.message.includes('FileNotFound')) {
