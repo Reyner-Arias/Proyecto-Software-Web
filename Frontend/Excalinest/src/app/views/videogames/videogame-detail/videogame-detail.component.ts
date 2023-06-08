@@ -16,6 +16,7 @@ export class VideogameDetailComponent implements OnInit {
   private excalinestDownloadsPath = "C:\\Excalinest\\";
   public deleteButton = false;
   public videogameTags = [{id: -1, name: ""}];
+  public spinnerMessage = "Cargando videojuego...";
 
   constructor(private domSanitizer: DomSanitizer,  public router: Router,
     private videogamesService: VideogamesService, private tagsService: TagsService,
@@ -119,6 +120,7 @@ export class VideogameDetailComponent implements OnInit {
   onDeleteVideogame() {
     this.openCloseInfoModal();
     this.showSpinner = true;
+    this.spinnerMessage = "Eliminando videojuego...";
     this.videogamesService.deleteVideogame({_id: this.videogame._id}).subscribe({
       error: (err: any) => {
         this.showSpinner = false;
@@ -137,13 +139,17 @@ export class VideogameDetailComponent implements OnInit {
       "destPath": this.excalinestDownloadsPath,
       "filename": this.videogame.titulo+".zip"
     }
+    this.showSpinner = true;
+    this.spinnerMessage = "Descargando videojuego...";
     this.videogamesService.getZipFile(body).subscribe({
       error: (err: any) => {
+        this.showSpinner = false;
         this.deleteButton = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
       },
       next: (res: any) => {
+        this.showSpinner = false;
         this.deleteButton = false;
         this.modalMessage = res+" Excalinest coloca el archivo en C:\\Excalinest";
         this.openCloseInfoModal();
