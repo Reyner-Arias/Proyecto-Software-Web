@@ -11,6 +11,7 @@ import { Tag } from 'src/app/models/tag.model';
 export class GetTagsComponent implements OnInit {
 
   tags = new Array<Tag>();
+  tagToDelete:Number =0;
  
   constructor(private tagsService: TagsService, private toastr: ToastrService) {}
 
@@ -31,17 +32,24 @@ export class GetTagsComponent implements OnInit {
     });
   }
 
-  deleteTag(tagId: Number) {
-    this.tagsService.deleteTag(tagId).subscribe({
+  deleteTag(tagId: Number, tagName: String) {
+    this.tagToDelete = tagId;
+    this.modalMessage = "¿Está seguro que desea eliminar la etiqueta " + tagName + "?";
+    this.deleteButton = true;
+    this.openCloseInfoModal();
+  }
+
+  onDeleteTag() {
+    this.openCloseInfoModal();
+    this.showSpinnerDelete = true;
+    this.tagsService.deleteTag(this.tagToDelete).subscribe({
       error: (err: any) =>{
+        this.showSpinnerDelete = false;
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
       },
       next: () => {
-        this.toastr.success('La etiqueta se eliminó correctamente', 'Éxito');
-        setTimeout(() => {
-          location.reload();
-        }, 3000); // Espera 3 segundos (3000 milisegundos) antes de recargar
+        location.reload();
       }
     });
   }
@@ -49,12 +57,14 @@ export class GetTagsComponent implements OnInit {
   /* --------------------- Spinner --------------------- */
 
   public showSpinner = true;
+  public showSpinnerDelete = false;
 
   /* ---------------------- Modal ---------------------- */
 
   public modalMessage = "";
   public modalTitle = "Atención";
   public visible = false;
+  public deleteButton = false;
 
   openCloseInfoModal() {
     this.visible = !this.visible;

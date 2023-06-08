@@ -3,7 +3,12 @@
     <span class="m-1">Cargando etiquetas...</span>
 </div>
 
-<div *ngIf="showSpinner == false">
+<div *ngIf="showSpinnerDelete" class="fade show spinner">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Eliminando etiqueta...</span>
+</div>
+
+<div *ngIf="showSpinner == false && showSpinnerDelete == false">
     <c-row>
         <c-col [sm]="3" *ngFor="let tag of tags">
             <c-card class="mb-4">
@@ -12,7 +17,7 @@
                 <c-row>
                     <c-col class="text-end mb-12">
                         <a cButton color="info" class="update-button" [routerLink]="['/tags/update']" [queryParams]="{tag: tag.id}" size="sm">Editar</a>
-                        <button cButton color="danger" (click)="deleteTag(tag.id)" size="sm">Eliminar</button>
+                        <button cButton color="danger" (click)="deleteTag(tag.id, tag.name)" size="sm">Eliminar</button>
                     </c-col>
                 </c-row>
                 </c-card-body>
@@ -28,6 +33,7 @@
     </c-modal-header>
     <c-modal-body>{{modalMessage}}</c-modal-body>
     <c-modal-footer>
+        <button cButton color="danger" (click)="onDeleteTag()" *ngIf="deleteButton">Eliminar</button>
         <button (click)="openCloseInfoModal()" cButton color="secondary">
             Cerrar
         </button>
