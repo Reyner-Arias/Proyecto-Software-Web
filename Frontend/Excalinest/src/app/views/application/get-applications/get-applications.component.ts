@@ -27,7 +27,6 @@ export class GetApplicationsComponent implements OnInit {
           this.openCloseInfoModal();
         }
         this.versions = res;
-        console.log(this.versions)
       }
     });
   }
