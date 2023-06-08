@@ -36,6 +36,6 @@ export class ApplicationService {
   }
 
   getZipFile(body: any) {
-    return this.http.post(`${this.apiUrl}/get-zip-file`, body, {responseType: 'text'});
+    return this.http.post(`${this.apiUrl}/get-zip-file`, body, {responseType: 'blob'});
   }
 }

@@ -5,6 +5,7 @@ import { VideogamesService } from '../../../services/videogames.service';
 import { Router } from '@angular/router';
 import { TagsService } from 'src/app/services/tags.service';
 import { VideogameTagService } from 'src/app/services/videogame-tag.service'
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-videogame-detail',
@@ -134,7 +135,6 @@ export class VideogameDetailComponent implements OnInit {
 
   downloadFile() {
     let body = {
-      "destPath": this.excalinestDownloadsPath,
       "filename": this.videogame.titulo+".zip"
     }
     this.videogamesService.getZipFile(body).subscribe({
@@ -143,10 +143,22 @@ export class VideogameDetailComponent implements OnInit {
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
       },
-      next: (res: any) => {
+      next: async (blob: Blob) => {
+        const filename = this.videogame.titulo+".zip";
+        
+        // Crear un objeto URL a partir del blob recibido
+        const url = window.URL.createObjectURL(blob);
+        
+        // Crear un enlace temporal y simular un clic para descargar el archivo
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.click();
+        
+        // Liberar la URL temporal creada
+        window.URL.revokeObjectURL(url)
+
         this.deleteButton = false;
-        this.modalMessage = res+" Excalinest coloca el archivo en C:\\Excalinest";
-        this.openCloseInfoModal();
       }
     });
   }

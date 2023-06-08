@@ -68,7 +68,7 @@ export class VideogamesService {
   }
 
   getZipFile(body: any) {
-    return this.http.post(`${this.adminAPI}/get-zip-file`, body, {responseType: 'text'});
+    return this.http.post(`${this.adminAPI}/get-zip-file`, body, {responseType: 'blob'});
   }
 
   deleteZipFile(bucketId: any) {

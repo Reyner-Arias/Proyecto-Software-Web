@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 export class GetApplicationsComponent implements OnInit {
 
   versions = new Array<Application>();
-  private excalinestDownloadsPath = "C:\\Excalinest\\";
 
   constructor(private applicationService: ApplicationService) {}
 
@@ -38,7 +37,6 @@ export class GetApplicationsComponent implements OnInit {
   downloadFile(version: Application) {
     this.showSpinner = true;
     let body = {
-      "destPath": this.excalinestDownloadsPath,
       "filename": version.title+".zip"
     }
     this.applicationService.getZipFile(body).subscribe({
@@ -47,10 +45,22 @@ export class GetApplicationsComponent implements OnInit {
         this.modalMessage = err.error.replace(/['"]+/g, '');
         this.openCloseInfoModal();
       },
-      next: (res: any) => {
+      next: (blob: Blob) => {
+        const filename = version.title+".zip";
+        
+        // Crear un objeto URL a partir del blob recibido
+        const url = window.URL.createObjectURL(blob);
+        
+        // Crear un enlace temporal y simular un clic para descargar el archivo
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.click();
+        
+        // Liberar la URL temporal creada
+        window.URL.revokeObjectURL(url)
+
         this.showSpinner = false;
-        this.modalMessage = res+" Excalinest coloca el archivo en C:\\Excalinest";
-        this.openCloseInfoModal();
       }
     });
   }

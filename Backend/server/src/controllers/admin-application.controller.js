@@ -122,7 +122,6 @@ adminApplicationController.deleteApplication = async function (req, res) {
 
 // Descargar una versión de la aplicación en archivo zip
 adminApplicationController.getZipFile = async function (req,res) {
-  const writeStream = fs.createWriteStream(req.body.destPath + req.body.filename);
   const downloadStream = bucket.openDownloadStreamByName(req.body.filename)
     .on('error', function (error) {
       if (error.name === 'MongoRuntimeError' && error.message.includes('FileNotFound')) {
@@ -132,13 +131,15 @@ adminApplicationController.getZipFile = async function (req,res) {
       }
     });
 
-  downloadStream.pipe(writeStream)
-    .on('error', function (error) {
-      return res.status(500).json("Error al descargar el archivo zip: " + error);
-    })
-    .on('finish', function () {
-      return res.status(200).json("Archivo descargado.");
-    });
+    res.setHeader('Content-Type', 'application/zip');
+
+    downloadStream.pipe(res)
+      .on('error', function (error) {
+        return res.status(500).json("Error al descargar el archivo zip: " + error);
+      })
+      .on('finish', function () {
+        res.end();
+      });
 }
 
 module.exports = adminApplicationController
