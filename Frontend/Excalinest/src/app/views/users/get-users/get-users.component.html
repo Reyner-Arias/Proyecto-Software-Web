@@ -14,6 +14,9 @@
                         <button cButton color="dark" class="mb-4" [routerLink]="['/users/user']" [state]="user" size="sm">Ver detalles</button>
                     </c-col>
                 </c-row>
+                <p cCardText>
+                    <small class="text-medium-emphasis">Rol: {{user.type}}</small>
+                </p>
                 </c-card-body>
             </c-card>
         </c-col>
