@@ -54,6 +54,7 @@ adminApplicationController.postApplication = async function (req, res) {
   const appFile = req.files['archivoApp'][0];
 
   if(!req.body.title || !appFile || !req.body.description) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron todos los datos de la aplicación.');
   }
 
@@ -68,6 +69,7 @@ adminApplicationController.postApplication = async function (req, res) {
 
     uploadStream
       .on('error', function (error) {
+        clearFilesDirectory(req.files);
         return res.status(500).json("Error al subir el archivo zip: " + error);
       })
       .on('finish', async () => {
@@ -91,6 +93,7 @@ adminApplicationController.postApplication = async function (req, res) {
         });
       });
   } else {
+    clearFilesDirectory(req.files);
     res.status(500).json('Error: El archivo de la aplicación debe ser un zip.');
   }
 }

@@ -52,10 +52,12 @@ adminUserController.postUser = async (req, res) => {
 
   if(!req.body.username || !req.body.email || !req.body.name || !req.body.type ||
     !facebookFile || !instaFile || !twitterFile) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron todos los datos del usuario.');
   }
 
   if(!isValidTypeOfUser(req.body.type)) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
@@ -106,10 +108,12 @@ adminUserController.register = async (req, res) => {
 
   if(!req.body.username || !req.body.email || !req.body.name || !req.body.type ||
     !facebookFile || !instaFile || !twitterFile) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron todos los datos del usuario.');
   }
 
   if(!isValidTypeOfUser(req.body.type)) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
@@ -212,6 +216,7 @@ adminUserController.putUser = async (req, res) => {
   }
 
   if(user.type && !isValidTypeOfUser(user.type)) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
@@ -220,6 +225,7 @@ adminUserController.putUser = async (req, res) => {
       Object.assign(updatedFields, { facebook: {tipoImagen: facebookFile.type, 
         data: fs.readFileSync(facebookFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
@@ -229,6 +235,7 @@ adminUserController.putUser = async (req, res) => {
       Object.assign(updatedFields, { instagram: {tipoImagen: instaFile.type, 
         data: fs.readFileSync(instaFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
@@ -238,6 +245,7 @@ adminUserController.putUser = async (req, res) => {
       Object.assign(updatedFields, { twitter: {tipoImagen: twitterFile.type, 
         data: fs.readFileSync(twitterFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
@@ -298,6 +306,7 @@ adminUserController.putProfile = async (req, res) => {
   }
 
   if(user.type && !isValidTypeOfUser(user.type)) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
@@ -306,6 +315,7 @@ adminUserController.putProfile = async (req, res) => {
       Object.assign(updatedFields, { facebook: {tipoImagen: facebookFile.type, 
         data: fs.readFileSync(facebookFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
@@ -315,6 +325,7 @@ adminUserController.putProfile = async (req, res) => {
       Object.assign(updatedFields, { instagram: {tipoImagen: instaFile.type, 
         data: fs.readFileSync(instaFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
@@ -324,6 +335,7 @@ adminUserController.putProfile = async (req, res) => {
       Object.assign(updatedFields, { twitter: {tipoImagen: twitterFile.type, 
         data: fs.readFileSync(twitterFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }

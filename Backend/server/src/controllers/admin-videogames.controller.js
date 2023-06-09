@@ -56,6 +56,7 @@ function clearFilesDirectory(archivosSubidos){
 // Crear un nuevo videojuego
 adminVideogameController.postVideogame = async function (req, res) {
   if(req.login_type != "desarrollador" && req.login_type != "administrador") {
+    clearFilesDirectory(req.files);
     return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 
@@ -69,10 +70,12 @@ adminVideogameController.postVideogame = async function (req, res) {
 
   if(!req.body.titulo || !req.body.sinopsis || !req.body.tags ||
      !coverFile || !zipFile || !facebookFile || !instaFile || !twitterFile) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron todos los datos del videojuego.');
   }
 
   if(req.body.tags.length == 0) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron etiquetas.');
   } else {
     for (const tag of req.body.tags) {
@@ -84,6 +87,7 @@ adminVideogameController.postVideogame = async function (req, res) {
         const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
       } catch(err) {
+        clearFilesDirectory(req.files);
         if(err.response.status == 404) {
           return res.status(404).json('Error: No se encuentra la etiqueta '+ tag +'. Cree la etiqueta antes de agregarla al videojuego.');
         } else {
@@ -127,6 +131,7 @@ adminVideogameController.postVideogame = async function (req, res) {
 
       uploadStream
         .on('error', function (error) {
+          clearFilesDirectory(req.files);
           return res.status(500).json("Error al subir el archivo zip: " + error);
         })
         .on('finish', async () => {
@@ -229,6 +234,7 @@ adminVideogameController.deleteVideogame = async function (req, res) {
 // Actualizar un videojuego
 adminVideogameController.putVideogame = async (req, res) => {
   if(req.login_type != "desarrollador" && req.login_type != "administrador") {
+    clearFilesDirectory(req.files);
     return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 
@@ -271,8 +277,10 @@ adminVideogameController.putVideogame = async (req, res) => {
 
   if(zipFile) {
     if(path.extname(zipFile.path) != ".zip") {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: El archivo del videojuego debe ser un zip.');
     } else if(!videogame.bucketId) {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: Se necesita un bucketId para actualizar el archivo del videojuego.');
     } else {
       const file = await bucket.find({ _id: new mongodb.ObjectId(videogame.bucketId) }).toArray();
@@ -295,6 +303,7 @@ adminVideogameController.putVideogame = async (req, res) => {
           await bucket.delete(file[0]._id);
         })
         .on('error', async (error) => {
+          clearFilesDirectory(req.files);
           return res.status(500).json("Error al subir el archivo zip: " + error);
         });
 
@@ -307,6 +316,7 @@ adminVideogameController.putVideogame = async (req, res) => {
       Object.assign(updatedFields, { portada: {tipoImagen: coverFile.type, 
         data: fs.readFileSync(coverFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
@@ -316,6 +326,7 @@ adminVideogameController.putVideogame = async (req, res) => {
       Object.assign(updatedFields, { facebook: {tipoImagen: facebookFile.type, 
         data: fs.readFileSync(facebookFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
@@ -325,6 +336,7 @@ adminVideogameController.putVideogame = async (req, res) => {
       Object.assign(updatedFields, { instagram: {tipoImagen: instaFile.type, 
         data: fs.readFileSync(instaFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
@@ -334,11 +346,13 @@ adminVideogameController.putVideogame = async (req, res) => {
       Object.assign(updatedFields, { twitter: {tipoImagen: twitterFile.type, 
         data: fs.readFileSync(twitterFile.path)} });
     } else {
+      clearFilesDirectory(req.files);
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
 
   if(videogame.tags && videogame.tags.length == 0) {
+    clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron etiquetas.');
   } else if(videogame.tags) {
     for (const tag of videogame.tags) {
@@ -350,6 +364,7 @@ adminVideogameController.putVideogame = async (req, res) => {
         const options = { 'method': 'GET', 'url': 'http://localhost:3000/admin-tags/get/' +`${tag}` }
         await axios(options);
       } catch(err) {
+        clearFilesDirectory(req.files);
         if(err.response.status == 404) {
           return res.status(404).json('Error: No se encuentra la etiqueta '+ tag +'. Cree la etiqueta antes de agregarla al videojuego.');
         } else {
