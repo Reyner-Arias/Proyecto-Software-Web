@@ -74,11 +74,13 @@ adminVideogameController.postVideogame = async function (req, res) {
     return res.status(500).json('Error: No se encontraron todos los datos del videojuego.');
   }
 
-  if(req.body.tags.length == 0) {
+  const videogameTags = req.body.tags.replace(',', ''); // Formato de las tags actualmente: idTag1,idTag2,idTag3
+
+  if(videogameTags.length == 0) {
     clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron etiquetas.');
   } else {
-    for (const tag of req.body.tags) {
+    for (const tag of videogameTags) {
       try {
         axios.interceptors.request.use(config => {
           config.headers.Authorization = req.token;
@@ -151,7 +153,7 @@ adminVideogameController.postVideogame = async function (req, res) {
                 res.status(500).json(err.message)
               }
             } else {
-              for (const tag of req.body.tags) {
+              for (const tag of videogameTags) {
                 try{
                   let newVideogameTag = {videogame: newVideogame._id, tag: tag};
                   await axios.post("http://localhost:3000/videogame-tag/post", newVideogameTag);
@@ -262,6 +264,8 @@ adminVideogameController.putVideogame = async (req, res) => {
   if(req.files['twitter']){
     twitterFile = req.files['twitter'][0];
   }
+
+  const videogameTags = req.body.tags.replace(',', ''); // Formato de las tags actualmente: idTag1,idTag2,idTag3
 
   if(videogame.titulo && !zipFile) {
     if(videogame.bucketId) {
@@ -397,7 +401,7 @@ adminVideogameController.putVideogame = async (req, res) => {
       return res.status(404).json('Error: No se encontró el videojuego.');
     } else {
       try{
-        await axios.post("http://localhost:3000/videogame-tag/update", {_id: req.body._id, tags: req.body.tags});
+        await axios.post("http://localhost:3000/videogame-tag/update", {_id: req.body._id, tags: videogameTags});
         return res.status(200).json('Los campos válidos del videojuego se han actualizado correctamente.');
       } catch(err) {
         return res.status(500).json(err.message);
