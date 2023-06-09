@@ -31,7 +31,16 @@ export class UsersService {
   }
 
   register(user: any) {
-    return this.http.post(`${this.apiUrl}/register`, user, {responseType: 'text'});
+    //Pasar los datos del usuario a un Form Data
+    const userFormData = new FormData();
+    userFormData.append('username', user.username);
+    userFormData.append('email', user.email);
+    userFormData.append('name', user.name);
+    userFormData.append('type', user.type);
+    userFormData.append('facebook', user.facebookFile);
+    userFormData.append('instagram', user.instaFile);
+    userFormData.append('twitter', user.twitterFile);
+    return this.http.post(`${this.apiUrl}/register`, userFormData, {headers: this.headers, responseType: 'text'});
   }
 
   putUser(id: string, user: any) {
@@ -49,7 +58,17 @@ export class UsersService {
   }
 
   putProfile(id: string, user: any) {
-    return this.http.put(`${this.apiUrl}/put/profile`+`/${id}`, user, {responseType: 'text'});
+    //Pasar los datos del usuario a un Form Data
+    const userFormData = new FormData();
+    userFormData.append('username', user.username);
+    userFormData.append('email', user.email);
+    userFormData.append('name', user.name);
+    userFormData.append('type', user.type);
+    userFormData.append('facebook', user.facebookFile);
+    userFormData.append('instagram', user.instaFile);
+    userFormData.append('twitter', user.twitterFile);
+
+    return this.http.put(`${this.apiUrl}/put/profile`+`/${id}`, userFormData, {headers: this.headers, responseType: 'text'});
   }
 
   getUsers() {

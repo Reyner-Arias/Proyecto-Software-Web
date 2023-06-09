@@ -100,8 +100,12 @@ adminUserController.postUser = async (req, res) => {
 adminUserController.register = async (req, res) => {
   const newUser = new User();
 
+  const facebookFile = req.files['facebook'][0];
+  const instaFile = req.files['instagram'][0];
+  const twitterFile = req.files['twitter'][0];
+
   if(!req.body.username || !req.body.email || !req.body.name || !req.body.type ||
-    !req.body.facepath || !req.body.instapath || !req.body.twitterpath) {
+    !facebookFile || !instaFile || !twitterFile) {
     return res.status(500).json('Error: No se encontraron todos los datos del usuario.');
   }
 
@@ -109,33 +113,21 @@ adminUserController.register = async (req, res) => {
     return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
-  if (isValidImageExtension(req.body.facepath) && isValidImageExtension(req.body.instapath) && 
-    isValidImageExtension(req.body.twitterpath)) {
-    if(req.body.facepath) {
-      if(fs.existsSync(req.body.facepath)){
-        newUser.facebook = {tipoImagen: getImageExtension(req.body.facepath),
-          data: fs.readFileSync(req.body.facepath)}
-      }else{
-        return res.status(500).json('Error: No se encontró la imagen del código QR de Facebook.');
-      }
+  if (isValidImageExtension(facebookFile.path) && isValidImageExtension(instaFile.path) && 
+    isValidImageExtension(twitterFile.path)) {
+    if(facebookFile) {
+      newUser.facebook = {tipoImagen: facebookFile.type,
+        data: fs.readFileSync(facebookFile.path)}
     }
 
-    if(req.body.instapath) {
-      if(fs.existsSync(req.body.instapath)){
-        newUser.instagram = {tipoImagen: getImageExtension(req.body.instapath),
-          data: fs.readFileSync(req.body.instapath)}
-      }else{
-        return res.status(500).json('Error: No se encontró la imagen del código QR de Instagram.');
-      }
+    if(instaFile) {
+      newUser.instagram = {tipoImagen: instaFile.type,
+        data: fs.readFileSync(instaFile.path)}
     }
     
-    if(req.body.twitterpath) {
-      if(fs.existsSync(req.body.twitterpath)){
-        newUser.twitter = {tipoImagen: getImageExtension(req.body.twitterpath),
-          data: fs.readFileSync(req.body.twitterpath)}
-      }else{
-        return res.status(500).json('Error: No se encontró la imagen del código QR de Twitter.');
-      }
+    if(twitterFile) {
+      newUser.twitter = {tipoImagen: twitterFile.type,
+        data: fs.readFileSync(twitterFile.path)}
     }
   }
 
@@ -143,6 +135,8 @@ adminUserController.register = async (req, res) => {
   newUser.email = req.body.email;
   newUser.name = req.body.name;
   newUser.type = req.body.type;
+
+  clearFilesDirectory(req.files);
 
   newUser.save((err) => {
     if (err) {
@@ -203,44 +197,46 @@ adminUserController.putUser = async (req, res) => {
   const { _id } = req.params
   var user = req.body;
 
+  var facebookFile = undefined;
+  var instaFile = undefined;
+  var twitterFile = undefined;
+
+  if(req.files['facebook']){
+    facebookFile = req.files['facebook'][0];
+  }
+  if(req.files['instagram']){
+    instaFile = req.files['instagram'][0];
+  }
+  if(req.files['twitter']){
+    twitterFile = req.files['twitter'][0];
+  }
+
   if(user.type && !isValidTypeOfUser(user.type)) {
     return res.status(500).json('Error: Tipo de usuario no válido.');
   }
 
-  if(user.facepath) {
-    if (isValidImageExtension(user.facepath)) {
-      if(fs.existsSync(user.facepath)) {
-        Object.assign(updatedFields, { facebook: {tipoImagen: getImageExtension(user.facepath), 
-          data: fs.readFileSync(user.facepath)} });
-      } else {
-        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Facebook.');
-      }
+  if(facebookFile) {
+    if (isValidImageExtension(facebookFile.path)) {
+      Object.assign(updatedFields, { facebook: {tipoImagen: facebookFile.type, 
+        data: fs.readFileSync(facebookFile.path)} });
     } else {
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
 
-  if(user.instapath) {
-    if (isValidImageExtension(user.instapath)) {
-      if(fs.existsSync(user.instapath)) {
-        Object.assign(updatedFields, { instagram: {tipoImagen: getImageExtension(user.instapath), 
-          data: fs.readFileSync(user.instapath)} });
-      } else {
-        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Instagram.');
-      }
+  if(instaFile) {
+    if (isValidImageExtension(instaFile.path)) {
+      Object.assign(updatedFields, { instagram: {tipoImagen: instaFile.type, 
+        data: fs.readFileSync(instaFile.path)} });
     } else {
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
   }
 
-  if(user.twitterpath) {
-    if (isValidImageExtension(user.twitterpath)) {
-      if(fs.existsSync(user.twitterpath)) {
-        Object.assign(updatedFields, { twitter: {tipoImagen: getImageExtension(user.twitterpath), 
-          data: fs.readFileSync(user.twitterpath)} });
-      } else {
-        return res.status(500).json('Error: No se ha encontrado la imagen del código QR de Twitter.');
-      }
+  if(twitterFile) {
+    if (isValidImageExtension(twitterFile.path)) {
+      Object.assign(updatedFields, { twitter: {tipoImagen: twitterFile.type, 
+        data: fs.readFileSync(twitterFile.path)} });
     } else {
       return res.status(500).json('Error: La imagen debe tener formato jpg, jpeg o png.');
     }
@@ -261,6 +257,8 @@ adminUserController.putUser = async (req, res) => {
   if(user.type) {
     Object.assign(updatedFields, {type: user.type})
   }
+
+  clearFilesDirectory(req.files);
 
   var updatedFieldsSet =  { $set: updatedFields };
 

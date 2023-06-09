@@ -22,11 +22,11 @@ const processUserImages = multer({ storage }).fields([
   ]);
 
 router.post('/mail', adminUserController.mail);
-router.post('/post', token.verifyToken, adminUserController.postUser);
-router.post('/register', adminUserController.register);
+router.post('/post', token.verifyToken, processUserImages, adminUserController.postUser);
+router.post('/register', processUserImages, adminUserController.register);
 router.get('/get-all', token.verifyToken, adminUserController.getAllUsers);
-router.put('/put/:_id', token.verifyToken, adminUserController.putUser);
-router.put('/put/profile/:_id', token.verifyToken, adminUserController.putProfile);
+router.put('/put/:_id', token.verifyToken, processUserImages, adminUserController.putUser);
+router.put('/put/profile/:_id', token.verifyToken, processUserImages, adminUserController.putProfile);
 router.delete('/delete/:email', token.verifyToken, adminUserController.deleteUser);
 router.get('/get', token.verifyToken, adminUserController.getUser);
 router.get('/login/:email', adminUserController.login);
