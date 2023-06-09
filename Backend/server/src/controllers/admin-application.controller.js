@@ -46,6 +46,7 @@ function clearFilesDirectory(archivosSubidos){
 // Publicar una nueva versión de la aplicación de escritorio
 adminApplicationController.postApplication = async function (req, res) {
   if(req.login_type != "soporte") {
+    clearFilesDirectory(req.files);
     return res.status(401).json('Error: Usuario no autorizado para esta funcionalidad.');
   }
 

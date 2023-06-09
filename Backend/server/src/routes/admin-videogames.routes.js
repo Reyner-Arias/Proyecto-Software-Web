@@ -22,7 +22,7 @@ const processVideogameImages = multer({ storage }).fields([
     { name: 'twitter', maxCount: 1 }
   ]);
 
-router.post("/post", token.verifyToken, adminVideogameController.postVideogame);
+router.post("/post", token.verifyToken, processVideogameImages, adminVideogameController.postVideogame);
 router.get("/get", token.verifyToken, adminVideogameController.getVideogames);
 
 // Obtener la cantidad de videojuegos con solo una etiqueta específica
@@ -30,7 +30,7 @@ router.get('/get-only-specific-tag-count/:tagId', token.verifyToken, adminVideog
 
 router.delete("/delete", token.verifyToken, adminVideogameController.deleteVideogame);
 router.post("/get-zip-file", token.verifyToken, adminVideogameController.getZipFile);
-router.put("/put", token.verifyToken, adminVideogameController.putVideogame);
+router.put("/put", token.verifyToken, processVideogameImages, adminVideogameController.putVideogame);
 router.delete("/delete-zip-file/:bucketId", token.verifyToken, adminVideogameController.deleteZipFile);
 
 module.exports = router;
