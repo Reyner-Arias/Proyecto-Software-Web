@@ -18,7 +18,7 @@ const processAppImages = multer({ storage }).fields([
     { name: 'archivoApp', maxCount: 1 }
   ]);
 
-router.post("/post", token.verifyToken, adminApplicationController.postApplication);
+router.post("/post", token.verifyToken, processAppImages, adminApplicationController.postApplication);
 router.get("/get-all", token.verifyToken, adminApplicationController.getAll);
 router.delete("/delete", token.verifyToken, adminApplicationController.deleteApplication);
 router.post("/get-zip-file", token.verifyToken, adminApplicationController.getZipFile);
