@@ -74,7 +74,21 @@ adminVideogameController.postVideogame = async function (req, res) {
     return res.status(500).json('Error: No se encontraron todos los datos del videojuego.');
   }
 
-  const videogameTags = req.body.tags.replace(',', ''); // Formato de las tags actualmente: idTag1,idTag2,idTag3
+  const videogameTags = [];
+  let number = "";
+
+  const stringTags = req.body.tags + ',';
+
+  for (const character of stringTags) {
+    if (character !== ',') {
+      number = number + character;
+    } else {
+      videogameTags.push(number);
+      number = "";
+    }
+  }
+
+  console.log(videogameTags)
 
   if(videogameTags.length == 0) {
     clearFilesDirectory(req.files);
@@ -265,7 +279,19 @@ adminVideogameController.putVideogame = async (req, res) => {
     twitterFile = req.files['twitter'][0];
   }
 
-  const videogameTags = req.body.tags.replace(',', ''); // Formato de las tags actualmente: idTag1,idTag2,idTag3
+  const videogameTags = [];
+  let number = "";
+
+  const stringTags = req.body.tags + ',';
+
+  for (const character of stringTags) {
+    if (character !== ',') {
+      number = number + character;
+    } else {
+      videogameTags.push(number);
+      number = "";
+    }
+  }
 
   if(videogame.titulo && !zipFile) {
     if(videogame.bucketId) {
@@ -359,7 +385,7 @@ adminVideogameController.putVideogame = async (req, res) => {
     clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron etiquetas.');
   } else if(videogame.tags) {
-    for (const tag of videogame.tags) {
+    for (const tag of videogameTags) {
       try {
         axios.interceptors.request.use(config => {
           config.headers.Authorization = req.token;
