@@ -381,10 +381,10 @@ adminVideogameController.putVideogame = async (req, res) => {
     }
   }
 
-  if(videogame.tags && videogame.tags.length == 0) {
+  if(videogameTags && videogameTags.length == 0) {
     clearFilesDirectory(req.files);
     return res.status(500).json('Error: No se encontraron etiquetas.');
-  } else if(videogame.tags) {
+  } else if(videogameTags) {
     for (const tag of videogameTags) {
       try {
         axios.interceptors.request.use(config => {
